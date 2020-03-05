@@ -1,3 +1,5 @@
 .sass-cache
 __pycache__
+_site
+_build
 
