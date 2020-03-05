@@ -24,13 +24,15 @@
   expand_sections: true
   sections:
   - url: /parts/01/dtw_ot
+    subsections:
+    - url: /parts/01/dtw_ot/background
+    - url: /parts/01/dtw_ot/dtw_warping_length
+    - url: /parts/01/dtw_ot/dtw_da
   - url: /parts/01/temporal_kernel
     expand_subsections: true
     # subsections:
     # - url: /parts/01/dbotsw
-    #   not_numbered: true
     # - url: /parts/01/efficient_kernel
-    #   not_numbered: true
 
 - url: /parts/02_representations
   expand_sections: true
