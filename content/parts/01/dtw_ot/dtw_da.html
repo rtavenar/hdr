@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Machine Learning for Time Series</title>
-  <meta name="description" content="# Links between Optimal Transport and DTWThis section covers my works related to Dynamic Time Warping (for time series)and Optimal Transport distances (for o...">
+  <meta name="description" content="# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).In this section, we...">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot.html">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot/dtw_da.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot/dtw_da.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Machine Learning for Time Series" />
-<meta property="og:description" content="# Links between Optimal Transport and DTWThis section covers my works related to Dynamic Time Warping (for time series)and Optimal Transport distances (for o..." />
+<meta property="og:description" content="# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).In this section, we..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw_ot.html",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw_ot/dtw_da.html",
   "headline": "Machine Learning for Time Series",
   "datePublished": "2020-03-05T22:40:19+01:00",
   "dateModified": "2020-03-05T22:40:19+01:00",
-  "description": "# Links between Optimal Transport and DTWThis section covers my works related to Dynamic Time Warping (for time series)and Optimal Transport distances (for o...",
+  "description": "# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).In this section, we...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -943,11 +943,24 @@ initFunction(initPrint)
 
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
-              <h1 id="links-between-optimal-transport-and-dtw">Links between Optimal Transport and DTW</h1>
+              <h1 id="dtw-alignment-as-a-temporal-domain-adaptation-strategy">DTW alignment as a temporal domain adaptation strategy</h1>
 
-<p>This section covers my works related to Dynamic Time Warping (for time series)
-and Optimal Transport distances (for other structured data such as graphs) and
-draws a parallel between both methodologies.</p>
+<!-- #region {"tags": ["popout"]} -->
+<p><strong>Note.</strong> This work was a part of Rémi Dupas’ PhD thesis (in Environment
+Sciences).
+<!-- #endregion --></p>
+
+<p>In this section, we present a method that uses Dynamic Time Warping (DTW)
+on multimodal data.
+The method relies on the assumption that one of the modalities at stake can be
+used as a reference to (temporally) realign other modalities
+<a class="citation" href="#dupas:halshs-01228397">(Dupas et al., 2015)</a>.
+It has been used in the context of hydrological measurements to align pollutant
+concentration profiles based on discharge time series.</p>
+
+<h2 id="references">References</h2>
+
+<ol class="bibliography"><li><span id="dupas:halshs-01228397">Dupas, R., Tavenard, R., Fovet, O., Gilliet, N., Grimaldi, C., &amp; Gascuel-Odoux, C. (2015). Identifying seasonal patterns of phosphorus storm dynamics with dynamic time warping. <i>Water Resources Research</i>, <i>51</i>(11), 8868–8882. https://doi.org/10.1002/2015WR017338</span></li></ol>
 
             </div>
             <div class="c-textbook__footer" id="textbook_footer">

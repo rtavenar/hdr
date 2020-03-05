@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Machine Learning for Time Series</title>
-  <meta name="description" content="# Links between Optimal Transport and DTWThis section covers my works related to Dynamic Time Warping (for time series)and Optimal Transport distances (for o...">
+  <title>A bit of background</title>
+  <meta name="description" content="        A bit of background    In the following, we present two similarity measures that are discussed in moredetails in Sections XX and YY.Dynamic Time Warp...">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot.html">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/parts/01/dtw_ot/background.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/parts/01/dtw_ot/background.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Machine Learning for Time Series" />
-<meta property="og:description" content="# Links between Optimal Transport and DTWThis section covers my works related to Dynamic Time Warping (for time series)and Optimal Transport distances (for o..." />
+<meta property="og:title"       content="A bit of background" />
+<meta property="og:description" content="        A bit of background    In the following, we present two similarity measures that are discussed in moredetails in Sections XX and YY.Dynamic Time Warp..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw_ot.html",
-  "headline": "Machine Learning for Time Series",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/dtw_ot/background.html",
+  "headline": "A bit of background",
   "datePublished": "2020-03-05T22:40:19+01:00",
   "dateModified": "2020-03-05T22:40:19+01:00",
-  "description": "# Links between Optimal Transport and DTWThis section covers my works related to Dynamic Time Warping (for time series)and Optimal Transport distances (for o...",
+  "description": "        A bit of background    In the following, we present two similarity measures that are discussed in moredetails in Sections XX and YY.Dynamic Time Warp...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -943,18 +943,269 @@ initFunction(initPrint)
 
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
-              <h1 id="links-between-optimal-transport-and-dtw">Links between Optimal Transport and DTW</h1>
+                  <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">A bit of background</div>
+</div>
+    
+<div class="jb_cell">
 
-<p>This section covers my works related to Dynamic Time Warping (for time series)
-and Optimal Transport distances (for other structured data such as graphs) and
-draws a parallel between both methodologies.</p>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the following, we present two similarity measures that are discussed in more
+details in Sections XX and YY.</p>
+<h2 id="Dynamic-Time-Warping">Dynamic Time Warping<a class="anchor-link" href="#Dynamic-Time-Warping"> </a></h2><p>Dynamic Time Warping (DTW) <a class="citation" href="#sakoe1978dynamic">(Sakoe &amp; Chiba, 1978)</a> is a similarity measure
+between time series.
+Let us consider two time series $x = (x_0, \dots, x_{n-1})$ and
+$y = (y_0, \dots, y_{m-1})$ of respective lengths $n$ and
+$m$.
+Here, all elements $x_i$ and $y_j$ are assumed to lie in the same
+$d$-dimensional space.</p>
 
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note.</strong> In <code>tslearn</code>, such time series would be represented as arrays of
+respective
+shapes <code>(n, d)</code> and <code>(m, d)</code> and DTW can be computed using the following code:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="kn">import</span> <span class="n">dtw</span><span class="p">,</span> <span class="n">dtw_path</span>
+
+<span class="n">dtw_score</span> <span class="o">=</span> <span class="n">dtw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="c1"># Or, if the path is also</span>
+<span class="c1"># an important information:</span>
+<span class="n">path</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">dtw_path</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Optimization-problem">Optimization problem<a class="anchor-link" href="#Optimization-problem"> </a></h3><p>DTW between $x$ and $y$ is formulated as the following
+optimization problem:</p>
+\begin{equation}
+DTW(x, y) = \min_\pi \sqrt{ \sum_{(i, j) \in \pi} d(x_i, y_j)^2 }
+\label{eq:dtw}
+\end{equation}
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>where $\pi = [\pi_0, \dots , \pi_{K-1}]$ is a path that satisfies the
+following properties:</p>
+<ul>
+<li>it is a list of index pairs $\pi_k = (i_k, j_k)$ with
+$0 \leq i_k &lt; n$ and $0 \leq j_k &lt; m$</li>
+<li>$\pi_0 = (0, 0)$ and $\pi_{K-1} = (n - 1, m - 1)$</li>
+<li><p>for all $k &gt; 0$ , $\pi_k = (i_k, j_k)$ is related to
+$\pi_{k-1} = (i_{k-1}, j_{k-1})$ as follows:</p>
+<ul>
+<li>$i_{k-1} \leq i_k \leq i_{k-1} + 1$</li>
+<li>$j_{k-1} \leq j_k \leq j_{k-1} + 1$</li>
+</ul>
+</li>
+</ul>
+<p>Here, a path can be seen as a temporal alignment of time series such that
+Euclidean distance between aligned (ie. resampled) time series is minimal.</p>
+<p>The following image exhibits the DTW path (in white) for a given pair of time
+series, on top of the cross-similarity matrix that stores $d(x_i, y_j)$
+values.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note.</strong> Code to produce such visualization is available in <a href="https://tslearn.readthedocs.io/en/latest/auto_examples/plot_dtw.html"><code>tslearn</code>'s
+Gallery of
+examples</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="../../../images/dtw.png" alt=""></p>
+<h3 id="Algorithmic-solution">Algorithmic solution<a class="anchor-link" href="#Algorithmic-solution"> </a></h3><p>There exists an $O(mn)$ algorithm to compute the exact optimum for this
+problem:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">dtw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+      <span class="n">dist</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                                       <span class="k">else</span> <span class="n">inf</span><span class="p">,</span>
+                             <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                                       <span class="k">else</span> <span class="n">inf</span><span class="p">,</span>
+                             <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+                                         <span class="k">else</span> <span class="n">inf</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Properties">Properties<a class="anchor-link" href="#Properties"> </a></h3><p>Dynamic Time Warping holds the following properties:</p>
+<ul>
+<li>$\forall x, y, DTW(x, y) \geq 0$</li>
+<li>$\forall x, DTW(x, x) = 0$</li>
+</ul>
+<p>However, mathematically speaking, DTW is not a valid distance since it does
+not satisfy the triangular inequality.</p>
+<h3 id="Setting-additional-constraints">Setting additional constraints<a class="anchor-link" href="#Setting-additional-constraints"> </a></h3><p>The set of temporal deformations to which DTW is invariant can be reduced by
+setting additional constraints on the set of acceptable paths.
+These constraints typically consist in forcing paths to lie close to the
+diagonal.</p>
+<p>First, the Sakoe-Chiba band is parametrized by a radius $r$ (number of
+off-diagonal elements to consider, also called warping window size sometimes),
+as illustrated below:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note.</strong> The corresponding code in <code>tslearn</code> would be:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="kn">import</span> <span class="n">dtw</span>
+<span class="n">cost</span> <span class="o">=</span> <span class="n">dtw</span><span class="p">(</span>
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+  <span class="n">global_constraint</span><span class="o">=</span><span class="s2">&quot;sakoe_chiba&quot;</span><span class="p">,</span>
+  <span class="n">sakoe_chiba_radius</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><figure>
+<p><img src="../../../images/sakoe_chiba.png" alt="" /></p>
+  <figcaption>$n = m = 10, r = 3$. Diagonal is marked in grey for better
+   readability.</figcaption>
+</figure></p>
+<p>Second, the Itakura parallelogram sets a maximum slope $s$ for alignment
+paths, which leads to a parallelogram-shaped constraint:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note.</strong> The corresponding code in <code>tslearn</code> would be:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="kn">import</span> <span class="n">dtw</span>
+<span class="n">cost</span> <span class="o">=</span> <span class="n">dtw</span><span class="p">(</span>
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+  <span class="n">global_constraint</span><span class="o">=</span><span class="s2">&quot;itakura&quot;</span><span class="p">,</span>
+  <span class="n">itakura_max_slope</span><span class="o">=</span><span class="mf">2.</span>
+<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><figure>
+<p><img src="../../../images/itakura.png" alt="" /></p>
+  <figcaption>$n = m = 10, s = 2$. Diagonal is marked in grey for better
+   readability.</figcaption>
+</figure></p>
+<h2 id="Optimal-Transport">Optimal Transport<a class="anchor-link" href="#Optimal-Transport"> </a></h2><p><strong>TODO</strong>: Wasserstein and Gromov-Wasserstein</p>
+<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="sakoe1978dynamic">Sakoe, H., &amp; Chiba, S. (1978). Dynamic programming algorithm optimization for spoken word recognition. <i>IEEE Transactions on Acoustics, Speech and Signal Processing</i>, <i>26</i>(1), 43–49.</span></li></ol></p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
             </div>
             <div class="c-textbook__footer" id="textbook_footer">
               
 <nav class="c-page__nav">
   
+    
+    
 
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/01/dtw_ot.html">
+      〈 <span class="u-margin-right-tiny"></span> Links between Optimal Transport an...
+    </a>
+  
+
+  
+    
+
+    
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/hdr/parts/01/dtw_ot/dtw_warping_length.html">
+      Constrained Dynamic Time Warping <span class="u-margin-right-tiny"></span> 〉
+    </a>
   
 </nav>
 
