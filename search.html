@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/search",
   "headline": "Search the site",
-  "datePublished": "2020-03-05T10:28:36+01:00",
-  "dateModified": "2020-03-05T10:28:36+01:00",
+  "datePublished": "2020-03-05T17:33:42+01:00",
+  "dateModified": "2020-03-05T17:33:42+01:00",
   "description": "        ",
   "author": {
     "@type": "Person",
@@ -82,6 +82,13 @@ MathJax.Hub.Config({
         styles: {'.MathJax_Display': {"margin": 0}},
         linebreaks: { automatic: true },
     },
+    
+    // Number LaTeX-style equations
+    "TeX": {
+        equationNumbers: {
+          autoNumber: "all"
+        }
+    }
     
 });
 </script>
@@ -532,7 +539,7 @@ initFunction(initPrint)
     <script type="text/x-thebe-config">{
     requestKernel: true,
     binderOptions: {
-    repo: "jupyter/jupyter-book",
+    repo: "rtavenar/hdr",
     ref: "gh-pages",
     },
     codeMirrorConfig: {
@@ -900,10 +907,17 @@ initFunction(initPrint)
         "teaser":null},{
         "title": "Links between Optimal Transport and DTW",
         
-        "excerpt": "links between optimal transport dtw todo",
+        "excerpt": "dtw x y k warping n m tslearn following series pi leq dynamic d between code j pik ik jk constraints paths diagonal similarity dots xi yj such problem path properties images png s setting itakura present cite consider respective here elements lie optimization equation temporal alignment distance forall not additional set r corresponding python metrics import cost globalconstraint sakoechiba figure caption marked grey better readability endfigure parallelogram links optimal transport todo bit background measures discussed details sections xx yy sakoedynamic measure let us lengths assumed same dimensional space represented arrays shapes computed using formulated begin min sqrt sum label",
         "categories": [],
         "tags": [],
         "url": "https://rtavenar.github.io/hdr/parts/01/dtw_ot.html",
+        "teaser":null},{
+        "title": "Constrained Dynamic Time Warping",
+        
+        "excerpt": "math dtw x y code m warping j n tslearn dynamic series d block python k import min c gamma following path pi leq soft paths metrics algorithm constraints dots xi yj also optimization problem pik ik jk diagonal barycenters timeserieskmeans length between such sum properties figure fig png width align center not set r cost itakura s clustering metric differentiable softdtw vol pp method setting similarity consider respective here elements lie using dtwpath dtwscore information sqrt temporal alignment distance gallery examples dist forall additional sakoe chiba sakoechiba marked grey better readability corresponding globalconstraint parallelogram dtwlimitedwarpinglength barycenter mathcal corresponds mu",
+        "categories": [],
+        "tags": [],
+        "url": "https://rtavenar.github.io/hdr/parts/01/dtw_warping_length.html",
         "teaser":null},{
         "title": "Temporal Kernel for Time Series Classification",
         
