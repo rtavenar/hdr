@@ -24,18 +24,8 @@
   expand_sections: true
   sections:
   - url: /parts/01/dtw_ot
-    # expand_subsections: false
-    # subsections:
-    # - url: /parts/01/dtw_warping_length
-    #   not_numbered: true
-    # - url: /parts/01/dtw_hydro
-    #   not_numbered: true
-    # - url: /parts/01/fgw_sgw
-    #   not_numbered: true
-    # - url: /parts/01/dtw_gi
-    #   not_numbered: true
   - url: /parts/01/temporal_kernel
-    # expand_subsections: false
+    expand_subsections: true
     # subsections:
     # - url: /parts/01/dbotsw
     #   not_numbered: true

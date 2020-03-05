@@ -148,6 +148,7 @@ GEM
       jekyll (~> 3.0)
     jekyll-feed (0.11.0)
       jekyll (~> 3.3)
+    jekyll-figure (0.1.0)
     jekyll-gist (1.5.0)
       octokit (~> 4.2)
     jekyll-github-metadata (2.12.1)
@@ -299,6 +300,7 @@ DEPENDENCIES
   guard-jekyll-plus (~> 2.0.2)
   guard-livereload (~> 2.5.2)
   jekyll-feed (~> 0.6)
+  jekyll-figure
   jekyll-redirect-from
   jekyll-scholar
   tzinfo-data

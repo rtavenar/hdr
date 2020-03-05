@@ -50,7 +50,7 @@ page_authors                   : None  # Either `None` or `infer`
 filename_title_split_character : '_'  # If inferring titles based on filename, splt on this character.
 
 # Math settings
-number_equations               : false  # Whether to automatically number all block equations with MathJax
+number_equations               : true  # Whether to automatically number all block equations with MathJax
 
 #######################################################################################
 # Interact link settings
@@ -67,8 +67,8 @@ jupyterhub_interact_text         : "Interact"  # The text that interact buttons 
 use_binder_button                : true  # If 'true', add a binder button for interactive links
 binderhub_url                    : "https://mybinder.org"  # The URL for your BinderHub. If no URL, use ""
 binder_repo_base                 : "https://github.com/"  # The site on which the textbook repository is hosted
-binder_repo_org                  : "jupyter"  # The username or organization that owns this repository
-binder_repo_name                 : "jupyter-book"  # The name of the repository on the web
+binder_repo_org                  : "rtavenar"  # The username or organization that owns this repository
+binder_repo_name                 : "hdr"  # The name of the repository on the web
 binder_repo_branch               : "gh-pages"  # The branch on which your textbook is hosted.
 binderhub_interact_text          : "Interact"  # The text that interact buttons will contain.
 
@@ -155,6 +155,7 @@ exclude:
 plugins:
   - jekyll-redirect-from
   - jekyll-scholar
+  - jekyll-figure
 
 # Jupyter Book version - DO NOT CHANGE THIS. It is generated when a new book is created
 jupyter_book_version: "0.6.4"
