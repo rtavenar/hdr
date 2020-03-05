@@ -1,0 +1,10 @@
+# Requirements for the demo notebooks
+# Useful for MyBinder configuration
+
+numpy
+matplotlib
+nbinteract
+scipy
+jupyter-book
+tslearn
+pytorch

@@ -1,0 +1,82 @@
+# This file contains the order and numbering for all sections in the book.
+#
+# Each entry has the following schema:
+#
+# - title: mytitle   # Title of chapter or section
+#   url: /myurl  # URL of section relative to the /content/ folder.
+#   sections:  # Contains a list of more entries that make up the chapter's sections
+#   not_numbered: true  # if the section shouldn't have a number in the sidebar
+#     (e.g. Introduction or appendices)
+#   expand_sections: true  # if you'd like the sections of this chapter to always
+#     be expanded in the sidebar.
+#   external: true  # Whether the URL is an external link or points to content in the book
+#
+# Below are some special values that trigger specific behavior:
+# - search: true  # Will provide a link to a search page
+# - divider: true  # Will insert a divider in the sidebar
+# - header: My Header  # Will insert a header with no link in the sidebar
+
+
+- url: /parts/intro
+  not_numbered: true
+
+- url: /parts/01_metrics
+  expand_sections: true
+  sections:
+  - url: /parts/01/dtw_ot
+    # expand_subsections: false
+    # subsections:
+    # - url: /parts/01/dtw_warping_length
+    #   not_numbered: true
+    # - url: /parts/01/dtw_hydro
+    #   not_numbered: true
+    # - url: /parts/01/fgw_sgw
+    #   not_numbered: true
+    # - url: /parts/01/dtw_gi
+    #   not_numbered: true
+  - url: /parts/01/temporal_kernel
+    # expand_subsections: false
+    # subsections:
+    # - url: /parts/01/dbotsw
+    #   not_numbered: true
+    # - url: /parts/01/efficient_kernel
+    #   not_numbered: true
+
+- url: /parts/02_representations
+  expand_sections: true
+  sections:
+  - url: /parts/02/topic_models
+    # expand_subsections: false
+    # subsections:
+    # - url: /parts/02/hdlsm
+    #   not_numbered: true
+    # - url: /parts/02/lda
+    #   not_numbered: true
+    # - url: /parts/02/traj
+    #   not_numbered: true
+  - url: /parts/02/shapelets_cnn
+    # expand_subsections: false
+    # subsections:
+    # - url: /parts/02/data_aug
+    #   not_numbered: true
+    # - url: /parts/02/ldps
+    #   not_numbered: true
+    # - url: /parts/02/random_shapelets
+    #   not_numbered: true
+    # - url: /parts/02/realistic_shapelets
+    #   not_numbered: true
+  - url: /parts/02/early
+    # expand_subsections: false
+    # subsections:
+    # - url: /parts/02/early_noclust
+    #   not_numbered: true
+    # - url: /parts/02/early_rnn
+    #   not_numbered: true
+
+- url: /parts/conclu
+  not_numbered: true
+
+- divider: true
+
+- url: /contributing
+  not_numbered: true
