@@ -1,3 +1,0 @@
-# Temporal Topic Models
-
-**TODO**
