@@ -3,3 +3,18 @@
     margin: 5px 2px 2px 0px !important;
     float: left !important;
 }
+
+/* Make the sidenote column larger */
+.c-textbook__content, .c-textbook__footer {
+    max-width: 1100px;
+}
+
+@media (min-width: 64em) {
+    div.jb_cell {
+        width: 60%;
+    }
+
+    div.jb_cell.tag_popout {
+        width: calc(100% - 60%);
+    }
+}
