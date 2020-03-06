@@ -17,6 +17,9 @@
 # - header: My Header  # Will insert a header with no link in the sidebar
 
 
+- url: /parts/about
+  not_numbered: true
+
 - url: /parts/intro
   not_numbered: true
 
@@ -28,6 +31,9 @@
     - url: /parts/01/dtw_ot/background
     - url: /parts/01/dtw_ot/dtw_warping_length
     - url: /parts/01/dtw_ot/dtw_da
+    - url: /parts/01/dtw_ot/fgw
+    - url: /parts/01/dtw_ot/sgw
+    - url: /parts/01/dtw_ot/dtw_gi
   - url: /parts/01/temporal_kernel
     expand_subsections: true
     # subsections:
