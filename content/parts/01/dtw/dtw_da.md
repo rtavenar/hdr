@@ -102,7 +102,8 @@ DTW) was needed anymore.
 This method proved useful to extract meaningful clusters and an _a posteriori_
 analysis of the clusters enabled to identify the export dynamics of pollutants
 in different geographical areas of the study sites, which then led to management
-recommendations, as described in {% cite dupas:halshs-01228397 %}.
+recommendations, as detailed in {% cite dupas:halshs-01228397 %}.
+
 
 ## References
 

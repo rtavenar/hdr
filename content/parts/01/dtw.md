@@ -13,8 +13,6 @@ jupyter:
     name: python3
 ---
 
-# Links between Optimal Transport and DTW
+# Dynamic Time Warping
 
-This section covers my works related to Dynamic Time Warping (for time series)
-and Optimal Transport distances (for other structured data such as graphs) and
-draws a parallel between both methodologies.
+This section covers my works related to Dynamic Time Warping for time series.
