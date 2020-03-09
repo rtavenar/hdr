@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Feedback welcome</title>
-  <meta name="description" content="        Feedback welcome    If you want to provide feedback (suggest improvements, spot typos, etc.) onthis document, feel free to do so by opening aGitHub I...">
+  <title>DTW alignment as a temporal domain adaptation strategy</title>
+  <meta name="description" content="        DTW alignment as a temporal domain adaptation strategy    Note. This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).In this secti...">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/contributing.html">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/parts/01/dtw/dtw_da.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/contributing.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/parts/01/dtw/dtw_da.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Feedback welcome" />
-<meta property="og:description" content="        Feedback welcome    If you want to provide feedback (suggest improvements, spot typos, etc.) onthis document, feel free to do so by opening aGitHub I..." />
+<meta property="og:title"       content="DTW alignment as a temporal domain adaptation strategy" />
+<meta property="og:description" content="        DTW alignment as a temporal domain adaptation strategy    Note. This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).In this secti..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/contributing.html",
-  "headline": "Feedback welcome",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/dtw/dtw_da.html",
+  "headline": "DTW alignment as a temporal domain adaptation strategy",
   "datePublished": "2020-03-09T18:07:32+01:00",
   "dateModified": "2020-03-09T18:07:32+01:00",
-  "description": "        Feedback welcome    If you want to provide feedback (suggest improvements, spot typos, etc.) onthis document, feel free to do so by opening aGitHub I...",
+  "description": "        DTW alignment as a temporal domain adaptation strategy    Note. This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).In this secti...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -1049,16 +1049,108 @@ initFunction(initPrint)
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
                   <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">Feedback welcome</div>
+    <div id="page-info"><div id="page-title">DTW alignment as a temporal domain adaptation strategy</div>
 </div>
     
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note.</strong> This work was a part of Rémi Dupas' PhD thesis (in Environment
+Sciences).</p>
+
+</div>
+</div>
+</div>
+</div>
+
 <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>If you want to provide feedback (suggest improvements, spot typos, etc.) on
-this document, feel free to do so by opening a
-<a href="https://github.com/rtavenar/hdr/issues/new">GitHub Issue</a>.</p>
+<p>In this section, we present a method that uses Dynamic Time Warping (DTW)
+on multimodal data.
+The method relies on the assumption that one of the modalities at stake (called
+reference modality in the following) can be used as a reference to (temporally)
+realign other modalities <a class="citation" href="#dupas:halshs-01228397">(Dupas et al., 2015)</a>.
+It has been used in the context of hydrological measurements to align pollutant
+concentration profiles based on discharge time series.</p>
+<p>This approach can be seen as the DTW counterpart of other works that rely on
+Optimal Transport for Domain Adaptation <a class="citation" href="#courty:hal-02112785">(Courty, Flamary, Tuia, &amp; Rakotomamonjy, 2017)</a>.
+One significant difference however is that we rely on a reference modality for
+alignment, which is guided by our application context.</p>
+<h2 id="Use-case">Use case<a class="anchor-link" href="#Use-case"> </a></h2><p>Phosphorus (P) transfer during storm events represents a significant part of
+annual P loads in streams and contributes to eutrophication in downstream water
+bodies. To improve understanding of P storm dynamics, automated or
+semi-automated methods are needed to extract meaningful information from
+ever-growing water quality measurement datasets.</p>
+<p>Clustering techniques have proven useful for identifying seasonal storm
+patterns and thus for increasing knowledge about seasonal variability in storm
+export mechanisms (e.g. <a class="citation" href="#aubert:halshs-00906292">(Aubert et al., 2013)</a>).
+Clustering techniques usually require calculating a distance between pairs of
+comparable points in several time series. For this reason, direct clustering
+(without using hysteresis-descriptor variables) of high frequency storm
+concentration time series is usually irrelevant because their length (number of
+measurement points) may differ and/or measurement points may have different
+positions relative to the hydrograph (flow rise and recession); hence, it is
+difficult to calculate a distance between pairs of comparable points.</p>
+<p>The aim of this study was to develop a clustering method that overcomes this
+limit and test its ability to compare seasonal variability of P storm dynamics
+in two headwater watersheds. Both watersheds are ca. 5 km², have similar
+climate and geology, but differ in land use and P pressure intensity.</p>
+<h2 id="Method">Method<a class="anchor-link" href="#Method"> </a></h2><p>In the above-described setting, we have access to one modality (discharge,
+commonly denoted $Q$) that is representative of the evolution of the flood.
+Temporal realignment based on this modality allows to overcome three
+difficulties that may arise when comparing storm-event data: time series may
+have</p>
+<ol>
+<li>different starting times due to the discharge threshold at which the
+autosamplers were triggered,</li>
+<li>different lengths  and</li>
+<li>differences in phase that yield different positions of the discharge peak
+and of concentration data points relative to the hydrograph.</li>
+</ol>
+<p>To align time series, we used path associated to DTW.
+This matching path can be viewed as the optimal way to perform point-wise
+alignment of time series.</p>
+<p>We used the matching path $\pi^\text{Q}$ to align each discharge time series to
+the same reference discharge time series $x_\text{ref}^\text{Q}$.
+The reference discharge time series used in this study was chosen
+as a storm event with full coverage of flow rise and flow recession phases.
+Alternatively, one could choose a synthetic idealized storm hydrograph.</p>
+<p>As stated above, the continuity condition imposed on admissible paths results
+in each element of reference time series $x_\text{ref}^\text{Q}$ being matched
+with at least one element in each discharge time series from the dataset.
+We then used barycentric mapping based on obtained matches to realign other
+modalities to the timestamps of the reference time series, as shown in the
+following Figure:
+ <strong>TODO Figure 5 in the notebook</strong></p>
+<p>At this point, each time series was transformed to series of $T_\text{ref}$
+$d$-dimensional measurements, where $T_\text{ref}$ is the length of the
+reference discharge time series and $d$ is the number of water quality
+parameters considered in the study (<em>i.e.</em> all modalities except discharge).
+In a second step, a standard $k$-means algorithm was used to cluster
+realigned time series.
+Note that a Euclidean distance can be used for clustering since time series
+had already been temporally realigned; hence, no time-sensitive metric (such as
+DTW) was needed anymore.</p>
+<p>This method proved useful to extract meaningful clusters and an <em>a posteriori</em>
+analysis of the clusters enabled to identify the export dynamics of pollutants
+in different geographical areas of the study sites, which then led to management
+recommendations, as detailed in <a class="citation" href="#dupas:halshs-01228397">(Dupas et al., 2015)</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="dupas:halshs-01228397">Dupas, R., Tavenard, R., Fovet, O., Gilliet, N., Grimaldi, C., &amp; Gascuel-Odoux, C. (2015). Identifying seasonal patterns of phosphorus storm dynamics with dynamic time warping. <i>Water Resources Research</i>, <i>51</i>(11), 8868–8882. https://doi.org/10.1002/2015WR017338</span></li>
+<li><span id="courty:hal-02112785">Courty, N., Flamary, R., Tuia, D., &amp; Rakotomamonjy, A. (2017). Optimal Transport for Domain Adaptation. <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>. Retrieved from https://hal.archives-ouvertes.fr/hal-02112785</span></li>
+<li><span id="aubert:halshs-00906292">Aubert, A., Tavenard, R., Emonet, R., De Lavenne, A., Malinowski, S., Guyet, T., … Gascuel-Odoux, C. (2013). Clustering Flood Events from Water Quality Time-Series using Latent Dirichlet Allocation Model. <i>Water Resources Research</i>, <i>49</i>(12), 8187–8199. https://doi.org/10.1002/2013WR014086</span></li></ol></p>
 
 </div>
 </div>
@@ -1078,8 +1170,8 @@ this document, feel free to do so by opening a
     
     
 
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/conclu.html">
-      〈 <span class="u-margin-right-tiny"></span> Conclusion and Perspectives
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/01/dtw/dtw_warping_length.html">
+      〈 <span class="u-margin-right-tiny"></span> Constrained Dynamic Time Warping
     </a>
   
 
@@ -1087,8 +1179,8 @@ this document, feel free to do so by opening a
     
 
     
-    <a id="js-page__nav__next" class="c-page__nav__next" href="">
-       <span class="u-margin-right-tiny"></span> 〉
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/hdr/parts/01/dtw/dtw_gi.html">
+      DTW with Global Invariances <span class="u-margin-right-tiny"></span> 〉
     </a>
   
 </nav>

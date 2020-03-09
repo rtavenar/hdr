@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Machine Learning for Time Series</title>
-  <meta name="description" content="# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).In this section, we...">
+  <title>Constrained Dynamic Time Warping</title>
+  <meta name="description" content="        Constrained Dynamic Time Warping    Note. This work was a part of Zheng Zhang's PhD thesis. It was performedduring Zheng's stay at LETG in 2015-2016....">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot/dtw_da.html">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/parts/01/dtw/dtw_warping_length.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot/dtw_da.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/parts/01/dtw/dtw_warping_length.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Machine Learning for Time Series" />
-<meta property="og:description" content="# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).In this section, we..." />
+<meta property="og:title"       content="Constrained Dynamic Time Warping" />
+<meta property="og:description" content="        Constrained Dynamic Time Warping    Note. This work was a part of Zheng Zhang's PhD thesis. It was performedduring Zheng's stay at LETG in 2015-2016...." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw_ot/dtw_da.html",
-  "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-06T10:39:05+01:00",
-  "dateModified": "2020-03-06T10:39:05+01:00",
-  "description": "# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).In this section, we...",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/dtw/dtw_warping_length.html",
+  "headline": "Constrained Dynamic Time Warping",
+  "datePublished": "2020-03-09T18:07:32+01:00",
+  "dateModified": "2020-03-09T18:07:32+01:00",
+  "description": "        Constrained Dynamic Time Warping    Note. This work was a part of Zheng Zhang's PhD thesis. It was performedduring Zheng's stay at LETG in 2015-2016....",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -670,14 +670,14 @@ initFunction(initPrint)
             
             
 
-            <li class="c-sidebar__section" data-url="/parts/01/dtw_ot">
+            <li class="c-sidebar__section" data-url="/parts/01/dtw">
               <a class="c-sidebar__entry"
-                href="/hdr/parts/01/dtw_ot.html"
+                href="/hdr/parts/01/dtw.html"
               >
                 
                   1.1
                 
-                Links between Optimal Transport and DTW
+                Dynamic Time Warping
               </a>
             </li>
             
@@ -688,9 +688,9 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/background">
+                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/background">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/background.html"
+                    href="/hdr/parts/01/dtw/background.html"
                   >
                     
                       1.1.1
@@ -704,9 +704,9 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/dtw_warping_length">
+                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/dtw_warping_length">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/dtw_warping_length.html"
+                    href="/hdr/parts/01/dtw/dtw_warping_length.html"
                   >
                     
                       1.1.2
@@ -720,9 +720,9 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/dtw_da">
+                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/dtw_da">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/dtw_da.html"
+                    href="/hdr/parts/01/dtw/dtw_da.html"
                   >
                     
                       1.1.3
@@ -736,12 +736,54 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/fgw">
+                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/dtw_gi">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/fgw.html"
+                    href="/hdr/parts/01/dtw/dtw_gi.html"
                   >
                     
                       1.1.4
+                      
+                    
+                    DTW with Global Invariances
+                  </a>
+                </li>
+              
+              </ul>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/parts/01/ot">
+              <a class="c-sidebar__entry"
+                href="/hdr/parts/01/ot.html"
+              >
+                
+                  1.2
+                
+                Optimal Transport for Structured Data
+              </a>
+            </li>
+            
+              
+              <ul class='c-sidebar__subsections u-hidden-visually'>
+              
+                
+                
+                
+                
+                <li class="c-sidebar__subsection" data-url="/parts/01/ot/fgw">
+                  <a class="c-sidebar__entry"
+                    href="/hdr/parts/01/ot/fgw.html"
+                  >
+                    
+                      1.2.1
                       
                     
                     Fused Gromov-Wasserstein
@@ -752,31 +794,15 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/sgw">
+                <li class="c-sidebar__subsection" data-url="/parts/01/ot/sgw">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/sgw.html"
+                    href="/hdr/parts/01/ot/sgw.html"
                   >
                     
-                      1.1.5
+                      1.2.2
                       
                     
                     Sliced Gromov-Wasserstein
-                  </a>
-                </li>
-              
-                
-                
-                
-                
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/dtw_gi">
-                  <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/dtw_gi.html"
-                  >
-                    
-                      1.1.6
-                      
-                    
-                    DTW with Global Invariances
                   </a>
                 </li>
               
@@ -797,7 +823,7 @@ initFunction(initPrint)
                 href="/hdr/parts/01/temporal_kernel.html"
               >
                 
-                  1.2
+                  1.3
                 
                 Temporal Kernel for Time Series Classification
               </a>
@@ -1022,111 +1048,165 @@ initFunction(initPrint)
 
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
-              <h1 id="dtw-alignment-as-a-temporal-domain-adaptation-strategy">DTW alignment as a temporal domain adaptation strategy</h1>
+                  <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Constrained Dynamic Time Warping</div>
+</div>
+    
+<div class="jb_cell tag_popout">
 
-<!-- #region {"tags": ["popout"]} -->
-<p><strong>Note.</strong> This work was a part of Rémi Dupas’ PhD thesis (in Environment
-Sciences).
-<!-- #endregion --></p>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note.</strong> This work was a part of Zheng Zhang's PhD thesis. It was performed
+during Zheng's stay at LETG in 2015-2016.</p>
 
-<p>In this section, we present a method that uses Dynamic Time Warping (DTW)
-on multimodal data.
-The method relies on the assumption that one of the modalities at stake (called
-reference modality in the following) can be used as a reference to (temporally)
-realign other modalities <a class="citation" href="#dupas:halshs-01228397">(Dupas et al., 2015)</a>.
-It has been used in the context of hydrological measurements to align pollutant
-concentration profiles based on discharge time series.</p>
+</div>
+</div>
+</div>
+</div>
 
-<p>This approach can be seen as the DTW counterpart of other works that rely on
-Optimal Transport for Domain Adaptation <a class="citation" href="#courty:hal-02112785">(Courty, Flamary, Tuia, &amp; Rakotomamonjy, 2017)</a>.
-One significant difference however is that we rely on a reference modality for
-alignment, which is guided by our application context.</p>
+<div class="jb_cell">
 
-<h2 id="use-case">Use case</h2>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this section, we present a method to regularize Dynamic Time Warping (DTW)
+by setting constraints on the length of the admissible warping paths
+<a class="citation" href="#zhang2017dynamic">(Zhang et al., 2017)</a>.</p>
+<h2 id="Formulation-and-Optimization">Formulation and Optimization<a class="anchor-link" href="#Formulation-and-Optimization"> </a></h2>
+</div>
+</div>
+</div>
+</div>
 
-<p>Phosphorus (P) transfer during storm events represents a significant part of
-annual P loads in streams and contributes to eutrophication in downstream water
-bodies. To improve understanding of P storm dynamics, automated or
-semi-automated methods are needed to extract meaningful information from
-ever-growing water quality measurement datasets.</p>
+<div class="jb_cell tag_popout">
 
-<p>Clustering techniques have proven useful for identifying seasonal storm
-patterns and thus for increasing knowledge about seasonal variability in storm
-export mechanisms (e.g. <a class="citation" href="#aubert:halshs-00906292">(Aubert et al., 2013)</a>).
-Clustering techniques usually require calculating a distance between pairs of
-comparable points in several time series. For this reason, direct clustering
-(without using hysteresis-descriptor variables) of high frequency storm
-concentration time series is usually irrelevant because their length (number of
-measurement points) may differ and/or measurement points may have different
-positions relative to the hydrograph (flow rise and recession); hence, it is
-difficult to calculate a distance between pairs of comparable points.</p>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note.</strong> The method is available in <code>tslearn</code> via:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="kn">import</span> <span class="n">dtw_limited_warping_length</span>
+<span class="n">cost</span> <span class="o">=</span> <span class="n">dtw_limited_warping_length</span><span class="p">(</span>
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+  <span class="n">max_length</span>
+<span class="p">)</span>
+</pre></div>
 
-<p>The aim of this study was to develop a clustering method that overcomes this
-limit and test its ability to compare seasonal variability of P storm dynamics
-in two headwater watersheds. Both watersheds are ca. 5 km², have similar
-climate and geology, but differ in land use and P pressure intensity.</p>
+</div>
+</div>
+</div>
+</div>
 
-<h2 id="method">Method</h2>
+<div class="jb_cell">
 
-<p>In the above-described setting, we have access to one modality (discharge,
-commonly denoted $Q$) that is representative of the evolution of the flood.
-Temporal realignment based on this modality allows to overcome three
-difficulties that may arise when comparing storm-event data: time series may
-have</p>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As discussed in <a href="background.html">Sec. 1.1.1</a>, a common way to restrict the set
+of admissible temporal distortions for Dynamic Time Warping consists in forcing
+path to lie stay close to the diagonal through the use of Sakoe-Chiba band or
+Itakura parallelogram constraints.
+A limitation of these global constraints is that they completely
+discard some regions of the alignment matrix <em>a priori</em> (<em>i.e.</em> whatever the
+data at stake).</p>
+<p>On the contrary, we propose Limited warping path length DTW (LDTW) that
+adds a path length constraint to the DTW
+optimization problem such that a path is said admissible for our method iff:</p>
+<ul>
+<li>it is an admissible DTW path;</li>
+<li>its length $K$ is lower or equal to a user-defined bound $K_\text{max}$.</li>
+</ul>
+<p>We have proposed an algorithm that stores, at each step $(i, j)$, optimal
+alignment scores for all admissible alignment path lengths.
+This gives the general LDTW algorithm:</p>
 
-<ol>
-  <li>different starting times due to the discharge threshold at which the
-autosamplers were triggered,</li>
-  <li>different lengths  and</li>
-  <li>differences in phase that yield different positions of the discharge peak
-and of concentration data points relative to the hydrograph.</li>
-</ol>
+</div>
+</div>
+</div>
+</div>
 
-<p>To align time series, we used path associated to DTW.
-This matching path can be viewed as the optimal way to perform point-wise
-alignment of time series.</p>
+<div class="jb_cell">
 
-<p>We used the matching path $\pi^\text{Q}$ to align each discharge time series to
-the same reference discharge time series $x_\text{ref}^\text{Q}$.
-The reference discharge time series used in this study was chosen
-as a storm event with full coverage of flow rise and flow recession phases.
-Alternatively, one could choose a synthetic idealized storm hydrograph.</p>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
-<p>As stated above, the continuity condition imposed on admissible paths results
-in each element of reference time series $x_\text{ref}^\text{Q}$ being matched
-with at least one element in each discharge time series from the dataset.
-We then used barycentric mapping based on obtained matches to realign other
-modalities to the timestamps of the reference time series, as shown in the
-following Figure:
- <strong>TODO Figure 5 in the notebook</strong></p>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">ldtw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">max_length</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+      <span class="n">dist</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+      <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">inf</span>  <span class="c1"># Set infinite cost for non-admissible lengths</span>
+      <span class="c1"># The core difference with DTW is the following line:</span>
+      <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">admissible_lengths</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">max_length</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                                                 <span class="k">else</span> <span class="n">inf</span><span class="p">,</span>
+                                  <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                                                 <span class="k">else</span> <span class="n">inf</span><span class="p">,</span>
+                                  <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+                                                   <span class="k">else</span> <span class="n">inf</span><span class="p">)</span>
 
-<p>At this point, each time series was transformed to series of $T_\text{ref}$
-$d$-dimensional measurements, where $T_\text{ref}$ is the length of the
-reference discharge time series and $d$ is the number of water quality
-parameters considered in the study (<em>i.e.</em> all modalities except discharge).
-In a second step, a standard $k$-means algorithm was used to cluster
-realigned time series.
-Note that a Euclidean distance can be used for clustering since time series
-had already been temporally realigned; hence, no time-sensitive metric (such as
-DTW) was needed anymore.</p>
+  <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:]))</span>
+</pre></div>
 
-<p>This method proved useful to extract meaningful clusters and an <em>a posteriori</em>
-analysis of the clusters enabled to identify the export dynamics of pollutants
-in different geographical areas of the study sites, which then led to management
-recommendations, as described in <a class="citation" href="#dupas:halshs-01228397">(Dupas et al., 2015)</a>.</p>
+    </div>
+</div>
+</div>
 
-<h2 id="references">References</h2>
+</div>
+</div>
 
-<ol class="bibliography"><li><span id="dupas:halshs-01228397">Dupas, R., Tavenard, R., Fovet, O., Gilliet, N., Grimaldi, C., &amp; Gascuel-Odoux, C. (2015). Identifying seasonal patterns of phosphorus storm dynamics with dynamic time warping. <i>Water Resources Research</i>, <i>51</i>(11), 8868–8882. https://doi.org/10.1002/2015WR017338</span></li>
-<li><span id="courty:hal-02112785">Courty, N., Flamary, R., Tuia, D., &amp; Rakotomamonjy, A. (2017). Optimal Transport for Domain Adaptation. <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>. Retrieved from https://hal.archives-ouvertes.fr/hal-02112785</span></li>
-<li><span id="aubert:halshs-00906292">Aubert, A., Tavenard, R., Emonet, R., De Lavenne, A., Malinowski, S., Guyet, T., … Gascuel-Odoux, C. (2013). Clustering Flood Events from Water Quality Time-Series using Latent Dirichlet Allocation Model. <i>Water Resources Research</i>, <i>49</i>(12), 8187–8199. https://doi.org/10.1002/2013WR014086</span></li></ol>
+<div class="jb_cell">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The question is then to compute the set <code>admissible_lengths(i, j, max_length)</code>.
+We have shown that this set is actually rather simple to compute and its length
+is $O(\min(i, j))$.
+Overall, we have a $O(mn^2 + nm^2)$ complexity for this exact algorithm.</p>
+<h2 id="Empirical-Observations">Empirical Observations<a class="anchor-link" href="#Empirical-Observations"> </a></h2><p>First, one can see in the following figure that the resulting alignments
+effectively limits the number of singularities in the obtained alignments as
+compared to DTW.</p>
+<p><figure>
+<p><img src="../../../images/ldtw_quali.png" alt="" /></p>
+  <figcaption>Comparison between alignments generated by DTW and LDTW on time
+   series from the CBF dataset.</figcaption>
+</figure></p>
+<p>Moreover, we have shown through experiments on UCR Time Series Datasets that
+this similarity measure, when used in a 1-Nearest Neighbor Classifier, led to
+higher accuracy than its competitors DTW and its constrained versions
+(Sakoe-Chiba band and Itakura parallelogram).</p>
+<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="zhang2017dynamic">Zhang, Z., Tavenard, R., Bailly, A., Tang, X., Tang, P., &amp; Corpetti, T. (2017). Dynamic time warping under limited warping path length. <i>Information Sciences</i>, <i>393</i>, 91–107.</span></li></ol></p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
             </div>
             <div class="c-textbook__footer" id="textbook_footer">
               
 <nav class="c-page__nav">
   
+    
+    
 
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/01/dtw/background.html">
+      〈 <span class="u-margin-right-tiny"></span> A bit of background
+    </a>
+  
+
+  
+    
+
+    
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/hdr/parts/01/dtw/dtw_da.html">
+      DTW alignment as a temporal domain... <span class="u-margin-right-tiny"></span> 〉
+    </a>
   
 </nav>
 

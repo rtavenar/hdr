@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Feedback welcome</title>
-  <meta name="description" content="        Feedback welcome    If you want to provide feedback (suggest improvements, spot typos, etc.) onthis document, feel free to do so by opening aGitHub I...">
+  <title>Dense Bag-of-Temporal-SIFT-Words</title>
+  <meta name="description" content="        Dense Bag-of-Temporal-SIFT-Words    Note. This work was part of Adeline Bailly's PhD thesis.In the context of image retrieval and classification, a l...">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/contributing.html">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/parts/01/kernel/dbotsw.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/contributing.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/parts/01/kernel/dbotsw.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Feedback welcome" />
-<meta property="og:description" content="        Feedback welcome    If you want to provide feedback (suggest improvements, spot typos, etc.) onthis document, feel free to do so by opening aGitHub I..." />
+<meta property="og:title"       content="Dense Bag-of-Temporal-SIFT-Words" />
+<meta property="og:description" content="        Dense Bag-of-Temporal-SIFT-Words    Note. This work was part of Adeline Bailly's PhD thesis.In the context of image retrieval and classification, a l..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/contributing.html",
-  "headline": "Feedback welcome",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/kernel/dbotsw.html",
+  "headline": "Dense Bag-of-Temporal-SIFT-Words",
   "datePublished": "2020-03-09T18:07:32+01:00",
   "dateModified": "2020-03-09T18:07:32+01:00",
-  "description": "        Feedback welcome    If you want to provide feedback (suggest improvements, spot typos, etc.) onthis document, feel free to do so by opening aGitHub I...",
+  "description": "        Dense Bag-of-Temporal-SIFT-Words    Note. This work was part of Adeline Bailly's PhD thesis.In the context of image retrieval and classification, a l...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -1049,16 +1049,65 @@ initFunction(initPrint)
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
                   <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">Feedback welcome</div>
+    <div id="page-info"><div id="page-title">Dense Bag-of-Temporal-SIFT-Words</div>
 </div>
     
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note.</strong> This work was part of Adeline Bailly's PhD thesis.</p>
+
+</div>
+</div>
+</div>
+</div>
+
 <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>If you want to provide feedback (suggest improvements, spot typos, etc.) on
-this document, feel free to do so by opening a
-<a href="https://github.com/rtavenar/hdr/issues/new">GitHub Issue</a>.</p>
+<p>In the context of image retrieval and classification, a large body of work
+concern scale-invariant descriptors.
+Particularly, the Scale-Invariant Feature Transform (SIFT) framework has led to
+widely used descriptors [21].
+These descriptors are scale and rotation invariant while being robust to noise.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note</strong> that the use of such handcrafted features was already outdated in the
+computer vision community at the time of this work.
+However, in the time series community, many problems correspond to small data
+settings for which available Convolutional Neural Networks (CNNs) hardly reached
+state-of-the-art performance, which led to this possibly surprising choice of
+using handcrafted features for time series classification.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In [4], we built upon this framework to design a Bag-of-Words (BoW) approach
+for time series classification where words correspond to quantized versions of
+local features.
+Features are built using the SIFT framework for both detection and description
+of the keypoints.
+This work has then been extended in <strong>TODO</strong> in which we show that dense
+extraction of features across time and scales leads to higher classification
+accuracy when fed to a standard Support Vector Machine (SVM) classifier.</p>
+<p><strong>TODO: add the Figure?</strong></p>
+<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"></ol></p>
 
 </div>
 </div>
@@ -1078,8 +1127,8 @@ this document, feel free to do so by opening a
     
     
 
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/conclu.html">
-      〈 <span class="u-margin-right-tiny"></span> Conclusion and Perspectives
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/01/temporal_kernel.html">
+      〈 <span class="u-margin-right-tiny"></span> Temporal Kernel for Time Series Cl...
     </a>
   
 
@@ -1087,8 +1136,8 @@ this document, feel free to do so by opening a
     
 
     
-    <a id="js-page__nav__next" class="c-page__nav__next" href="">
-       <span class="u-margin-right-tiny"></span> 〉
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/hdr/parts/01/kernel/efficient_kernel.html">
+      Efficient temporal match kernels <span class="u-margin-right-tiny"></span> 〉
     </a>
   
 </nav>

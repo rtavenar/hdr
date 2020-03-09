@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Machine Learning for Time Series</title>
-  <meta name="description" content="# Sliced Gromov-Wasserstein**Note.** This work is part of Titouan Vayer's PhD thesis.## References{% bibliography --cited %}">
+  <title>Fused Gromov-Wasserstein</title>
+  <meta name="description" content="        Fused Gromov-Wasserstein    Note. This work is part of Titouan Vayer's PhD thesis.References          ">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot/sgw.html">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/parts/01/ot/fgw.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw_ot/sgw.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/parts/01/ot/fgw.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Machine Learning for Time Series" />
-<meta property="og:description" content="# Sliced Gromov-Wasserstein**Note.** This work is part of Titouan Vayer's PhD thesis.## References{% bibliography --cited %}" />
+<meta property="og:title"       content="Fused Gromov-Wasserstein" />
+<meta property="og:description" content="        Fused Gromov-Wasserstein    Note. This work is part of Titouan Vayer's PhD thesis.References          " />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw_ot/sgw.html",
-  "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-06T10:39:05+01:00",
-  "dateModified": "2020-03-06T10:39:05+01:00",
-  "description": "# Sliced Gromov-Wasserstein**Note.** This work is part of Titouan Vayer's PhD thesis.## References{% bibliography --cited %}",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/ot/fgw.html",
+  "headline": "Fused Gromov-Wasserstein",
+  "datePublished": "2020-03-09T18:07:32+01:00",
+  "dateModified": "2020-03-09T18:07:32+01:00",
+  "description": "        Fused Gromov-Wasserstein    Note. This work is part of Titouan Vayer's PhD thesis.References          ",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -670,14 +670,14 @@ initFunction(initPrint)
             
             
 
-            <li class="c-sidebar__section" data-url="/parts/01/dtw_ot">
+            <li class="c-sidebar__section" data-url="/parts/01/dtw">
               <a class="c-sidebar__entry"
-                href="/hdr/parts/01/dtw_ot.html"
+                href="/hdr/parts/01/dtw.html"
               >
                 
                   1.1
                 
-                Links between Optimal Transport and DTW
+                Dynamic Time Warping
               </a>
             </li>
             
@@ -688,9 +688,9 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/background">
+                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/background">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/background.html"
+                    href="/hdr/parts/01/dtw/background.html"
                   >
                     
                       1.1.1
@@ -704,9 +704,9 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/dtw_warping_length">
+                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/dtw_warping_length">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/dtw_warping_length.html"
+                    href="/hdr/parts/01/dtw/dtw_warping_length.html"
                   >
                     
                       1.1.2
@@ -720,9 +720,9 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/dtw_da">
+                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/dtw_da">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/dtw_da.html"
+                    href="/hdr/parts/01/dtw/dtw_da.html"
                   >
                     
                       1.1.3
@@ -736,12 +736,54 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/fgw">
+                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/dtw_gi">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/fgw.html"
+                    href="/hdr/parts/01/dtw/dtw_gi.html"
                   >
                     
                       1.1.4
+                      
+                    
+                    DTW with Global Invariances
+                  </a>
+                </li>
+              
+              </ul>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/parts/01/ot">
+              <a class="c-sidebar__entry"
+                href="/hdr/parts/01/ot.html"
+              >
+                
+                  1.2
+                
+                Optimal Transport for Structured Data
+              </a>
+            </li>
+            
+              
+              <ul class='c-sidebar__subsections u-hidden-visually'>
+              
+                
+                
+                
+                
+                <li class="c-sidebar__subsection" data-url="/parts/01/ot/fgw">
+                  <a class="c-sidebar__entry"
+                    href="/hdr/parts/01/ot/fgw.html"
+                  >
+                    
+                      1.2.1
                       
                     
                     Fused Gromov-Wasserstein
@@ -752,31 +794,15 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/sgw">
+                <li class="c-sidebar__subsection" data-url="/parts/01/ot/sgw">
                   <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/sgw.html"
+                    href="/hdr/parts/01/ot/sgw.html"
                   >
                     
-                      1.1.5
+                      1.2.2
                       
                     
                     Sliced Gromov-Wasserstein
-                  </a>
-                </li>
-              
-                
-                
-                
-                
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw_ot/dtw_gi">
-                  <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw_ot/dtw_gi.html"
-                  >
-                    
-                      1.1.6
-                      
-                    
-                    DTW with Global Invariances
                   </a>
                 </li>
               
@@ -797,7 +823,7 @@ initFunction(initPrint)
                 href="/hdr/parts/01/temporal_kernel.html"
               >
                 
-                  1.2
+                  1.3
                 
                 Temporal Kernel for Time Series Classification
               </a>
@@ -1022,22 +1048,57 @@ initFunction(initPrint)
 
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
-              <h1 id="sliced-gromov-wasserstein">Sliced Gromov-Wasserstein</h1>
+                  <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Fused Gromov-Wasserstein</div>
+</div>
+    
+<div class="jb_cell tag_popout">
 
-<!-- #region {"tags": ["popout"]} -->
-<p><strong>Note.</strong> This work is part of Titouan Vayer’s PhD thesis.
-<!-- #endregion --></p>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note.</strong> This work is part of Titouan Vayer's PhD thesis.</p>
 
-<h2 id="references">References</h2>
+</div>
+</div>
+</div>
+</div>
 
-<ol class="bibliography"></ol>
+<div class="jb_cell">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"></ol></p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
             </div>
             <div class="c-textbook__footer" id="textbook_footer">
               
 <nav class="c-page__nav">
   
+    
+    
 
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/01/ot.html">
+      〈 <span class="u-margin-right-tiny"></span> Optimal Transport for Structured Data
+    </a>
+  
+
+  
+    
+
+    
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/hdr/parts/01/ot/sgw.html">
+      Sliced Gromov-Wasserstein <span class="u-margin-right-tiny"></span> 〉
+    </a>
   
 </nav>
 

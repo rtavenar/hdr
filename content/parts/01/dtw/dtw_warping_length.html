@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Feedback welcome</title>
-  <meta name="description" content="        Feedback welcome    If you want to provide feedback (suggest improvements, spot typos, etc.) onthis document, feel free to do so by opening aGitHub I...">
+  <title>Machine Learning for Time Series</title>
+  <meta name="description" content="# Constrained Dynamic Time Warping**Note.** This work was a part of Zheng Zhang's PhD thesis. It was performedduring Zheng's stay at LETG in 2015-2016.In thi...">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/contributing.html">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_warping_length.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/contributing.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_warping_length.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Feedback welcome" />
-<meta property="og:description" content="        Feedback welcome    If you want to provide feedback (suggest improvements, spot typos, etc.) onthis document, feel free to do so by opening aGitHub I..." />
+<meta property="og:title"       content="Machine Learning for Time Series" />
+<meta property="og:description" content="# Constrained Dynamic Time Warping**Note.** This work was a part of Zheng Zhang's PhD thesis. It was performedduring Zheng's stay at LETG in 2015-2016.In thi..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/contributing.html",
-  "headline": "Feedback welcome",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_warping_length.html",
+  "headline": "Machine Learning for Time Series",
   "datePublished": "2020-03-09T18:07:32+01:00",
   "dateModified": "2020-03-09T18:07:32+01:00",
-  "description": "        Feedback welcome    If you want to provide feedback (suggest improvements, spot typos, etc.) onthis document, feel free to do so by opening aGitHub I...",
+  "description": "# Constrained Dynamic Time Warping**Note.** This work was a part of Zheng Zhang's PhD thesis. It was performedduring Zheng's stay at LETG in 2015-2016.In thi...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -1048,48 +1048,103 @@ initFunction(initPrint)
 
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
-                  <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">Feedback welcome</div>
-</div>
-    
-<div class="jb_cell">
+              <h1 id="constrained-dynamic-time-warping">Constrained Dynamic Time Warping</h1>
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If you want to provide feedback (suggest improvements, spot typos, etc.) on
-this document, feel free to do so by opening a
-<a href="https://github.com/rtavenar/hdr/issues/new">GitHub Issue</a>.</p>
+<!-- #region {"tags": ["popout"]} -->
+<p><strong>Note.</strong> This work was a part of Zheng Zhang’s PhD thesis. It was performed
+during Zheng’s stay at LETG in 2015-2016.
+<!-- #endregion --></p>
 
-</div>
-</div>
-</div>
-</div>
+<p>In this section, we present a method to regularize Dynamic Time Warping (DTW)
+by setting constraints on the length of the admissible warping paths
+<a class="citation" href="#zhang2017dynamic">(Zhang et al., 2017)</a>.</p>
 
- 
+<h2 id="formulation-and-optimization">Formulation and Optimization</h2>
 
+<!-- #region {"tags": ["popout"]} -->
+<p><strong>Note.</strong> The method is available in <code class="highlighter-rouge">tslearn</code> via:</p>
 
-    </main>
-    
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="kn">import</span> <span class="n">dtw_limited_warping_length</span>
+<span class="n">cost</span> <span class="o">=</span> <span class="n">dtw_limited_warping_length</span><span class="p">(</span>
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+  <span class="n">max_length</span>
+<span class="p">)</span>
+</code></pre></div></div>
+<!-- #endregion -->
+
+<p>As discussed in <a href="background.html">Sec. 1.1.1</a>, a common way to restrict the set
+of admissible temporal distortions for Dynamic Time Warping consists in forcing
+path to lie stay close to the diagonal through the use of Sakoe-Chiba band or
+Itakura parallelogram constraints.
+A limitation of these global constraints is that they completely
+discard some regions of the alignment matrix <em>a priori</em> (<em>i.e.</em> whatever the
+data at stake).</p>
+
+<p>On the contrary, we propose Limited warping path length DTW (LDTW) that
+adds a path length constraint to the DTW
+optimization problem such that a path is said admissible for our method iff:</p>
+
+<ul>
+  <li>it is an admissible DTW path;</li>
+  <li>its length $K$ is lower or equal to a user-defined bound $K_\text{max}$.</li>
+</ul>
+
+<p>We have proposed an algorithm that stores, at each step $(i, j)$, optimal
+alignment scores for all admissible alignment path lengths.
+This gives the general LDTW algorithm:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">ldtw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">max_length</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+      <span class="n">dist</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+      <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">inf</span>  <span class="c1"># Set infinite cost for non-admissible lengths
+</span>      <span class="c1"># The core difference with DTW is the following line:
+</span>      <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">admissible_lengths</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">max_length</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                                                 <span class="k">else</span> <span class="n">inf</span><span class="p">,</span>
+                                  <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                                                 <span class="k">else</span> <span class="n">inf</span><span class="p">,</span>
+                                  <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+                                                   <span class="k">else</span> <span class="n">inf</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="p">:]))</span>
+</code></pre></div></div>
+
+<p>The question is then to compute the set <code class="highlighter-rouge">admissible_lengths(i, j, max_length)</code>.
+We have shown that this set is actually rather simple to compute and its length
+is $O(\min(i, j))$.
+Overall, we have a $O(mn^2 + nm^2)$ complexity for this exact algorithm.</p>
+
+<h2 id="empirical-observations">Empirical Observations</h2>
+
+<p>First, one can see in the following figure that the resulting alignments
+effectively limits the number of singularities in the obtained alignments as
+compared to DTW.</p>
+
+<figure>
+<p><img src="../../../images/ldtw_quali.png" alt="" /></p>
+  <figcaption>Comparison between alignments generated by DTW and LDTW on time
+   series from the CBF dataset.</figcaption>
+</figure>
+
+<p>Moreover, we have shown through experiments on UCR Time Series Datasets that
+this similarity measure, when used in a 1-Nearest Neighbor Classifier, led to
+higher accuracy than its competitors DTW and its constrained versions
+(Sakoe-Chiba band and Itakura parallelogram).</p>
+
+<h2 id="references">References</h2>
+
+<ol class="bibliography"><li><span id="zhang2017dynamic">Zhang, Z., Tavenard, R., Bailly, A., Tang, X., Tang, P., &amp; Corpetti, T. (2017). Dynamic time warping under limited warping path length. <i>Information Sciences</i>, <i>393</i>, 91–107.</span></li></ol>
+
             </div>
             <div class="c-textbook__footer" id="textbook_footer">
               
 <nav class="c-page__nav">
   
-    
-    
 
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/conclu.html">
-      〈 <span class="u-margin-right-tiny"></span> Conclusion and Perspectives
-    </a>
-  
-
-  
-    
-
-    
-    <a id="js-page__nav__next" class="c-page__nav__next" href="">
-       <span class="u-margin-right-tiny"></span> 〉
-    </a>
   
 </nav>
 
