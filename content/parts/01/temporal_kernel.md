@@ -179,15 +179,17 @@ k(x_{i}, y_{j}) \approx \left\langle\phi(x_{i}), \phi(y_{j})\right\rangle,
 then we have:
 
 \begin{equation}
-SQFD(\mathbf{x}, \mathbf{y}) \approx \left\|\frac{1}{n}\sum_i \phi(x_{i}) -
-                                        \frac{1}{m}\sum_j \phi(y_{j})\right\|.
+SQFD(\mathbf{x}, \mathbf{y}) \approx \left\|
+    \underbrace{\frac{1}{n}\sum_i \phi(x_{i})}_{b_\phi(\mathbf{x})} -
+    \underbrace{\frac{1}{m}\sum_j \phi(y_{j})}_{b_\phi(\mathbf{y})}
+    \right\|.
 \end{equation}
 
 In other words, once feature sets are projected in this finite-dimensional
 space, approximate SQFD computation is performed through (i) a barycenter
-computation in the feature space (which can be done offline) followed by (ii) a
-Euclidean distance computation in $O(D)$ time, where $D$ is the dimension of
-the feature map $\phi(x)$.
+computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
+followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
+the dimension of the feature map $\phi(x)$.
 Note that SQFD then corresponds to a biased estimator of the squared
 difference between the mean of the samples $\mathbf{x}$ and $\mathbf{y}$ which
 is classically used to test the difference between distributions

@@ -170,10 +170,6 @@ cost = dtw(
 ![](../../../images/itakura.png)
 {% endfigure %}
 
-## Optimal Transport
-
-**TODO**: Wasserstein and Gromov-Wasserstein
-
 ## References
 
 {% bibliography --cited %}
