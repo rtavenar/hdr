@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/temporal_kernel.html",
   "headline": "Temporal Kernel for Time Series Classification",
-  "datePublished": "2020-03-09T18:07:32+01:00",
-  "dateModified": "2020-03-09T18:07:32+01:00",
+  "datePublished": "2020-03-10T09:37:46+01:00",
+  "dateModified": "2020-03-10T09:37:46+01:00",
   "description": "        Temporal Kernel for Time Series Classification    The method presented in this section consists in defining a kernel betweensets of timestamped objec...",
   "author": {
     "@type": "Person",
@@ -1266,13 +1266,15 @@ used in order to approximate it with a linear kernel <a class="citation" href="#
 k(x_{i}, y_{j}) \approx \left\langle\phi(x_{i}), \phi(y_{j})\right\rangle,
 \end{equation}<p>then we have:</p>
 \begin{equation}
-SQFD(\mathbf{x}, \mathbf{y}) \approx \left\|\frac{1}{n}\sum_i \phi(x_{i}) -
-                                        \frac{1}{m}\sum_j \phi(y_{j})\right\|.
+SQFD(\mathbf{x}, \mathbf{y}) \approx \left\|
+    \underbrace{\frac{1}{n}\sum_i \phi(x_{i})}_{b_\phi(\mathbf{x})} -
+    \underbrace{\frac{1}{m}\sum_j \phi(y_{j})}_{b_\phi(\mathbf{y})}
+    \right\|.
 \end{equation}<p>In other words, once feature sets are projected in this finite-dimensional
 space, approximate SQFD computation is performed through (i) a barycenter
-computation in the feature space (which can be done offline) followed by (ii) a
-Euclidean distance computation in $O(D)$ time, where $D$ is the dimension of
-the feature map $\phi(x)$.
+computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
+followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
+the dimension of the feature map $\phi(x)$.
 Note that SQFD then corresponds to a biased estimator of the squared
 difference between the mean of the samples $\mathbf{x}$ and $\mathbf{y}$ which
 is classically used to test the difference between distributions
