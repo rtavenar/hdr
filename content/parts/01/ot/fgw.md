@@ -16,7 +16,8 @@ jupyter:
 # Fused Gromov-Wasserstein
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work is part of Titouan Vayer's PhD thesis.
+**Note.** This work was part of Titouan Vayer's PhD thesis.
+We were co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
 <!-- #endregion -->
 
 ## References

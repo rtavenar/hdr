@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# Temporal Kernel for Time Series Classification
+# A Temporal Kernel for Time Series
 
 The method presented in this section consists in defining a kernel between
 sets of timestamped objects (typically features).
@@ -25,10 +25,12 @@ following form:
 \end{equation}
 
 (each observation in the sequence is timestamped).
-This allows, in particular, to consider the case of irregular sampling.
+This allows, in particular, to consider the case of irregularly sampled time
+series.
 
 <!-- #region {"tags": ["popout"]} -->
 **Note.** This work was part of Adeline Bailly's PhD thesis.
+We were co-supervising Adeline together with Laetitia Chapel.
 <!-- #endregion -->
 
 ## Match kernel and Signature Quadratic Form Distance
@@ -174,14 +176,15 @@ used in order to approximate it with a linear kernel {% cite NIPS2007_3182 %}.
 Let us assume that we have a feature map $\phi$ such that
 
 \begin{equation}
-k(x_{i}, y_{j}) \approx \left\langle\phi(x_{i}), \phi(y_{j})\right\rangle,
+k_t((x_{i}, t_i), (y_{j}, t_j)) \approx
+    \left\langle\phi(g(x_{i}, t_i)), \phi(g(y_{j}, t_j))\right\rangle,
 \end{equation}
 then we have:
 
 \begin{equation}
 SQFD(\mathbf{x}, \mathbf{y}) \approx \left\|
-    \underbrace{\frac{1}{n}\sum_i \phi(x_{i})}_{b_\phi(\mathbf{x})} -
-    \underbrace{\frac{1}{m}\sum_j \phi(y_{j})}_{b_\phi(\mathbf{y})}
+    \underbrace{\frac{1}{n}\sum_i \phi(g(x_{i}, t_i))}_{b_\phi(\mathbf{x})} -
+    \underbrace{\frac{1}{m}\sum_j \phi(g(y_{j}, t_j))}_{b_\phi(\mathbf{y})}
     \right\|.
 \end{equation}
 

@@ -16,7 +16,8 @@ jupyter:
 # DTW with Global Invariances
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work is part of Titouan Vayer's PhD thesis.
+**Note.** This work was part of Titouan Vayer's PhD thesis.
+We were co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
 <!-- #endregion -->
 
 In this work we address the problem of comparing time series while taking
@@ -60,8 +61,6 @@ following Figure:
 %}
 ![](../../../images/dtw_gi.png)
 {% endfigure %}
-
-**TODO: notations in Fig 1**
 
 ## Optimization
 

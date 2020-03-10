@@ -18,6 +18,7 @@ jupyter:
 <!-- #region {"tags": ["popout"]} -->
 **Note.** This work was a part of Rémi Dupas' PhD thesis (in Environment
 Sciences).
+I was not involved in Rémi's PhD supervision.
 <!-- #endregion -->
 
 In this section, we present a method that uses Dynamic Time Warping (DTW)

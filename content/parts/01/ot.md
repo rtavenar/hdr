@@ -15,6 +15,5 @@ jupyter:
 
 # Optimal Transport for Structured Data
 
-This section covers my works related to Dynamic Time Warping (for time series)
-and Optimal Transport distances (for other structured data such as graphs) and
-draws a parallel between both methodologies.
+This section covers my works related to Optimal Transport distances for
+structured data such as graphs.

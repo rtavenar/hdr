@@ -26,9 +26,9 @@
 - url: /parts/01_metrics
   expand_sections: true
   sections:
+  - url: /parts/01/temporal_kernel
   - url: /parts/01/dtw
     subsections:
-    - url: /parts/01/dtw/background
     - url: /parts/01/dtw/dtw_warping_length
     - url: /parts/01/dtw/dtw_da
     - url: /parts/01/dtw/dtw_gi
@@ -36,7 +36,6 @@
     subsections:
     - url: /parts/01/ot/fgw
     - url: /parts/01/ot/sgw
-  - url: /parts/01/temporal_kernel
 
 - url: /parts/02_representations
   expand_sections: true
