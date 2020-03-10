@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Machine Learning for Time Series</title>
-  <meta name="description" content="# Temporal Kernel for Time Series ClassificationThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typica...">
+  <meta name="description" content="# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)...">
 
   <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Machine Learning for Time Series" />
-<meta property="og:description" content="# Temporal Kernel for Time Series ClassificationThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typica..." />
+<meta property="og:description" content="# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-10T09:37:46+01:00",
-  "dateModified": "2020-03-10T09:37:46+01:00",
-  "description": "# Temporal Kernel for Time Series ClassificationThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typica...",
+  "datePublished": "2020-03-10T22:53:25+01:00",
+  "dateModified": "2020-03-10T22:53:25+01:00",
+  "description": "# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -670,12 +670,33 @@ initFunction(initPrint)
             
             
 
+            <li class="c-sidebar__section" data-url="/parts/01/temporal_kernel">
+              <a class="c-sidebar__entry"
+                href="/hdr/parts/01/temporal_kernel.html"
+              >
+                
+                  1.1
+                
+                A Temporal Kernel for Time Series
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
             <li class="c-sidebar__section" data-url="/parts/01/dtw">
               <a class="c-sidebar__entry"
                 href="/hdr/parts/01/dtw.html"
               >
                 
-                  1.1
+                  1.2
                 
                 Dynamic Time Warping
               </a>
@@ -688,28 +709,12 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/background">
-                  <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw/background.html"
-                  >
-                    
-                      1.1.1
-                      
-                    
-                    A bit of background
-                  </a>
-                </li>
-              
-                
-                
-                
-                
                 <li class="c-sidebar__subsection" data-url="/parts/01/dtw/dtw_warping_length">
                   <a class="c-sidebar__entry"
                     href="/hdr/parts/01/dtw/dtw_warping_length.html"
                   >
                     
-                      1.1.2
+                      1.2.1
                       
                     
                     Constrained Dynamic Time Warping
@@ -725,7 +730,7 @@ initFunction(initPrint)
                     href="/hdr/parts/01/dtw/dtw_da.html"
                   >
                     
-                      1.1.3
+                      1.2.2
                       
                     
                     DTW alignment as a temporal domain adaptation strategy
@@ -741,7 +746,7 @@ initFunction(initPrint)
                     href="/hdr/parts/01/dtw/dtw_gi.html"
                   >
                     
-                      1.1.4
+                      1.2.3
                       
                     
                     DTW with Global Invariances
@@ -765,7 +770,7 @@ initFunction(initPrint)
                 href="/hdr/parts/01/ot.html"
               >
                 
-                  1.2
+                  1.3
                 
                 Optimal Transport for Structured Data
               </a>
@@ -783,7 +788,7 @@ initFunction(initPrint)
                     href="/hdr/parts/01/ot/fgw.html"
                   >
                     
-                      1.2.1
+                      1.3.1
                       
                     
                     Fused Gromov-Wasserstein
@@ -799,7 +804,7 @@ initFunction(initPrint)
                     href="/hdr/parts/01/ot/sgw.html"
                   >
                     
-                      1.2.2
+                      1.3.2
                       
                     
                     Sliced Gromov-Wasserstein
@@ -807,27 +812,6 @@ initFunction(initPrint)
                 </li>
               
               </ul>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/parts/01/temporal_kernel">
-              <a class="c-sidebar__entry"
-                href="/hdr/parts/01/temporal_kernel.html"
-              >
-                
-                  1.3
-                
-                Temporal Kernel for Time Series Classification
-              </a>
-            </li>
             
             
           
@@ -1048,7 +1032,7 @@ initFunction(initPrint)
 
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
-              <h1 id="temporal-kernel-for-time-series-classification">Temporal Kernel for Time Series Classification</h1>
+              <h1 id="a-temporal-kernel-for-time-series">A Temporal Kernel for Time Series</h1>
 
 <p>The method presented in this section consists in defining a kernel between
 sets of timestamped objects (typically features).
@@ -1060,10 +1044,12 @@ following form:</p>
 \end{equation}</p>
 
 <p>(each observation in the sequence is timestamped).
-This allows, in particular, to consider the case of irregular sampling.</p>
+This allows, in particular, to consider the case of irregularly sampled time
+series.</p>
 
 <!-- #region {"tags": ["popout"]} -->
 <p><strong>Note.</strong> This work was part of Adeline Bailly’s PhD thesis.
+We were co-supervising Adeline together with Laetitia Chapel.
 <!-- #endregion --></p>
 
 <h2 id="match-kernel-and-signature-quadratic-form-distance">Match kernel and Signature Quadratic Form Distance</h2>
@@ -1208,14 +1194,15 @@ used in order to approximate it with a linear kernel <a class="citation" href="#
 <p>Let us assume that we have a feature map $\phi$ such that</p>
 
 <p>\begin{equation}
-k(x_{i}, y_{j}) \approx \left\langle\phi(x_{i}), \phi(y_{j})\right\rangle,
+k_t((x_{i}, t_i), (y_{j}, t_j)) \approx
+    \left\langle\phi(g(x_{i}, t_i)), \phi(g(y_{j}, t_j))\right\rangle,
 \end{equation}
 then we have:</p>
 
 <p>\begin{equation}
 SQFD(\mathbf{x}, \mathbf{y}) \approx \left|
-    \underbrace{\frac{1}{n}\sum_i \phi(x_{i})}<em>{b</em>\phi(\mathbf{x})} -
-    \underbrace{\frac{1}{m}\sum_j \phi(y_{j})}<em>{b</em>\phi(\mathbf{y})}
+    \underbrace{\frac{1}{n}\sum_i \phi(g(x_{i}, t_i))}<em>{b</em>\phi(\mathbf{x})} -
+    \underbrace{\frac{1}{m}\sum_j \phi(g(y_{j}, t_j))}<em>{b</em>\phi(\mathbf{y})}
     \right|.
 \end{equation}</p>
 

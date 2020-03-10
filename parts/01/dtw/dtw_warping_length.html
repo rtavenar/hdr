@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/dtw/dtw_warping_length.html",
   "headline": "Constrained Dynamic Time Warping",
-  "datePublished": "2020-03-10T09:37:46+01:00",
-  "dateModified": "2020-03-10T09:37:46+01:00",
+  "datePublished": "2020-03-10T22:53:25+01:00",
+  "dateModified": "2020-03-10T22:53:25+01:00",
   "description": "        Constrained Dynamic Time Warping    Note. This work was a part of Zheng Zhang's PhD thesis. It was performedduring Zheng's stay at LETG in 2015-2016....",
   "author": {
     "@type": "Person",
@@ -670,12 +670,33 @@ initFunction(initPrint)
             
             
 
+            <li class="c-sidebar__section" data-url="/parts/01/temporal_kernel">
+              <a class="c-sidebar__entry"
+                href="/hdr/parts/01/temporal_kernel.html"
+              >
+                
+                  1.1
+                
+                A Temporal Kernel for Time Series
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
             <li class="c-sidebar__section" data-url="/parts/01/dtw">
               <a class="c-sidebar__entry"
                 href="/hdr/parts/01/dtw.html"
               >
                 
-                  1.1
+                  1.2
                 
                 Dynamic Time Warping
               </a>
@@ -688,28 +709,12 @@ initFunction(initPrint)
                 
                 
                 
-                <li class="c-sidebar__subsection" data-url="/parts/01/dtw/background">
-                  <a class="c-sidebar__entry"
-                    href="/hdr/parts/01/dtw/background.html"
-                  >
-                    
-                      1.1.1
-                      
-                    
-                    A bit of background
-                  </a>
-                </li>
-              
-                
-                
-                
-                
                 <li class="c-sidebar__subsection" data-url="/parts/01/dtw/dtw_warping_length">
                   <a class="c-sidebar__entry"
                     href="/hdr/parts/01/dtw/dtw_warping_length.html"
                   >
                     
-                      1.1.2
+                      1.2.1
                       
                     
                     Constrained Dynamic Time Warping
@@ -725,7 +730,7 @@ initFunction(initPrint)
                     href="/hdr/parts/01/dtw/dtw_da.html"
                   >
                     
-                      1.1.3
+                      1.2.2
                       
                     
                     DTW alignment as a temporal domain adaptation strategy
@@ -741,7 +746,7 @@ initFunction(initPrint)
                     href="/hdr/parts/01/dtw/dtw_gi.html"
                   >
                     
-                      1.1.4
+                      1.2.3
                       
                     
                     DTW with Global Invariances
@@ -765,7 +770,7 @@ initFunction(initPrint)
                 href="/hdr/parts/01/ot.html"
               >
                 
-                  1.2
+                  1.3
                 
                 Optimal Transport for Structured Data
               </a>
@@ -783,7 +788,7 @@ initFunction(initPrint)
                     href="/hdr/parts/01/ot/fgw.html"
                   >
                     
-                      1.2.1
+                      1.3.1
                       
                     
                     Fused Gromov-Wasserstein
@@ -799,7 +804,7 @@ initFunction(initPrint)
                     href="/hdr/parts/01/ot/sgw.html"
                   >
                     
-                      1.2.2
+                      1.3.2
                       
                     
                     Sliced Gromov-Wasserstein
@@ -807,27 +812,6 @@ initFunction(initPrint)
                 </li>
               
               </ul>
-            
-            
-          
-            
-            
-
-            
-            
-            
-            
-
-            <li class="c-sidebar__section" data-url="/parts/01/temporal_kernel">
-              <a class="c-sidebar__entry"
-                href="/hdr/parts/01/temporal_kernel.html"
-              >
-                
-                  1.3
-                
-                Temporal Kernel for Time Series Classification
-              </a>
-            </li>
             
             
           
@@ -1057,7 +1041,8 @@ initFunction(initPrint)
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Note.</strong> This work was a part of Zheng Zhang's PhD thesis. It was performed
-during Zheng's stay at LETG in 2015-2016.</p>
+during Zheng's stay at LETG in 2015-2016.
+I was not involved in Zheng's PhD supervision.</p>
 
 </div>
 </div>
@@ -1098,7 +1083,7 @@ by setting constraints on the length of the admissible warping paths
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As discussed in <a href="background.html">Sec. 1.1.1</a>, a common way to restrict the set
+<p>As discussed <a href="../dtw.html">above</a>, a common way to restrict the set
 of admissible temporal distortions for Dynamic Time Warping consists in forcing
 path to lie stay close to the diagonal through the use of Sakoe-Chiba band or
 Itakura parallelogram constraints.
@@ -1163,14 +1148,129 @@ This gives the general LDTW algorithm:</p>
 We have shown that this set is actually rather simple to compute and its length
 is $O(\min(i, j))$.
 Overall, we have a $O(mn^2 + nm^2)$ complexity for this exact algorithm.</p>
-<h2 id="Empirical-Observations">Empirical Observations<a class="anchor-link" href="#Empirical-Observations"> </a></h2><p>First, one can see in the following figure that the resulting alignments
+<h2 id="Empirical-Observations">Empirical Observations<a class="anchor-link" href="#Empirical-Observations"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_hide_input">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">plot_matches</span><span class="p">(</span><span class="n">ts0</span><span class="p">,</span> <span class="n">ts1</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mf">4.</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># Plot matches</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="n">ts0</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span> <span class="n">ts1</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">offset</span><span class="p">],</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Plot series (with pos/neg offset for visu reasons)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ts0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">ts0</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ts1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">ts1</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span> <span class="o">-</span> <span class="n">offset</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First, one can see in the following figure that the resulting alignments
 effectively limits the number of singularities in the obtained alignments as
-compared to DTW.</p>
-<p><figure>
-<p><img src="../../../images/ldtw_quali.png" alt="" /></p>
-  <figcaption>Comparison between alignments generated by DTW and LDTW on time
-   series from the CBF dataset.</figcaption>
-</figure></p>
+compared to DTW:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="k">import</span> <span class="n">dtw_path_limited_warping_length</span><span class="p">,</span> \
+    <span class="n">dtw_path</span>
+<span class="kn">from</span> <span class="nn">tslearn.datasets</span> <span class="k">import</span> <span class="n">UCR_UEA_datasets</span>
+
+<span class="n">dataset</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">UCR_UEA_datasets</span><span class="p">()</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;CBF&quot;</span><span class="p">)</span>
+<span class="n">max_length</span> <span class="o">=</span> <span class="mi">149</span>
+<span class="n">path</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">dtw_path_limited_warping_length</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                             <span class="n">dataset</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                             <span class="n">max_length</span><span class="p">)</span>
+<span class="n">plot_matches</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">path</span><span class="p">,</span> <span class="s2">&quot;LDTW matches&quot;</span><span class="p">)</span>
+
+<span class="n">path</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">dtw_path</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plot_matches</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">path</span><span class="p">,</span> <span class="s2">&quot;DTW matches&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../../images/parts/01/dtw/dtw_warping_length_8_0.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../../images/parts/01/dtw/dtw_warping_length_8_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Moreover, we have shown through experiments on UCR Time Series Datasets that
 this similarity measure, when used in a 1-Nearest Neighbor Classifier, led to
 higher accuracy than its competitors DTW and its constrained versions
@@ -1195,8 +1295,8 @@ higher accuracy than its competitors DTW and its constrained versions
     
     
 
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/01/dtw/background.html">
-      〈 <span class="u-margin-right-tiny"></span> A bit of background
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/01/dtw.html">
+      〈 <span class="u-margin-right-tiny"></span> Dynamic Time Warping
     </a>
   
 
