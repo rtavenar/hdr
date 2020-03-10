@@ -39,10 +39,10 @@ cost = dtw_limited_warping_length(
 ```
 <!-- #endregion -->
 
-As discussed [above](../dtw.html), a common way to restrict the set
-of admissible temporal distortions for Dynamic Time Warping consists in forcing
-path to lie stay close to the diagonal through the use of Sakoe-Chiba band or
-Itakura parallelogram constraints.
+As discussed [above](../dtw.html#Setting-additional-constraints), a common way
+to restrict the set of admissible temporal distortions for Dynamic Time Warping
+consists in forcing path to lie stay close to the diagonal through the use of
+Sakoe-Chiba band or Itakura parallelogram constraints.
 A limitation of these global constraints is that they completely
 discard some regions of the alignment matrix _a priori_ (_i.e._ whatever the
 data at stake).

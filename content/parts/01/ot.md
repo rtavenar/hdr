@@ -15,5 +15,24 @@ jupyter:
 
 # Optimal Transport for Structured Data
 
+<!-- #region {"tags": ["popout"]} -->
+**Note.** This work was part of Titouan Vayer's PhD thesis.
+We were co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
+<!-- #endregion -->
+
 This section covers my works related to Optimal Transport distances for
 structured data such as graphs.
+
+## Wasserstein and Gromov-Wasserstein distances
+
+**TODO**
+
+## Fused Gromov-Wasserstein
+
+**TODO**
+
+**TODO: at some point, highlight Sliced Gromov Wasserstein also.**
+
+## References
+
+{% bibliography --cited %}
