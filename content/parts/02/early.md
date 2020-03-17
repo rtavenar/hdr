@@ -1,3 +1,151 @@
+---
+jupyter:
+  jupytext:
+    formats: md
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.1'
+      jupytext_version: 1.2.1
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
 # Early Classification of Time Series
 
-**TODO**
+Early classification of time series is the task of performing a classification
+as early as possible for an incoming time series.
+
+I have worked on two methods for this task.
+The first one is a slight improvement over
+{% cite dachraoui2015early %} and the second one relies on a representation
+learning strategy.
+
+## Optimizing a Composite Loss for Early Classification
+
+{% cite dachraoui2015early %} introduce a composite loss function for early
+classification of time series that balances earliness and accuracy.
+
+The cost function is of the following form:
+
+\begin{equation}
+C(y, \hat{y}, t) = C(y, \hat{y}) + \alpha t
+\end{equation}
+
+where $\hat{y}$ is the class predicted by the model, $C(\cdot,\cdot)$ is a
+classification loss and $t$ is the number of timestamps required before a
+decision is triggered by the system.
+In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
+and is supposed to be a hyper-parameter of the method.
+
+In {% cite dachraoui2015early %}, they rely on (i) a clustering of the training
+time series and (ii) individual classifiers trained at all possible timestamp,
+so as to be able to predict, at time $t$, an expected cost for all times
+$t + \tau$ with $\tau \geq 0$:
+
+\begin{equation}
+    f_\tau(\mathbf{x}_{\rightarrow t}, y) =
+        \sum_k P(C_k | \mathbf{x}_{\rightarrow t})
+        \sum_i P(y=i | C_k)
+        \sum_{j \neq i} P_{t+\tau}(\hat{y} = j | y=i, C_k)
+        + \alpha t
+        \label{eq:dachraoui}
+\end{equation}
+
+where:
+
+* $P(C_k | \mathbf{x}_{\rightarrow t})$ is a soft-assignment weight of
+$\mathbf{x}_{\rightarrow t}$ ($\mathbf{x}$ observed up to timestamp $t$) to
+cluster $C_k$;
+* $P(y=i | C_k)$ is obtained from a contingency table that stores the number of
+training time series of each class in each cluster;
+* $P_{t+\tau}(\hat{y} = j | y=i, C_k)$ is obtained through training time
+confusion matrices built using the classifier operating at time $t+\tau$.
+
+At test time, if a series is observed up to time $t$ and if, for all positive
+$\tau$ we have
+$f_\tau(\mathbf{x}_{\rightarrow t}, y) \geq f_0(\mathbf{x}_{\rightarrow t}, y)$,
+then a decision is made.
+
+### Limitations of the clustering
+
+<!-- #region {"tags": ["popout"]} -->
+**Note.** This unpublished note is part of François Painblanc's PhD work.
+We are co-supervising François together with Laetitia Chapel, Chloé Friguet and
+Pierre Gloaguen.
+<!-- #endregion -->
+
+Relying on Equation \eqref{eq:dachraoui} to decide prediction time can be
+tricky. We show in the following that in some cases (related to specific
+configurations of training time confusion matrices), such an approach will lead
+to undesirable behaviors.
+
+Using Bayes rule, Equation \eqref{eq:dachraoui} can be re-written
+
+\begin{eqnarray}
+    f_\tau(\mathbf{x}_{\rightarrow t}, y) &=&
+        \sum_k P(C_k | \mathbf{x}_{\rightarrow t})
+        \sum_i
+        \sum_{j \neq i} P_{t+\tau}(\hat{y} = j, y=i | C_k)
+        + \alpha t \\
+    &=&
+        \sum_k P(C_k | \mathbf{x}_{\rightarrow t})
+        \underbrace{\sum_i 1 - P_{t+\tau}(\hat{y} = i, y=i | C_k)}_{A_{t+\tau}(k)}
+        + \alpha t \\
+\end{eqnarray}
+
+where $A_{t+\tau}(k)$ is the sum of off-diagonal elements in the training time
+confusion matrix for cluster $k$ at time $t+\tau$.
+
+In practice, this means that if the sum of off-diagonal elements of confusion
+matrices is equal to the same $A_{t+\tau}$ for all clusters, then this method
+will make a decision without taking the data $\mathbf{x}_{\rightarrow t}$
+into account:
+
+\begin{eqnarray}
+    f_\tau(\mathbf{x}_{\rightarrow t}, y) &=&
+        \sum_k P(C_k | \mathbf{x}_{\rightarrow t})
+        A_{t+\tau}
+        + \alpha t \\
+     &=&
+        A_{t+\tau} + \alpha t \\
+\end{eqnarray}
+
+In other words, for this method to work, it is important that accuracy differs
+significantly between clusters, which is a condition that is difficult to ensure
+in practice.
+
+### Pushing the Method to the Limit
+
+In {%cite tavenard:halshs-01339007 %}, we pushed this method to the limit
+where the number of clusters is equal to the number of training time series.
+In this case, the limitation exposed above does not hold anymore.
+
+We showed superior loss optimization capabilities with this approach, at the
+cost of a larger computational complexity.
+
+We also showed that in order to limit inference time complexity, one could
+learn a classifier that, based on the time series $\mathbf{x}_{\rightarrow t}$
+observed up to time $t$ predicts whether a decision should be triggered or not.
+In this setting, the target values $\gamma_t$ used to train this classifier
+were computed using the same approach as before:
+
+\begin{equation}
+    \gamma_t(\mathbf{x}_{\rightarrow t}) = \left\{
+        \begin{array}{l}
+            1 \text{ if } f_{t}(\mathbf{x}_{\rightarrow t})=\min_{\tau \geq 0}         
+                f_{t+\tau}(\mathbf{x}_{\rightarrow t}) \\
+            0 \text{ otherwise. }
+        \end{array} \right.
+\end{equation}
+
+In other words, decision making is here seen as a two-step process where a
+first classifier decides whether a decision should be made, in which case a
+second classifier is used to determine the class to be predicted.
+
+
+## References
+
+{% bibliography --cited %}
