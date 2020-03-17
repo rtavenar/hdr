@@ -5,16 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Temporal Topic Models</title>
-  <meta name="description" content="        Temporal Topic Models    TODO         ">
+  <title>Machine Learning for Time Series</title>
+  <meta name="description" content="# Early Classification of Time SeriesEarly classification of time series is the task of performing a classificationas early as possible for an incoming time ...">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/parts/02/topic_models.html">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/02/early.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/parts/02/topic_models.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/02/early.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Temporal Topic Models" />
-<meta property="og:description" content="        Temporal Topic Models    TODO         " />
+<meta property="og:title"       content="Machine Learning for Time Series" />
+<meta property="og:description" content="# Early Classification of Time SeriesEarly classification of time series is the task of performing a classificationas early as possible for an incoming time ..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -24,11 +24,11 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/02/topic_models.html",
-  "headline": "Temporal Topic Models",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/02/early.html",
+  "headline": "Machine Learning for Time Series",
   "datePublished": "2020-03-17T23:36:14+01:00",
   "dateModified": "2020-03-17T23:36:14+01:00",
-  "description": "        Temporal Topic Models    TODO         ",
+  "description": "# Early Classification of Time SeriesEarly classification of time series is the task of performing a classificationas early as possible for an incoming time ...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -995,46 +995,151 @@ initFunction(initPrint)
 
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
-                  <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">Temporal Topic Models</div>
-</div>
-    
-<div class="jb_cell">
+              <h1 id="early-classification-of-time-series">Early Classification of Time Series</h1>
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>TODO</strong></p>
+<p>Early classification of time series is the task of performing a classification
+as early as possible for an incoming time series.</p>
 
-</div>
-</div>
-</div>
-</div>
+<p>I have worked on two methods for this task.
+The first one is a slight improvement over
+<a class="citation" href="#dachraoui2015early">(Dachraoui, Bondu, &amp; Cornuéjols, 2015)</a> and the second one relies on a representation
+learning strategy.</p>
 
- 
+<h2 id="optimizing-a-composite-loss-for-early-classification">Optimizing a Composite Loss for Early Classification</h2>
 
+<p><a class="citation" href="#dachraoui2015early">(Dachraoui, Bondu, &amp; Cornuéjols, 2015)</a> introduce a composite loss function for early
+classification of time series that balances earliness and accuracy.</p>
 
-    </main>
-    
+<p>The cost function is of the following form:</p>
+
+<p>\begin{equation}
+C(y, \hat{y}, t) = C(y, \hat{y}) + \alpha t
+\end{equation}</p>
+
+<p>where $\hat{y}$ is the class predicted by the model, $C(\cdot,\cdot)$ is a
+classification loss and $t$ is the number of timestamps required before a
+decision is triggered by the system.
+In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
+and is supposed to be a hyper-parameter of the method.</p>
+
+<p>In <a class="citation" href="#dachraoui2015early">(Dachraoui, Bondu, &amp; Cornuéjols, 2015)</a>, they rely on (i) a clustering of the training
+time series and (ii) individual classifiers trained at all possible timestamp,
+so as to be able to predict, at time $t$, an expected cost for all times
+$t + \tau$ with $\tau \geq 0$:</p>
+
+<p>\begin{equation}
+    f_\tau(\mathbf{x}<em>{\rightarrow t}, y) =
+        \sum_k P(C_k | \mathbf{x}</em>{\rightarrow t})
+        \sum_i P(y=i | C_k)
+        \sum_{j \neq i} P_{t+\tau}(\hat{y} = j | y=i, C_k)
+        + \alpha t
+        \label{eq:dachraoui}
+\end{equation}</p>
+
+<p>where:</p>
+
+<ul>
+  <li>$P(C_k | \mathbf{x}<em>{\rightarrow t})$ is a soft-assignment weight of
+$\mathbf{x}</em>{\rightarrow t}$ ($\mathbf{x}$ observed up to timestamp $t$) to
+cluster $C_k$;</li>
+  <li>$P(y=i | C_k)$ is obtained from a contingency table that stores the number of
+training time series of each class in each cluster;</li>
+  <li>$P_{t+\tau}(\hat{y} = j | y=i, C_k)$ is obtained through training time
+confusion matrices built using the classifier operating at time $t+\tau$.</li>
+</ul>
+
+<p>At test time, if a series is observed up to time $t$ and if, for all positive
+$\tau$ we have
+$f_\tau(\mathbf{x}<em>{\rightarrow t}, y) \geq f_0(\mathbf{x}</em>{\rightarrow t}, y)$,
+then a decision is made.</p>
+
+<h3 id="limitations-of-the-clustering">Limitations of the clustering</h3>
+
+<!-- #region {"tags": ["popout"]} -->
+<p><strong>Note.</strong> This unpublished note is part of François Painblanc’s PhD work.
+We are co-supervising François together with Laetitia Chapel, Chloé Friguet and
+Pierre Gloaguen.
+<!-- #endregion --></p>
+
+<p>Relying on Equation \eqref{eq:dachraoui} to decide prediction time can be
+tricky. We show in the following that in some cases (related to specific
+configurations of training time confusion matrices), such an approach will lead
+to undesirable behaviors.</p>
+
+<p>Using Bayes rule, Equation \eqref{eq:dachraoui} can be re-written</p>
+
+<p>\begin{eqnarray}
+    f_\tau(\mathbf{x}<em>{\rightarrow t}, y) &amp;=&amp;
+        \sum_k P(C_k | \mathbf{x}</em>{\rightarrow t})
+        \sum_i
+        \sum_{j \neq i} P_{t+\tau}(\hat{y} = j, y=i | C_k)
+        + \alpha t <br />
+    &amp;=&amp;
+        \sum_k P(C_k | \mathbf{x}<em>{\rightarrow t})
+        \underbrace{\sum_i 1 - P</em>{t+\tau}(\hat{y} = i, y=i | C_k)}<em>{A</em>{t+\tau}(k)}
+        + \alpha t <br />
+\end{eqnarray}</p>
+
+<p>where $A_{t+\tau}(k)$ is the sum of off-diagonal elements in the training time
+confusion matrix for cluster $k$ at time $t+\tau$.</p>
+
+<p>In practice, this means that if the sum of off-diagonal elements of confusion
+matrices is equal to the same $A_{t+\tau}$ for all clusters, then this method
+will make a decision without taking the data $\mathbf{x}_{\rightarrow t}$
+into account:</p>
+
+<p>\begin{eqnarray}
+    f_\tau(\mathbf{x}<em>{\rightarrow t}, y) &amp;=&amp;
+        \sum_k P(C_k | \mathbf{x}</em>{\rightarrow t})
+        A_{t+\tau}
+        + \alpha t <br />
+     &amp;=&amp;
+        A_{t+\tau} + \alpha t <br />
+\end{eqnarray}</p>
+
+<p>In other words, for this method to work, it is important that accuracy differs
+significantly between clusters, which is a condition that is difficult to ensure
+in practice.</p>
+
+<h3 id="pushing-the-method-to-the-limit">Pushing the Method to the Limit</h3>
+
+<p>In <a class="citation" href="#tavenard:halshs-01339007">(Tavenard &amp; Malinowski, 2016)</a>, we pushed this method to the limit
+where the number of clusters is equal to the number of training time series.
+In this case, the limitation exposed above does not hold anymore.</p>
+
+<p>We showed superior loss optimization capabilities with this approach, at the
+cost of a larger computational complexity.</p>
+
+<p>We also showed that in order to limit inference time complexity, one could
+learn a classifier that, based on the time series $\mathbf{x}_{\rightarrow t}$
+observed up to time $t$ predicts whether a decision should be triggered or not.
+In this setting, the target values $\gamma_t$ used to train this classifier
+were computed using the same approach as before:</p>
+
+<p>\begin{equation}
+    \gamma_t(\mathbf{x}<em>{\rightarrow t}) = \left{
+        \begin{array}{l}
+            1 \text{ if } f</em>{t}(\mathbf{x}<em>{\rightarrow t})=\min</em>{\tau \geq 0}       <br />
+                f_{t+\tau}(\mathbf{x}_{\rightarrow t}) <br />
+            0 \text{ otherwise. }
+        \end{array} \right.
+\end{equation}</p>
+
+<p>In other words, decision making is here seen as a two-step process where a
+first classifier decides whether a decision should be made, in which case a
+second classifier is used to determine the class to be predicted.</p>
+
+<h2 id="references">References</h2>
+
+<ol class="bibliography"><li><span id="dachraoui2015early">Dachraoui, A., Bondu, A., &amp; Cornuéjols, A. (2015). Early classification of time series as a non myopic sequential decision making problem. In <i>Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i> (pp. 433–447). Springer.</span></li>
+<li><span id="tavenard:halshs-01339007">Tavenard, R., &amp; Malinowski, S. (2016). Cost-Aware Early Classification of Time Series. In <i>Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i> (pp. 632–647). Riva del Garda, Italy. Retrieved from https://halshs.archives-ouvertes.fr/halshs-01339007</span></li></ol>
+
             </div>
             <div class="c-textbook__footer" id="textbook_footer">
               
 <nav class="c-page__nav">
   
-    
-    
 
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/hdr/parts/02_representations.html">
-      〈 <span class="u-margin-right-tiny"></span> Learning sensible representations ...
-    </a>
-  
-
-  
-    
-
-    
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/hdr/parts/02/shapelets_cnn.html">
-      Shapelet-based representations and... <span class="u-margin-right-tiny"></span> 〉
-    </a>
   
 </nav>
 

@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/ot.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-10T23:14:31+01:00",
-  "dateModified": "2020-03-10T23:14:31+01:00",
+  "datePublished": "2020-03-17T23:36:14+01:00",
+  "dateModified": "2020-03-17T23:36:14+01:00",
   "description": "# Optimal Transport for Structured Data**Note.** This work was part of Titouan Vayer's PhD thesis.We were co-supervising Titouan together with Laetitia Chape...",
   "author": {
     "@type": "Person",
@@ -1007,17 +1007,222 @@ structured data such as graphs.</p>
 
 <h2 id="wasserstein-and-gromov-wasserstein-distances">Wasserstein and Gromov-Wasserstein distances</h2>
 
+<p><strong>TODO (use Fig6-7 from journal paper)</strong></p>
+
+<h2 id="sliced-gromov-wasserstein">Sliced Gromov-Wasserstein</h2>
+
 <p><strong>TODO</strong></p>
 
 <h2 id="fused-gromov-wasserstein">Fused Gromov-Wasserstein</h2>
 
-<p><strong>TODO</strong></p>
+<p>Here, we focus on comparing structured data which combine a feature
+<strong>and</strong> a structure information.
+More formally, we consider undirected labeled graphs as tuples of the form $\mathcal{G}=(\mathcal{V},\mathcal{E},\ell_f,\ell_s)$ where
+$(\mathcal{V},\mathcal{E})$ are the set of vertices and edges of the graph.
+$\ell_f: \mathcal{V} \rightarrow \Omega_f$ is a labelling function which
+associates each vertex $v_{i} \in \mathcal{V}$ with a feature
+$a_{i}\stackrel{\text{def}}{=}\ell_f(v_{i})$ in some feature metric space
+$(\Omega_f,d)$.
+We will denote by <em>feature information</em> the set of all the features
+${a_{i}}<em>{i}$ of the graph.
+Similarly, $\ell_s: \mathcal{V} \rightarrow \Omega_s$ maps a vertex $v_i$ from
+the graph to its structure representation
+$x</em>{i} \stackrel{\text{def}}{=} \ell_s(v_{i})$ in some structure space
+$(\Omega_s,C)$ specific to each graph.
+$C : \Omega_s \times \Omega_s \rightarrow \mathbb{R_{+}}$ is a symmetric
+application which aims at measuring the similarity between the nodes in the
+graph.
+Unlike the feature space however, $\Omega_s$ is implicit and in practice,
+knowing the similarity measure $C$ will be sufficient. With a slight abuse of
+notation, $C$ will be used in the following to denote both the structure
+similarity measure and the matrix that encodes this similarity between pairs of
+nodes in the graph ${C(i,k) = C(x_i, x_k)}<em>{i,k}$.
+Depending on the context, $C$ can either encode the neighborhood information of
+the nodes, the edge information of the graph or more generally it can model a
+distance between the nodes such as the shortest path distance.
+When $C$ is a metric, such as the shortest-path
+distance, we naturally endow the structure with the metric space $(\Omega_s,C)$.
+We will denote by _structure information</em> the set of all the structure
+embeddings ${x_{i}}<em>i$ of the graph.
+We propose to enrich the previously described graph with a histogram which
+serves the purpose of signaling the relative importance of the vertices in the
+graph.
+To do so, we equip graph vertices with weights ${h</em>{i}}_{i}$ that sum to $1$.</p>
+
+<p>All in all, we define <em>structured data</em> as a
+tuple $\mathcal{S}=(\mathcal{G},h_{\mathcal{G}})$ where $\mathcal{G}$ is a
+graph as described previously and $h_{\mathcal{G}}$ is a function that
+associates a weight to each vertex. This definition allows the graph to be
+represented by a fully supported probability measure over the product space
+feature/structure $\mu= \sum_{i=1}^{n} h_{i} \delta_{(x_{i},a_{i})}$ which
+describes the entire structured data:</p>
+
+<p><img src="../../images/graph_as_distrib.svg" alt="" /></p>
+
+<h3 id="distance-definition-and-properties">Distance definition and properties</h3>
+
+<p>Let $\mathcal{G}<em>1$ and $\mathcal{G}_2$ be two graphs, described respectively
+by their probability measure $\mu= \sum</em>{i=1}^{n} h_{i} \delta_{(x_{i},a_{i})}$
+and $\nu= \sum_{i=1}^{m} g_{j} \delta_{(y_{j},b_{j})}$.
+Their structure matrices are denoted $C_{1}$ and $C_{2}$, respectively.</p>
+
+<p>We define a novel Optimal Transport discrepancy called the
+Fused Gromov-Wasserstein distance.
+It is defined, for a trade-off parameter  $\alpha \in [0,1]$, as</p>
+
+<p>\begin{equation}
+\label{discretefgw}
+FGW_{q, \alpha} (\mu, \nu) = \min_\pi E_{q}(\mathcal{G}_1, \mathcal{G}_2, \pi)
+\end{equation}</p>
+
+<p>where $\pi$ is a transport map (<em>i.e.</em> it has marginals $h$ and $g$) and</p>
+
+<p>\begin{equation}
+E_{q}(\mathcal{G}<em>1, \mathcal{G}_2, \pi) =
+    \sum</em>{i,j,k,l} (1-\alpha) d(a_{i},b_{j})^{q}
+                    +\alpha |C_{1}(i,k)-C_{2}(j,l)|^{q} \pi_{i,j}\pi_{k,l} .
+\end{equation}</p>
+
+<p>The FGW distance looks for the coupling $\pi$ between vertices of the
+graphs that minimizes the cost $E_{q}$ which is a linear combination of a cost
+$d(a_{i},b_{j})$ of transporting one feature $a_{i}$ to a feature $b_{j}$ and a
+cost $|C_{1}(i,k)-C_{2}(j,l)|$ of transporting pairs of nodes in each structure.
+As such, the optimal coupling tends to associate pairs of feature and
+structure points with similar distances within each structure pair and with
+similar features.
+As an important feature of FGW, by relying on a sum of
+(inter- and intra-)vertex-to-vertex distances, it can handle structured data
+with continuous attributed or discrete labeled nodes
+(depending on the definition of $d$) and can also be computed even if the graphs
+have different numbers of nodes.</p>
+
+<p>We have shown in <a class="citation" href="#vayer:hal-02174322">(Vayer, Chapel, Flamary, Tavenard, &amp; Courty, 2019)</a> that FGW retains the following
+properties:</p>
+
+<ul>
+  <li>it defines a metric for $q=1$ and a semi-metric for $q &gt;1$;</li>
+  <li>varying $\alpha$ between 0 and 1 allows to interpolate between the
+Wasserstein distance between the features and the Gromov-Wasserstein distance
+between the structures;</li>
+</ul>
+
+<p>We also define a continuous counterpart for FGW which comes with a
+concentration inequality in <a class="citation" href="#vayer:hal-02174316">(Vayer, Chapel, Flamary, Tavenard, &amp; Courty, 2019)</a>.</p>
+
+<p>We have presented a Conditional Gradient algorithm for optimization on the
+above-defined loss.
+We have also exposed a Block Coordinate Descent algorithm to compute graph
+barycenters <em>w.r.t.</em> FGW.</p>
+
+<h3 id="results">Results</h3>
+
+<p>We show that FGW allows to extract meaningful barycenters:</p>
+
+<p>```python tags=[“hide_input”]
+import networkx as nx
+import matplotlib.pyplot as plt
+plt.ion()</p>
+
+<p>def build_noisy_circular_graph(n_nodes=20, mu_features=0., sigma_features=0.3,
+                               with_noise=False, structure_noise=False, p=None):
+    g=Graph()
+    g.add_nodes(list(range(N)))
+    for i in range(N):
+        noise=float(np.random.normal(mu,sigma,1))
+        if with_noise:
+            g.add_one_attribute(i,math.sin((2<em>i</em>math.pi/N))+noise)
+        else:
+            g.add_one_attribute(i,math.sin(2<em>i</em>math.pi/N))
+        g.add_edge((i,i+1))
+        if structure_noise:
+            randomint=np.random.randint(0,p)
+            if randomint==0:
+                if i&lt;=N-3:
+                    g.add_edge((i,i+2))
+                if i==N-2:
+                    g.add_edge((i,0))
+                if i==N-1:
+                    g.add_edge((i,1))
+    g.add_edge((N,0))
+    noise=float(np.random.normal(mu,sigma,1))
+    if with_noise:
+        g.add_one_attribute(N,math.sin((2<em>N</em>math.pi/N))+noise)
+    else:
+        g.add_one_attribute(N,math.sin(2<em>N</em>math.pi/N))
+    return g</p>
+
+<p>def draw_graph(g):
+    pos = nx.kamada_kawai_layout(g.nx_graph)
+    nx.draw(g.nx_graph, pos=pos,
+            node_color=graph_colors(g.nx_graph, vmin=-1, vmax=1),
+            with_labels=False)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```python
+import numpy
+
+np.random.seed(0)
+
+n_graphs = 10
+n_graphs_shown = 5
+
+dataset = []
+for k in range(n_graphs):
+    dataset.append(
+        build_noisy_circular_graph(np.random.randint(15,25),
+                                   with_noise=True,
+                                   structure_noise=True,
+                                   p=3)
+    )
+
+Cs=[x.distance_matrix(force_recompute=True,method='shortest_path') for x in X0]
+ps=[np.ones(len(x.nodes()))/len(x.nodes()) for x in X0]
+Ys=[x.values() for x in X0]
+lambdas=np.array([np.ones(len(Ys))/len(Ys)]).ravel()
+sizebary=15 # we choose a barycenter with 15 nodes
+init_X=np.repeat(sizebary,sizebary)
+
+features, C_matrix, log = fgw_barycenters(sizebary,
+                                          Ys, Cs, ps, lambdas,
+                                          alpha=0.95,
+                                          init_X=init_X)
+
+# Build graph from barycenter parts (C1 and D1)
+barycenter = nx.from_numpy_matrix(
+    sp_to_adjency(C_matrix,
+                  threshinf=0,
+                  threshsup=find_thresh(C1,sup=100,step=100)[0])
+)
+for i in range(len(features)):
+    barycenter.add_node(i, attr_name=float(features[i]))
+
+# Plot stuff
+for i in range(len(dataset)):
+    plt.subplot(1, n_graphs_shown + 1, i + 1)
+    g = dataset[i]
+    draw_graph(g)
+    plt.title('Sample %d' % (i + 1))
+plt.subplot(1, n_graphs_shown + 1, n_graphs_shown + 1)
+draw_graph(barycenter)
+plt.title('FGW Barycenter')
+</code></pre></div></div>
+
+<p><strong>TODO toy barycenters</strong>
+Use that:
+<a href="https://pot.readthedocs.io/en/stable/all.html#ot.gromov.fgw_barycenters">https://pot.readthedocs.io/en/stable/all.html#ot.gromov.fgw_barycenters</a></p>
+
+<p>We also show that these barycenters can be used for graph clustering.</p>
+
+<p>We also exhibit classification results for FGW embedded in a Gaussian kernel
+SVM which leads to state-of-the-art performance (even outperforming graph
+neural network approaches) on a wide range of graph classification problems.</p>
 
 <p><strong>TODO: at some point, highlight Sliced Gromov Wasserstein also.</strong></p>
 
 <h2 id="references">References</h2>
 
-<ol class="bibliography"></ol>
+<ol class="bibliography"><li><span id="vayer:hal-02174322">Vayer, T., Chapel, L., Flamary, R., Tavenard, R., &amp; Courty, N. (2019). Optimal Transport for structured data with application on graphs. In <i>Proceedings of the International Conference on Machine Learning</i> (pp. 1–16). Long Beach, United States.</span></li>
+<li><span id="vayer:hal-02174316">Vayer, T., Chapel, L., Flamary, R., Tavenard, R., &amp; Courty, N. (2019). <i>Fused Gromov-Wasserstein distance for structured objects: theoretical foundations and mathematical properties</i>.</span></li></ol>
 
             </div>
             <div class="c-textbook__footer" id="textbook_footer">

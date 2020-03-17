@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/ot.html",
   "headline": "Optimal Transport for Structured Data",
-  "datePublished": "2020-03-10T23:14:31+01:00",
-  "dateModified": "2020-03-10T23:14:31+01:00",
+  "datePublished": "2020-03-17T23:36:14+01:00",
+  "dateModified": "2020-03-17T23:36:14+01:00",
   "description": "        Optimal Transport for Structured Data    Note. This work was part of Titouan Vayer's PhD thesis.We were co-supervising Titouan together with Laetitia...",
   "author": {
     "@type": "Person",
@@ -1017,10 +1017,286 @@ We were co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This section covers my works related to Optimal Transport distances for
 structured data such as graphs.</p>
-<h2 id="Wasserstein-and-Gromov-Wasserstein-distances">Wasserstein and Gromov-Wasserstein distances<a class="anchor-link" href="#Wasserstein-and-Gromov-Wasserstein-distances"> </a></h2><p><strong>TODO</strong></p>
-<h2 id="Fused-Gromov-Wasserstein">Fused Gromov-Wasserstein<a class="anchor-link" href="#Fused-Gromov-Wasserstein"> </a></h2><p><strong>TODO</strong></p>
+<h2 id="Wasserstein-and-Gromov-Wasserstein-distances">Wasserstein and Gromov-Wasserstein distances<a class="anchor-link" href="#Wasserstein-and-Gromov-Wasserstein-distances"> </a></h2><p><strong>TODO (use Fig6-7 from journal paper)</strong></p>
+<h2 id="Sliced-Gromov-Wasserstein">Sliced Gromov-Wasserstein<a class="anchor-link" href="#Sliced-Gromov-Wasserstein"> </a></h2><p><strong>TODO</strong></p>
+<h2 id="Fused-Gromov-Wasserstein">Fused Gromov-Wasserstein<a class="anchor-link" href="#Fused-Gromov-Wasserstein"> </a></h2><p>Here, we focus on comparing structured data which combine a feature
+<strong>and</strong> a structure information.
+More formally, we consider undirected labeled graphs as tuples of the form $\mathcal{G}=(\mathcal{V},\mathcal{E},\ell_f,\ell_s)$ where
+$(\mathcal{V},\mathcal{E})$ are the set of vertices and edges of the graph.
+$\ell_f: \mathcal{V} \rightarrow \Omega_f$ is a labelling function which
+associates each vertex $v_{i} \in \mathcal{V}$ with a feature
+$a_{i}\stackrel{\text{def}}{=}\ell_f(v_{i})$ in some feature metric space
+$(\Omega_f,d)$.
+We will denote by <em>feature information</em> the set of all the features
+$\{a_{i}\}_{i}$ of the graph.
+Similarly, $\ell_s: \mathcal{V} \rightarrow \Omega_s$ maps a vertex $v_i$ from
+the graph to its structure representation
+$x_{i} \stackrel{\text{def}}{=} \ell_s(v_{i})$ in some structure space
+$(\Omega_s,C)$ specific to each graph.
+$C : \Omega_s \times \Omega_s \rightarrow \mathbb{R_{+}}$ is a symmetric
+application which aims at measuring the similarity between the nodes in the
+graph.
+Unlike the feature space however, $\Omega_s$ is implicit and in practice,
+knowing the similarity measure $C$ will be sufficient. With a slight abuse of
+notation, $C$ will be used in the following to denote both the structure
+similarity measure and the matrix that encodes this similarity between pairs of
+nodes in the graph $\{C(i,k) = C(x_i, x_k)\}_{i,k}$.
+Depending on the context, $C$ can either encode the neighborhood information of
+the nodes, the edge information of the graph or more generally it can model a
+distance between the nodes such as the shortest path distance.
+When $C$ is a metric, such as the shortest-path
+distance, we naturally endow the structure with the metric space $(\Omega_s,C)$.
+We will denote by <em>structure information</em> the set of all the structure
+embeddings $\{x_{i}\}_i$ of the graph.
+We propose to enrich the previously described graph with a histogram which
+serves the purpose of signaling the relative importance of the vertices in the
+graph.
+To do so, we equip graph vertices with weights $\{h_{i}\}_{i}$ that sum to $1$.</p>
+<p>All in all, we define <em>structured data</em> as a
+tuple $\mathcal{S}=(\mathcal{G},h_{\mathcal{G}})$ where $\mathcal{G}$ is a
+graph as described previously and $h_{\mathcal{G}}$ is a function that
+associates a weight to each vertex. This definition allows the graph to be
+represented by a fully supported probability measure over the product space
+feature/structure $\mu= \sum_{i=1}^{n} h_{i} \delta_{(x_{i},a_{i})}$ which
+describes the entire structured data:</p>
+<p><img src="../../images/graph_as_distrib.svg" alt=""></p>
+<h3 id="Distance-definition-and-properties">Distance definition and properties<a class="anchor-link" href="#Distance-definition-and-properties"> </a></h3><p>Let $\mathcal{G}_1$ and $\mathcal{G}_2$ be two graphs, described respectively
+by their probability measure $\mu= \sum_{i=1}^{n} h_{i} \delta_{(x_{i},a_{i})}$
+and $\nu= \sum_{i=1}^{m} g_{j} \delta_{(y_{j},b_{j})}$.
+Their structure matrices are denoted $C_{1}$ and $C_{2}$, respectively.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We define a novel Optimal Transport discrepancy called the
+Fused Gromov-Wasserstein distance.
+It is defined, for a trade-off parameter  $\alpha \in [0,1]$, as</p>
+\begin{equation}
+\label{discretefgw}
+FGW_{q, \alpha} (\mu, \nu) = \min_\pi E_{q}(\mathcal{G}_1, \mathcal{G}_2, \pi)
+\end{equation}<p>where $\pi$ is a transport map (<em>i.e.</em> it has marginals $h$ and $g$) and</p>
+\begin{equation}
+E_{q}(\mathcal{G}_1, \mathcal{G}_2, \pi) =
+    \sum_{i,j,k,l} (1-\alpha) d(a_{i},b_{j})^{q}
+                    +\alpha |C_{1}(i,k)-C_{2}(j,l)|^{q} \pi_{i,j}\pi_{k,l} .
+\end{equation}<p>The FGW distance looks for the coupling $\pi$ between vertices of the
+graphs that minimizes the cost $E_{q}$ which is a linear combination of a cost
+$d(a_{i},b_{j})$ of transporting one feature $a_{i}$ to a feature $b_{j}$ and a
+cost $|C_{1}(i,k)-C_{2}(j,l)|$ of transporting pairs of nodes in each structure.
+As such, the optimal coupling tends to associate pairs of feature and
+structure points with similar distances within each structure pair and with
+similar features.
+As an important feature of FGW, by relying on a sum of
+(inter- and intra-)vertex-to-vertex distances, it can handle structured data
+with continuous attributed or discrete labeled nodes
+(depending on the definition of $d$) and can also be computed even if the graphs
+have different numbers of nodes.</p>
+<p>We have shown in <a class="citation" href="#vayer:hal-02174322">(Vayer, Chapel, Flamary, Tavenard, &amp; Courty, 2019)</a> that FGW retains the following
+properties:</p>
+<ul>
+<li>it defines a metric for $q=1$ and a semi-metric for $q &gt;1$;</li>
+<li>varying $\alpha$ between 0 and 1 allows to interpolate between the
+Wasserstein distance between the features and the Gromov-Wasserstein distance
+between the structures;</li>
+</ul>
+<p>We also define a continuous counterpart for FGW which comes with a
+concentration inequality in <a class="citation" href="#vayer:hal-02174316">(Vayer, Chapel, Flamary, Tavenard, &amp; Courty, 2019)</a>.</p>
+<p>We have presented a Conditional Gradient algorithm for optimization on the
+above-defined loss.
+We have also exposed a Block Coordinate Descent algorithm to compute graph
+barycenters <em>w.r.t.</em> FGW.</p>
+<h3 id="Results">Results<a class="anchor-link" href="#Results"> </a></h3><p>We show that FGW allows to extract meaningful barycenters:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_hide_input">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">build_noisy_circular_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">mu_features</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">sigma_features</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+                               <span class="n">with_noise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">structure_noise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">g</span><span class="o">=</span><span class="n">Graph</span><span class="p">()</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_nodes</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">noise</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">with_noise</span><span class="p">:</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">add_one_attribute</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">N</span><span class="p">))</span><span class="o">+</span><span class="n">noise</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">add_one_attribute</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">structure_noise</span><span class="p">:</span>
+            <span class="n">randomint</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">randomint</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">N</span><span class="o">-</span><span class="mi">3</span><span class="p">:</span>
+                    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span>
+                    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">noise</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">with_noise</span><span class="p">:</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">add_one_attribute</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">N</span><span class="p">))</span><span class="o">+</span><span class="n">noise</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">add_one_attribute</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">g</span>
+
+
+<span class="k">def</span> <span class="nf">draw_graph</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">kamada_kawai_layout</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">nx_graph</span><span class="p">)</span>
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">nx_graph</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span>
+            <span class="n">node_color</span><span class="o">=</span><span class="n">graph_colors</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">nx_graph</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-1-e5dc942babca&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">import</span> networkx <span class="ansi-green-fg">as</span> nx
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-green-fg">import</span> matplotlib<span class="ansi-blue-fg">.</span>pyplot <span class="ansi-green-fg">as</span> plt
+<span class="ansi-green-intense-fg ansi-bold">      3</span> plt<span class="ansi-blue-fg">.</span>ion<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> 
+<span class="ansi-green-intense-fg ansi-bold">      5</span> 
+
+<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named &#39;networkx&#39;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">n_graphs</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">n_graphs_shown</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_graphs</span><span class="p">):</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">build_noisy_circular_graph</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">25</span><span class="p">),</span>
+                                   <span class="n">with_noise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">structure_noise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">p</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">Cs</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">distance_matrix</span><span class="p">(</span><span class="n">force_recompute</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;shortest_path&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X0</span><span class="p">]</span>
+<span class="n">ps</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">nodes</span><span class="p">()))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X0</span><span class="p">]</span>
+<span class="n">Ys</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X0</span><span class="p">]</span>
+<span class="n">lambdas</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Ys</span><span class="p">))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">Ys</span><span class="p">)])</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">sizebary</span><span class="o">=</span><span class="mi">15</span> <span class="c1"># we choose a barycenter with 15 nodes</span>
+<span class="n">init_X</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">sizebary</span><span class="p">,</span><span class="n">sizebary</span><span class="p">)</span>
+
+<span class="n">features</span><span class="p">,</span> <span class="n">C_matrix</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="n">fgw_barycenters</span><span class="p">(</span><span class="n">sizebary</span><span class="p">,</span>
+                                          <span class="n">Ys</span><span class="p">,</span> <span class="n">Cs</span><span class="p">,</span> <span class="n">ps</span><span class="p">,</span> <span class="n">lambdas</span><span class="p">,</span>
+                                          <span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                                          <span class="n">init_X</span><span class="o">=</span><span class="n">init_X</span><span class="p">)</span>
+
+<span class="c1"># Build graph from barycenter parts (C1 and D1)</span>
+<span class="n">barycenter</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">from_numpy_matrix</span><span class="p">(</span>
+    <span class="n">sp_to_adjency</span><span class="p">(</span><span class="n">C_matrix</span><span class="p">,</span>
+                  <span class="n">threshinf</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                  <span class="n">threshsup</span><span class="o">=</span><span class="n">find_thresh</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span><span class="n">sup</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">step</span><span class="o">=</span><span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)):</span>
+    <span class="n">barycenter</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<span class="c1"># Plot stuff</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_graphs_shown</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">draw_graph</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sample </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_graphs_shown</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_graphs_shown</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">draw_graph</span><span class="p">(</span><span class="n">barycenter</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;FGW Barycenter&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-2-3594dcf52044&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-green-fg">import</span> numpy
+<span class="ansi-green-intense-fg ansi-bold">      2</span> 
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span>np<span class="ansi-blue-fg">.</span>random<span class="ansi-blue-fg">.</span>seed<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> 
+<span class="ansi-green-intense-fg ansi-bold">      5</span> n_graphs <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">10</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;np&#39; is not defined</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>TODO toy barycenters</strong>
+Use that:
+<a href="https://pot.readthedocs.io/en/stable/all.html#ot.gromov.fgw_barycenters">https://pot.readthedocs.io/en/stable/all.html#ot.gromov.fgw_barycenters</a></p>
+<p>We also show that these barycenters can be used for graph clustering.</p>
+<p>We also exhibit classification results for FGW embedded in a Gaussian kernel
+SVM which leads to state-of-the-art performance (even outperforming graph
+neural network approaches) on a wide range of graph classification problems.</p>
 <p><strong>TODO: at some point, highlight Sliced Gromov Wasserstein also.</strong></p>
-<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"></ol></p>
+<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="vayer:hal-02174322">Vayer, T., Chapel, L., Flamary, R., Tavenard, R., &amp; Courty, N. (2019). Optimal Transport for structured data with application on graphs. In <i>Proceedings of the International Conference on Machine Learning</i> (pp. 1–16). Long Beach, United States.</span></li>
+<li><span id="vayer:hal-02174316">Vayer, T., Chapel, L., Flamary, R., Tavenard, R., &amp; Courty, N. (2019). <i>Fused Gromov-Wasserstein distance for structured objects: theoretical foundations and mathematical properties</i>.</span></li></ol></p>
 
 </div>
 </div>
