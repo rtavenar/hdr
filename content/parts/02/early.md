@@ -66,7 +66,8 @@ $\mathbf{x}_{\rightarrow t}$ to cluster $C_k$;
 * $P(y=i | C_k)$ is obtained from a contingency table that stores the number of
 training time series of each class in each cluster;
 * $P_{t+\tau}(\hat{y} = j | y=i, C_k)$ is obtained through training time
-confusion matrices built using classifier $m_{t+\tau}(\cdot)$.
+confusion matrices built on time series from cluster $C_k$ using classifier
+$m_{t+\tau}(\cdot)$.
 
 At test time, if a series is observed up to time $t$ and if, for all positive
 $\tau$ we have
