@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/02/early.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-17T23:36:14+01:00",
-  "dateModified": "2020-03-17T23:36:14+01:00",
+  "datePublished": "2020-03-18T15:32:15+01:00",
+  "dateModified": "2020-03-18T15:32:15+01:00",
   "description": "# Early Classification of Time SeriesEarly classification of time series is the task of performing a classificationas early as possible for an incoming time ...",
   "author": {
     "@type": "Person",
@@ -998,7 +998,10 @@ initFunction(initPrint)
               <h1 id="early-classification-of-time-series">Early Classification of Time Series</h1>
 
 <p>Early classification of time series is the task of performing a classification
-as early as possible for an incoming time series.</p>
+as early as possible for an incoming time series.
+Because of the specificity of this task, I will use in this section the
+notation $\mathbf{x}_{\rightarrow t}$ to denote the time series $\mathbf{x}$
+truncated after timestamp $t$.</p>
 
 <p>I have worked on two methods for this task.
 The first one is a slight improvement over
@@ -1013,19 +1016,21 @@ classification of time series that balances earliness and accuracy.</p>
 <p>The cost function is of the following form:</p>
 
 <p>\begin{equation}
-C(y, \hat{y}, t) = C(y, \hat{y}) + \alpha t
+\mathcal{L}(y, \hat{y}, t) = \mathcal{L}_c(y, \hat{y}) + \alpha t
+\label{eq:loss_early}
 \end{equation}</p>
 
-<p>where $\hat{y}$ is the class predicted by the model, $C(\cdot,\cdot)$ is a
-classification loss and $t$ is the number of timestamps required before a
+<p>where $\hat{y}$ is the class predicted by the model,
+$\mathcal{L}_c(\cdot,\cdot)$ is a
+classification loss and $t$ is the timestampat which a
 decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
 and is supposed to be a hyper-parameter of the method.</p>
 
 <p>In <a class="citation" href="#dachraoui2015early">(Dachraoui, Bondu, &amp; Cornuéjols, 2015)</a>, they rely on (i) a clustering of the training
-time series and (ii) individual classifiers trained at all possible timestamp,
-so as to be able to predict, at time $t$, an expected cost for all times
-$t + \tau$ with $\tau \geq 0$:</p>
+time series and (ii) individual classifiers $m_t(\cdot)$ trained at all possible
+timestamps, so as to be able to predict, at time $t$, an expected cost for all
+times $t + \tau$ with $\tau \geq 0$:</p>
 
 <p>\begin{equation}
     f_\tau(\mathbf{x}<em>{\rightarrow t}, y) =
@@ -1040,8 +1045,7 @@ $t + \tau$ with $\tau \geq 0$:</p>
 
 <ul>
   <li>$P(C_k | \mathbf{x}<em>{\rightarrow t})$ is a soft-assignment weight of
-$\mathbf{x}</em>{\rightarrow t}$ ($\mathbf{x}$ observed up to timestamp $t$) to
-cluster $C_k$;</li>
+$\mathbf{x}</em>{\rightarrow t}$ to cluster $C_k$;</li>
   <li>$P(y=i | C_k)$ is obtained from a contingency table that stores the number of
 training time series of each class in each cluster;</li>
   <li>$P_{t+\tau}(\hat{y} = j | y=i, C_k)$ is obtained through training time
@@ -1051,7 +1055,7 @@ confusion matrices built using the classifier operating at time $t+\tau$.</li>
 <p>At test time, if a series is observed up to time $t$ and if, for all positive
 $\tau$ we have
 $f_\tau(\mathbf{x}<em>{\rightarrow t}, y) \geq f_0(\mathbf{x}</em>{\rightarrow t}, y)$,
-then a decision is made.</p>
+then a decision is made using classifier $m_t(\cdot)$.</p>
 
 <h3 id="limitations-of-the-clustering">Limitations of the clustering</h3>
 
@@ -1081,7 +1085,8 @@ to undesirable behaviors.</p>
 \end{eqnarray}</p>
 
 <p>where $A_{t+\tau}(k)$ is the sum of off-diagonal elements in the training time
-confusion matrix for cluster $k$ at time $t+\tau$.</p>
+confusion matrix built from time series in cluster $k$ using classifier
+$m_{t+\tau}(\cdot)$.</p>
 
 <p>In practice, this means that if the sum of off-diagonal elements of confusion
 matrices is equal to the same $A_{t+\tau}$ for all clusters, then this method
@@ -1111,28 +1116,104 @@ In this case, the limitation exposed above does not hold anymore.</p>
 cost of a larger computational complexity.</p>
 
 <p>We also showed that in order to limit inference time complexity, one could
-learn a classifier that, based on the time series $\mathbf{x}_{\rightarrow t}$
+learn a <em>decision triggering classifier</em> that, based on the time series
+$\mathbf{x}<em>{\rightarrow t}$
 observed up to time $t$ predicts whether a decision should be triggered or not.
-In this setting, the target values $\gamma_t$ used to train this classifier
-were computed using the same approach as before:</p>
+In this setting, the target values $\gamma_t$ used to train this
+_decision triggering classifier</em>
+were computed using the approach described above:</p>
 
 <p>\begin{equation}
     \gamma_t(\mathbf{x}<em>{\rightarrow t}) = \left{
         \begin{array}{l}
-            1 \text{ if } f</em>{t}(\mathbf{x}<em>{\rightarrow t})=\min</em>{\tau \geq 0}       <br />
-                f_{t+\tau}(\mathbf{x}_{\rightarrow t}) <br />
+            1 \text{ if } f</em>{0}(\mathbf{x}<em>{\rightarrow t})=\min</em>{\tau \geq 0}       <br />
+                f_{\tau}(\mathbf{x}_{\rightarrow t}) <br />
             0 \text{ otherwise. }
         \end{array} \right.
 \end{equation}</p>
 
 <p>In other words, decision making is here seen as a two-step process where a
-first classifier decides whether a decision should be made, in which case a
-second classifier is used to determine the class to be predicted.</p>
+first classifier (<em>decision triggering classifier</em>) decides whether a decision
+should be made, in which case a
+second classifier is used to determine the class to be predicted (the latter
+classifier is $m_t(\cdot)$, the same as for other methods).</p>
+
+<h2 id="representation-learning-for-early-classification">Representation Learning for Early Classification</h2>
+
+<!-- #region {"tags": ["popout"]} -->
+<p><strong>Note.</strong> This work is part of Marc Rußwurm’s PhD work.
+Marc is a PhD student from TU Munich who has come to France for a
+4-month period in 2018-2019. I was co-supervising Marc with Nicolas Courty
+during his stay in France.
+<!-- #endregion --></p>
+
+<p>The previous approach has several shortcomings.
+First, it requires to learn a classifier $m_t(\cdot)$ for each possible time
+series length $t$, which is very costly.
+Second, both classifiers (the one that decides whether a decision should be
+made, and the one that actually makes the decision) are seen as independent
+models, while they are, in practice, closely related.
+Finally, the loss function presented in Equation \eqref{eq:loss_early} requires
+a careful choice of hyper-parameter $\alpha$ that might not be easy to pick in
+practice.</p>
+
+<p><strong>TODO: illustrate the problem with Dachraoui’s synthetic dataset and 2 very
+close $\alpha$ values</strong></p>
+
+<p>We have hence proposed a representation learning framework that
+covers these three limitations <a class="citation" href="#ruwurm:hal-02174314">(Rußwurm et al., 2019)</a>.</p>
+
+<p>In more details, we rely on a feature extraction module (that can either be
+made of convolutional or recurrent submodules) to extract a fixed-sized
+representation $h_t$ from an incoming time series $\mathbf{x}_{\rightarrow t}$.
+An important point here is that this feature extractor can operate on time
+series whatever their length (and hence a different feature extractor need not
+to be learned for each time series length).
+Then, this feature is provided as input to two different heads, as shown in the
+following Figure:</p>
+
+<p><img src="../../images/double_head_early.png" alt="" /></p>
+
+<ul>
+  <li>the first head (left) outputs a probability $P_t$ of making a decision at
+time $t$ (given that no decision has been made before): it plays the same role
+as the <em>decision triggering classifier</em> presented above;</li>
+  <li>the second head is the standard classification head that effectively produces
+a classification if the first head triggered it.</li>
+</ul>
+
+<p>Hence, provided that we have a differentiable early classification loss
+function, we are able to learn all parameters of this model end-to-end.
+Our last contribution in this context is the design of a loss function that
+does not lead to dumb optimal solutions (<em>eg.</em> trigger all classifications at
+the first time stamp, whatever the data).
+We introduced the following loss function:</p>
+
+<p>\begin{equation}
+    \mathcal{L}(y, \hat{y}, t) =
+        \alpha \mathcal{L}_c(y, \hat{y}) - (1-\alpha) P(\hat{y}=y)
+            \left( \frac{T-t}{T} \right)
+\end{equation}</p>
+
+<p>where $P(\hat{y}=y)$ is the probability (as assigned by the classification
+model) to generate $y$ as an output.
+The second part in this loss function is an earliness reward, which is taken
+into account iff the procided decision is sound (<em>ie.</em> the correct class is
+predicted with non-zero probability).</p>
+
+<p>We have shown that this model outperforms all known baselines in terms of both
+time complexity and earliness/accuracy tradeoff, especially for large scale
+datasets.
+Moreover, we have presented an application of this model to the monitoring of
+agriculture, and exposed its ability to trigger class-specific early decisions
+in this context in <a class="citation" href="#ruwurm:hal-02343851">(Rußwurm, Tavenard, Lefèvre, &amp; Körner, 2019)</a>.</p>
 
 <h2 id="references">References</h2>
 
 <ol class="bibliography"><li><span id="dachraoui2015early">Dachraoui, A., Bondu, A., &amp; Cornuéjols, A. (2015). Early classification of time series as a non myopic sequential decision making problem. In <i>Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i> (pp. 433–447). Springer.</span></li>
-<li><span id="tavenard:halshs-01339007">Tavenard, R., &amp; Malinowski, S. (2016). Cost-Aware Early Classification of Time Series. In <i>Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i> (pp. 632–647). Riva del Garda, Italy. Retrieved from https://halshs.archives-ouvertes.fr/halshs-01339007</span></li></ol>
+<li><span id="tavenard:halshs-01339007">Tavenard, R., &amp; Malinowski, S. (2016). Cost-Aware Early Classification of Time Series. In <i>Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i> (pp. 632–647). Riva del Garda, Italy. Retrieved from https://halshs.archives-ouvertes.fr/halshs-01339007</span></li>
+<li><span id="ruwurm:hal-02174314">Rußwurm, M., Lefevre, S., Courty, N., Emonet, R., Körner, M., &amp; Tavenard, R. (2019). <i>End-to-end Learning for Early Classification of Time Series</i>.</span></li>
+<li><span id="ruwurm:hal-02343851">Rußwurm, M., Tavenard, R., Lefèvre, S., &amp; Körner, M. (2019). Early Classification for Agricultural Monitoring from Satellite Time Series. In <i>AI for Social Good Workshop at International Conference on Machine Learning (ICML)</i>. Long Beach, United States.</span></li></ol>
 
             </div>
             <div class="c-textbook__footer" id="textbook_footer">
