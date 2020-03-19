@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/02/early.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-18T15:54:39+01:00",
-  "dateModified": "2020-03-18T15:54:39+01:00",
+  "datePublished": "2020-03-19T23:29:47+01:00",
+  "dateModified": "2020-03-19T23:29:47+01:00",
   "description": "# Early Classification of Time SeriesEarly classification of time series is the task of performing a classificationas early as possible for an incoming time ...",
   "author": {
     "@type": "Person",
@@ -855,7 +855,7 @@ initFunction(initPrint)
                 
                   2.2
                 
-                Shapelet-based representations and convolutional models
+                Shapelet-based Representations and Convolutional Models
               </a>
             </li>
             
@@ -1022,7 +1022,7 @@ classification of time series that balances earliness and accuracy.</p>
 
 <p>where $\hat{y}$ is the class predicted by the model,
 $\mathcal{L}_c(\cdot,\cdot)$ is a
-classification loss and $t$ is the timestampat which a
+classification loss and $t$ is the timestamp at which a
 decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
 and is supposed to be a hyper-parameter of the method.</p>
@@ -1145,7 +1145,7 @@ classifier is $m_t(\cdot)$, the same as for other methods).</p>
 <p><strong>Note.</strong> This work is part of Marc Rußwurm’s PhD work.
 Marc is a PhD student from TU Munich who has come to France for a
 4-month period in 2018-2019. I was co-supervising Marc with Nicolas Courty
-during his stay in France.
+and Sébastien Lefèvre during his stay in France.
 <!-- #endregion --></p>
 
 <p>The previous approach has several shortcomings.
@@ -1159,7 +1159,7 @@ a careful choice of hyper-parameter $\alpha$ that might not be easy to pick in
 practice.</p>
 
 <p><strong>TODO: illustrate the problem with Dachraoui’s synthetic dataset and 2 very
-close $\alpha$ values</strong></p>
+close $\alpha$ values once the method is integrated in <code class="highlighter-rouge">tslearn</code></strong></p>
 
 <p>We have hence proposed a representation learning framework that
 covers these three limitations <a class="citation" href="#ruwurm:hal-02174314">(Rußwurm et al., 2019)</a>.</p>

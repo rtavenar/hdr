@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_gi.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-18T15:54:39+01:00",
-  "dateModified": "2020-03-18T15:54:39+01:00",
+  "datePublished": "2020-03-19T23:29:47+01:00",
+  "dateModified": "2020-03-19T23:29:47+01:00",
   "description": "# DTW with Global Invariances**Note.** This work was part of Titouan Vayer's PhD thesis.We were co-supervising Titouan together with Laetitia Chapel and Nico...",
   "author": {
     "@type": "Person",
@@ -855,7 +855,7 @@ initFunction(initPrint)
                 
                   2.2
                 
-                Shapelet-based representations and convolutional models
+                Shapelet-based Representations and Convolutional Models
               </a>
             </li>
             
@@ -1473,6 +1473,7 @@ return barycenter ```
 </code></pre></div></div>
 
 <p>```python tags=[“hide_input”]
+%config InlineBackend.figure_format = ‘svg’
 import matplotlib.pyplot as plt</p>
 
 <p>plt.ion()</p>
@@ -1620,8 +1621,8 @@ list_method_names = ["DTW", "DTW-GI"]
 
 angles_visu = [90, numpy.nan, -120]
 
-fig = plt.figure(figsize=(3 * n_spirals_shown + len(list_barycenter_fun),
-                    3 * len(list_dataset_generators)))
+fig = plt.figure(figsize=(.67 * (3 * n_spirals_shown + len(list_barycenter_fun)),
+                          2. * len(list_dataset_generators)))
 for idx_dataset, dataset_fun in enumerate(list_dataset_generators):
     spirals = dataset_fun(n_spirals, sz)
 
@@ -1650,7 +1651,7 @@ for idx_dataset, dataset_fun in enumerate(list_dataset_generators):
     for i, (barycenter_fun, title) in enumerate(zip(list_barycenter_fun,
                                                     list_method_names)):
         init_b = numpy.random.randn(sz_barycenter, d_barycenter)
-        if title in ["DTW", "softDTW"] and has_3d(spirals):
+        if title == "DTW" and has_3d(spirals):
             continue
         barycenter = barycenter_fun(spirals, sz_barycenter, init_b)
         ax = plt.subplot(len(list_dataset_generators),

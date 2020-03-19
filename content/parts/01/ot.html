@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Machine Learning for Time Series</title>
-  <meta name="description" content="# Optimal Transport for Structured Data**Note.** This work was part of Titouan Vayer's PhD thesis.We were co-supervising Titouan together with Laetitia Chape...">
+  <meta name="description" content="# Optimal Transport for Structured DataThis section covers my works related to Optimal Transport distances forstructured data such as graphs.In order to comp...">
 
   <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/ot.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/ot.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Machine Learning for Time Series" />
-<meta property="og:description" content="# Optimal Transport for Structured Data**Note.** This work was part of Titouan Vayer's PhD thesis.We were co-supervising Titouan together with Laetitia Chape..." />
+<meta property="og:description" content="# Optimal Transport for Structured DataThis section covers my works related to Optimal Transport distances forstructured data such as graphs.In order to comp..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/ot.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-18T15:54:39+01:00",
-  "dateModified": "2020-03-18T15:54:39+01:00",
-  "description": "# Optimal Transport for Structured Data**Note.** This work was part of Titouan Vayer's PhD thesis.We were co-supervising Titouan together with Laetitia Chape...",
+  "datePublished": "2020-03-19T23:29:47+01:00",
+  "dateModified": "2020-03-19T23:29:47+01:00",
+  "description": "# Optimal Transport for Structured DataThis section covers my works related to Optimal Transport distances forstructured data such as graphs.In order to comp...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -855,7 +855,7 @@ initFunction(initPrint)
                 
                   2.2
                 
-                Shapelet-based representations and convolutional models
+                Shapelet-based Representations and Convolutional Models
               </a>
             </li>
             
@@ -997,21 +997,86 @@ initFunction(initPrint)
             <div class="c-textbook__content" id="textbook_content">
               <h1 id="optimal-transport-for-structured-data">Optimal Transport for Structured Data</h1>
 
+<p>This section covers my works related to Optimal Transport distances for
+structured data such as graphs.
+In order to compare graphs, we have introduced the Fused Gromov Wasserstein
+distance that interpolates between Wasserstein distance between node feature
+distributions and Gromov-Wasserstein distance between structures.</p>
+
 <!-- #region {"tags": ["popout"]} -->
 <p><strong>Note.</strong> This work was part of Titouan Vayer’s PhD thesis.
 We were co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
 <!-- #endregion --></p>
 
-<p>This section covers my works related to Optimal Transport distances for
-structured data such as graphs.</p>
+<p>Here, we first introduce both Wasserstein and Gromov-Wasserstein distances and
+some of our results concerning computational considerations related to the
+latter.</p>
 
 <h2 id="wasserstein-and-gromov-wasserstein-distances">Wasserstein and Gromov-Wasserstein distances</h2>
 
-<p><strong>TODO (use Fig6-7 from journal paper)</strong></p>
+<p>Let $\mu = \sum_i h_i \delta_{x_i}$ and $\nu = \sum_j g_j \delta_{y_j}$ be two
+discrete distributions lying in the same metric space $(\Omega, d)$.
+Then, the $p$-Wasserstein distance is defined as:</p>
 
-<h2 id="sliced-gromov-wasserstein">Sliced Gromov-Wasserstein</h2>
+<!-- #region {"tags": ["popout"]} -->
+<p><strong>Note</strong> the close connection between this definition and that of the Dynamic
+Time Warping in <a href="dtw.html">Sec. 1.2</a>
+<!-- #endregion --></p>
 
-<p><strong>TODO</strong></p>
+<p>\begin{equation}
+    W_p(\mu, \nu) = \left(
+        \min_{\pi \in \Pi} \sum_{i,j} d(x_i, y_j)^p \pi_{i,j}
+        \right)^{\frac{1}{p}}
+    \label{eq:wass}
+\end{equation}</p>
+
+<p>where $\Pi$ is the set of all admissible couplings between $\mu$ and $\nu$
+(<em>ie.</em> the set of all matrices with maginals $h$ and $g$).</p>
+
+<p>This distance is illustrated in the following Figure:</p>
+
+<p><img src="../../images/wass.png" alt="" /></p>
+
+<p>When distributions $\mu$ and $\nu$ do not lie in the same ambiant space,
+however, one cannot compute their Wasserstein distance. An alternative that was
+introduced in <a class="citation" href="#memoli2011gromov">(Mémoli, 2011)</a> relies on matching intra-domain
+distances, as illustrated below:</p>
+
+<p><img src="../../images/gw.png" alt="" /></p>
+
+<p>The corresponding distance is the Gromov-Wasserstein distance, defined as:</p>
+
+<p>\begin{equation}
+    GW_p(\mu, \nu) = \left(
+        \min_{\pi \in \Pi}
+            \sum_{i,j,k,l}
+            \left| d_X(x_i, x_k) - d_Y(y_j, y_l) \right|^p \pi_{i,j} \pi_{k,l}
+        \right)^{\frac{1}{p}}
+    \label{eq:gw}
+\end{equation}</p>
+
+<p>where $d_X$ (resp. $d_Y$) is the metric associated to the space in which
+$\mu$ (resp. $\nu$) lies.</p>
+
+<h3 id="sliced-gromov-wasserstein">Sliced Gromov-Wasserstein</h3>
+
+<p>Computational complexity associated to the optimization problem in
+Equation \eqref{eq:gw} is high in general.
+However, we have shown in <a class="citation" href="#vayer:hal-02174309">(Vayer, Flamary, Tavenard, Chapel, &amp; Courty, 2019)</a> that in the
+mono-dimensional case, this problem can be seen as an instance of the Quadratic
+Assignment Problem <a class="citation" href="#koopmans1957assignment">(Koopmans &amp; Beckmann, 1957)</a>.
+We have provided closed form solution for this instance.
+In a nutshell, our solution consists in sorting mono-dimensional distributions
+and either matching elements from both distributions in order or in reverse
+order, leading to a $O(n \log n)$ algorithm that exactly solves this problem.</p>
+
+<p>Based on this closed-form solution, we were able to introduce a Sliced
+Gromov-Wasserstein distance that, similarly to the Sliced Wasserstein distance
+<a class="citation" href="#rabin2011wasserstein">(Rabin, Peyré, Delon, &amp; Bernot, 2011)</a>, computes similarity between distributions
+through projections on random lines.</p>
+
+<p><strong>TODO: add a summary of Titouan’s last findings about GW when they are
+stabilized.</strong></p>
 
 <h2 id="fused-gromov-wasserstein">Fused Gromov-Wasserstein</h2>
 
@@ -1221,7 +1286,11 @@ neural network approaches) on a wide range of graph classification problems.</p>
 
 <h2 id="references">References</h2>
 
-<ol class="bibliography"><li><span id="vayer:hal-02174322">Vayer, T., Chapel, L., Flamary, R., Tavenard, R., &amp; Courty, N. (2019). Optimal Transport for structured data with application on graphs. In <i>Proceedings of the International Conference on Machine Learning</i> (pp. 1–16). Long Beach, United States.</span></li>
+<ol class="bibliography"><li><span id="memoli2011gromov">Mémoli, F. (2011). Gromov–Wasserstein distances and the metric approach to object matching. <i>Foundations of Computational Mathematics</i>, <i>11</i>(4), 417–487.</span></li>
+<li><span id="vayer:hal-02174309">Vayer, T., Flamary, R., Tavenard, R., Chapel, L., &amp; Courty, N. (2019). Sliced Gromov-Wasserstein. In <i>Neural Information Processing Systems</i> (Vol. 32). Vancouver, Canada.</span></li>
+<li><span id="koopmans1957assignment">Koopmans, T. C., &amp; Beckmann, M. (1957). Assignment problems and the location of economic activities. <i>Econometrica: Journal of the Econometric Society</i>, 53–76.</span></li>
+<li><span id="rabin2011wasserstein">Rabin, J., Peyré, G., Delon, J., &amp; Bernot, M. (2011). Wasserstein barycenter and its application to texture mixing. In <i>International Conference on Scale Space and Variational Methods in Computer Vision</i> (pp. 435–446). Springer.</span></li>
+<li><span id="vayer:hal-02174322">Vayer, T., Chapel, L., Flamary, R., Tavenard, R., &amp; Courty, N. (2019). Optimal Transport for structured data with application on graphs. In <i>Proceedings of the International Conference on Machine Learning</i> (pp. 1–16). Long Beach, United States.</span></li>
 <li><span id="vayer:hal-02174316">Vayer, T., Chapel, L., Flamary, R., Tavenard, R., &amp; Courty, N. (2019). <i>Fused Gromov-Wasserstein distance for structured objects: theoretical foundations and mathematical properties</i>.</span></li></ol>
 
             </div>
