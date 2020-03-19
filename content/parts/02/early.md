@@ -40,7 +40,7 @@ The cost function is of the following form:
 
 where $\hat{y}$ is the class predicted by the model,
 $\mathcal{L}_c(\cdot,\cdot)$ is a
-classification loss and $t$ is the timestampat which a
+classification loss and $t$ is the timestamp at which a
 decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
 and is supposed to be a hyper-parameter of the method.
@@ -161,7 +161,7 @@ classifier is $m_t(\cdot)$, the same as for other methods).
 **Note.** This work is part of Marc Rußwurm's PhD work.
 Marc is a PhD student from TU Munich who has come to France for a
 4-month period in 2018-2019. I was co-supervising Marc with Nicolas Courty
-during his stay in France.
+and Sébastien Lefèvre during his stay in France.
 <!-- #endregion -->
 
 The previous approach has several shortcomings.
@@ -175,7 +175,7 @@ a careful choice of hyper-parameter $\alpha$ that might not be easy to pick in
 practice.
 
 **TODO: illustrate the problem with Dachraoui's synthetic dataset and 2 very
-close $\alpha$ values**
+close $\alpha$ values once the method is integrated in `tslearn`**
 
 We have hence proposed a representation learning framework that
 covers these three limitations {% cite ruwurm:hal-02174314 %}.

@@ -87,6 +87,7 @@ Overall, we have a $O(mn^2 + nm^2)$ complexity for this exact algorithm.
 ## Empirical Observations
 
 ```python tags=["hide_input"]
+%config InlineBackend.figure_format = 'svg'
 import matplotlib.pyplot as plt
 import numpy
 
@@ -94,7 +95,7 @@ plt.ion()
 
 def plot_matches(ts0, ts1, path, title):
     offset = 4.
-    fig = plt.figure(figsize=(12, 4))
+    fig = plt.figure(figsize=(6, 2))
 
     # Plot matches
     for (i, j) in path:
@@ -103,9 +104,9 @@ def plot_matches(ts0, ts1, path, title):
 
     # Plot series (with pos/neg offset for visu reasons)
     plt.plot(numpy.arange(ts0.shape[0]), ts0.ravel() + offset,
-             color='b', linestyle='-', marker='o', linewidth=1)
+             color='b', linestyle='-', marker='o', markersize=1.)
     plt.plot(numpy.arange(ts1.shape[0]), ts1.ravel() - offset,
-             color='r', linestyle='-', marker='o', linewidth=1)
+             color='r', linestyle='-', marker='o', markersize=1.)
 
     plt.xticks([])
     plt.yticks([])

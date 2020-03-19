@@ -15,21 +15,86 @@ jupyter:
 
 # Optimal Transport for Structured Data
 
+This section covers my works related to Optimal Transport distances for
+structured data such as graphs.
+In order to compare graphs, we have introduced the Fused Gromov Wasserstein
+distance that interpolates between Wasserstein distance between node feature
+distributions and Gromov-Wasserstein distance between structures.
+
 <!-- #region {"tags": ["popout"]} -->
 **Note.** This work was part of Titouan Vayer's PhD thesis.
 We were co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
 <!-- #endregion -->
 
-This section covers my works related to Optimal Transport distances for
-structured data such as graphs.
+Here, we first introduce both Wasserstein and Gromov-Wasserstein distances and
+some of our results concerning computational considerations related to the
+latter.
 
 ## Wasserstein and Gromov-Wasserstein distances
 
-**TODO (use Fig6-7 from journal paper)**
+Let $\mu = \sum_i h_i \delta_{x_i}$ and $\nu = \sum_j g_j \delta_{y_j}$ be two
+discrete distributions lying in the same metric space $(\Omega, d)$.
+Then, the $p$-Wasserstein distance is defined as:
 
-## Sliced Gromov-Wasserstein
+<!-- #region {"tags": ["popout"]} -->
+**Note** the close connection between this definition and that of the Dynamic
+Time Warping in [Sec. 1.2](dtw.html)
+<!-- #endregion -->
 
-**TODO**
+\begin{equation}
+    W_p(\mu, \nu) = \left(
+        \min_{\pi \in \Pi} \sum_{i,j} d(x_i, y_j)^p \pi_{i,j}
+        \right)^{\frac{1}{p}}
+    \label{eq:wass}
+\end{equation}
+
+where $\Pi$ is the set of all admissible couplings between $\mu$ and $\nu$
+(_ie._ the set of all matrices with maginals $h$ and $g$).
+
+This distance is illustrated in the following Figure:
+
+![](../../images/wass.png)
+
+When distributions $\mu$ and $\nu$ do not lie in the same ambiant space,
+however, one cannot compute their Wasserstein distance. An alternative that was
+introduced in {% cite memoli2011gromov %} relies on matching intra-domain
+distances, as illustrated below:
+
+![](../../images/gw.png)
+
+The corresponding distance is the Gromov-Wasserstein distance, defined as:
+
+\begin{equation}
+    GW_p(\mu, \nu) = \left(
+        \min_{\pi \in \Pi}
+            \sum_{i,j,k,l}
+            \left| d_X(x_i, x_k) - d_Y(y_j, y_l) \right|^p \pi_{i,j} \pi_{k,l}
+        \right)^{\frac{1}{p}}
+    \label{eq:gw}
+\end{equation}
+
+where $d_X$ (resp. $d_Y$) is the metric associated to the space in which
+$\mu$ (resp. $\nu$) lies.
+
+### Sliced Gromov-Wasserstein
+
+Computational complexity associated to the optimization problem in
+Equation \eqref{eq:gw} is high in general.
+However, we have shown in {% cite vayer:hal-02174309 %} that in the
+mono-dimensional case, this problem can be seen as an instance of the Quadratic
+Assignment Problem {% cite koopmans1957assignment %}.
+We have provided closed form solution for this instance.
+In a nutshell, our solution consists in sorting mono-dimensional distributions
+and either matching elements from both distributions in order or in reverse
+order, leading to a $O(n \log n)$ algorithm that exactly solves this problem.
+
+Based on this closed-form solution, we were able to introduce a Sliced
+Gromov-Wasserstein distance that, similarly to the Sliced Wasserstein distance
+{% cite rabin2011wasserstein %}, computes similarity between distributions
+through projections on random lines.
+
+**TODO: add a summary of Titouan's last findings about GW when they are
+stabilized.**
 
 ## Fused Gromov-Wasserstein
 

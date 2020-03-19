@@ -121,6 +121,7 @@ These constraints typically consist in forcing paths to lie close to the
 diagonal.
 
 ```python tags=["hide_input"]
+%config InlineBackend.figure_format = 'svg'
 import matplotlib.pyplot as plt
 import numpy
 

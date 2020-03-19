@@ -88,7 +88,180 @@ with at least one element in each discharge time series from the dataset.
 We then used barycentric mapping based on obtained matches to realign other
 modalities to the timestamps of the reference time series, as shown in the
 following Figure:
+
+```python tags=["hide_input"]
+%config InlineBackend.figure_format = 'svg'
+import matplotlib.pyplot as plt
+import numpy
+from tslearn.utils import to_time_series
+
+plt.ion()
+
+def plot_matches(ts0, ts1, ts0_resample, path):
+    offset = .5
+    fig = plt.figure(figsize=(6, 3))
+
+    plt.subplot(1, 2, 1)
+    plt.text(x=0.5, y=1.0,
+             s="Original discharge time series", fontsize=12, horizontalalignment='center',
+             verticalalignment='center', transform=plt.gca().transAxes)
+    plt.text(x=0.5, y=0.0,
+             s="Reference discharge time series", fontsize=12, horizontalalignment='center',
+             verticalalignment='center', transform=plt.gca().transAxes)
+
+    # Plot series (with pos/neg offset for visu reasons)
+    plt.plot(numpy.arange(ts0.shape[0]), ts0.ravel() + offset,
+             color='k', linestyle='-', linewidth=2.)
+    plt.plot(numpy.arange(ts1.shape[0]), ts1.ravel() - offset,
+             color='k', linestyle='-', linewidth=2.)
+
+    # Plot matches
+    for (i, j) in path:
+        if [pair[0] for pair in path].count(i) > 1:
+            plt.plot([i, j], [ts0[i, 0] + offset, ts1[j, 0] - offset],
+                     color="blue", marker='o', linestyle="dashed")
+        elif [pair[1] for pair in path].count(j) > 1:
+            plt.plot([i, j], [ts0[i, 0] + offset, ts1[j, 0] - offset],
+                     color="red", marker='o', linestyle="dashed")
+        else:
+            plt.plot([i, j], [ts0[i, 0] + offset, ts1[j, 0] - offset],
+                     color="grey", marker='o', linestyle="dashed")
+
+    plt.xticks([])
+    plt.yticks([])
+    plt.gca().axis("off")
+
+    plt.subplot(1, 2, 2)
+    plt.text(x=0.5, y=1.0,
+             s="Resampled discharge time series", fontsize=12, horizontalalignment='center',
+             verticalalignment='center', transform=plt.gca().transAxes)
+    plt.text(x=0.5, y=0.0,
+             s="Reference discharge time series", fontsize=12, horizontalalignment='center',
+             verticalalignment='center', transform=plt.gca().transAxes)
+
+    # Plot series (with pos/neg offset for visu reasons)
+    plt.plot(numpy.arange(ts0_resample.shape[0]), ts0_resample.ravel() + offset,
+             color='k', linestyle='-', linewidth=2.)
+    plt.plot(numpy.arange(ts1.shape[0]), ts1.ravel() - offset,
+             color='k', linestyle='-', linewidth=2.)
+
+    # Plot matches
+    for j in range(len(ts1)):
+        if [pair[1] for pair in path].count(j) > 1:
+            plt.plot([j, j], [ts0_resample[j, 0] + offset, ts1[j, 0] - offset],
+                     color="red", marker='o', linestyle="dashed")
+        else:
+            pair = path[[pair[1] for pair in path].index(j)]
+            i = pair[0]
+            if [pair[0] for pair in path].count(i) > 1:
+                plt.plot([j, j], [ts0_resample[j, 0] + offset, ts1[j, 0] - offset],
+                         color="blue", marker='o', linestyle="dashed")
+            else:
+                plt.plot([j, j], [ts0_resample[j, 0] + offset, ts1[j, 0] - offset],
+                         color="grey", marker='o', linestyle="dashed")
+    plt.xticks([])
+    plt.yticks([])
+    plt.gca().axis("off")   
+    plt.tight_layout()
+```
+
  **TODO Figure 5 in the notebook**
+
+```python
+from tslearn.metrics import dtw_path
+
+x_q_ref = to_time_series(
+    [0.13991821, 0.16294979, 0.31514145, 0.54636252, 0.69737061, 0.87776431,
+     0.95917049, 0.99667355, 0.98113988, 0.87307521, 0.70341944, 0.59648599,
+     0.51890249, 0.43674822, 0.38792677, 0.36107532, 0.32893154, 0.30836181,
+     0.30146932, 0.27417169]
+)
+
+y_q = to_time_series(
+    [0.12127299, 0.12750528, 0.14748864, 0.17853797, 0.2815324 , 0.3848446,
+     0.51661235, 0.6876372 , 0.83539414, 0.96088103, 1.        , 0.82093283,
+     0.70602368, 0.56334187, 0.47268893, 0.41283418, 0.3747808 , 0.34633213,
+     0.32026957, 0.30550197]
+)
+
+y_srp = to_time_series(
+    [0.26215067, 0.14032423, 0.07405513, 0.08556629, 0.07101746, 0.0891955 ,
+     0.22119012, 0.32734859, 0.41433779, 0.43256379, 0.56561361, 0.81348724,
+     0.93016563, 0.92843896, 0.71375583, 0.55979408, 0.43102897, 0.32704483,
+     0.27554838, 0.26154313]
+)
+
+path, dist = dtw_path(y_q, x_q_ref)
+
+# The resampling happens here:
+list_indices = [[ii for (ii, jj) in path if jj == j]
+                for j in range(len(x_q_ref))]
+y_q_resample = to_time_series(
+    [y_q[indices].mean(axis=0) for indices in list_indices]
+)
+y_srp_resample = to_time_series(
+    [y_srp[indices].mean(axis=0) for indices in list_indices]
+)
+
+plot_matches(y_q, x_q_ref, y_q_resample, path)
+```
+
+```python tags=["hide_input"]
+fig = plt.figure(figsize=(6, 2))
+
+plt.subplot(1, 2, 1)
+plt.text(x=0.5, y=1.0,
+         s="Original SRP time series", fontsize=12, horizontalalignment='center',
+         verticalalignment='center', transform=plt.gca().transAxes)
+
+# Plot series (with pos/neg offset for visu reasons)
+plt.plot(numpy.arange(y_srp.shape[0]), y_srp.ravel(),
+         color='k', linestyle='-', linewidth=2.)
+
+# Plot matches
+for (i, j) in path:
+    if [pair[0] for pair in path].count(i) > 1:
+        plt.plot([i, i], [y_srp[i, 0], y_srp[i, 0]],
+                 color="blue", marker='o', linestyle="dashed")
+    elif [pair[1] for pair in path].count(j) > 1:
+        plt.plot([i, i], [y_srp[i, 0], y_srp[i, 0]],
+                 color="red", marker='o', linestyle="dashed")
+    else:
+        plt.plot([i, i], [y_srp[i, 0], y_srp[i, 0]],
+                 color="grey", marker='o', linestyle="dashed")
+
+plt.xticks([])
+plt.yticks([])
+plt.gca().axis("off")
+
+plt.subplot(1, 2, 2)
+plt.text(x=0.5, y=1.0,
+         s="Resampled SRP time series", fontsize=12, horizontalalignment='center',
+         verticalalignment='center', transform=plt.gca().transAxes)
+
+# Plot series (with pos/neg offset for visu reasons)
+plt.plot(numpy.arange(y_srp_resample.shape[0]), y_srp_resample.ravel(),
+         color='k', linestyle='-', linewidth=2.)
+
+# Plot matches
+for j in range(len(x_q_ref)):
+    if [pair[1] for pair in path].count(j) > 1:
+        plt.plot([j, j], [y_srp_resample[j, 0], y_srp_resample[j, 0]],
+                 color="red", marker='o', linestyle="dashed")
+    else:
+        pair = path[[pair[1] for pair in path].index(j)]
+        i = pair[0]
+        if [pair[0] for pair in path].count(i) > 1:
+            plt.plot([j, j], [y_srp_resample[j, 0], y_srp_resample[j, 0]],
+                     color="blue", marker='o', linestyle="dashed")
+        else:
+            plt.plot([j, j], [y_srp_resample[j, 0], y_srp_resample[j, 0]],
+                     color="grey", marker='o', linestyle="dashed")
+plt.xticks([])
+plt.yticks([])
+plt.gca().axis("off")   
+plt.tight_layout()
+```
 
 At this point, each time series was transformed to series of $T_\text{ref}$
 $d$-dimensional measurements, where $T_\text{ref}$ is the length of the

@@ -9,4 +9,5 @@ efficiently compares such representations.
 Second, in [Sec. 1.2](01/dtw.html), time series are treated as sequences, which
 means that only ordering is of importance (not time delay between observations)
 and variants of the Dynamic Time Warping algorithm are used.
-Finally, in [Sec. 1.3](01/ot.html), graphs are seen as **TODO**.
+Finally, in [Sec. 1.3](01/ot.html), undirected labeled graphs are seen as
+discrete distributions over the feature-structure product space.

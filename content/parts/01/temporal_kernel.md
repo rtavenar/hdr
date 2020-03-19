@@ -79,6 +79,7 @@ $\sqrt{\frac{\gamma_t}{\gamma_f}}$ on the kernel matrix (larger $\gamma_t$
 leads to ignoring off-diagonal elements):
 
 ```python tags=["hide_input"]
+%config InlineBackend.figure_format = 'svg'
 import numpy
 from scipy.spatial.distance import cdist
 import matplotlib.pyplot as plt
@@ -149,7 +150,7 @@ s_y1_t = g(s_y1, ratio)
 s_y2_t = g(s_y2, ratio)
 
 # Plotting stuff
-plt.figure(figsize=(8, 8))
+plt.figure(figsize=(5, 5))
 ax_gram = plt.axes(rect_gram)
 ax_s_x = plt.axes(rect_s_x)
 ax_s_y = plt.axes(rect_s_y)

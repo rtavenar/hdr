@@ -495,6 +495,7 @@ def dtw_gi_barycenter_averaging(X, barycenter_size=None, init_barycenter=None,
 ```
 
 ```python tags=["hide_input"]
+%config InlineBackend.figure_format = 'svg'
 import matplotlib.pyplot as plt
 
 plt.ion()
@@ -650,8 +651,8 @@ list_method_names = ["DTW", "DTW-GI"]
 
 angles_visu = [90, numpy.nan, -120]
 
-fig = plt.figure(figsize=(3 * n_spirals_shown + len(list_barycenter_fun),
-                    3 * len(list_dataset_generators)))
+fig = plt.figure(figsize=(.67 * (3 * n_spirals_shown + len(list_barycenter_fun)),
+                          2. * len(list_dataset_generators)))
 for idx_dataset, dataset_fun in enumerate(list_dataset_generators):
     spirals = dataset_fun(n_spirals, sz)
 
@@ -680,7 +681,7 @@ for idx_dataset, dataset_fun in enumerate(list_dataset_generators):
     for i, (barycenter_fun, title) in enumerate(zip(list_barycenter_fun,
                                                     list_method_names)):
         init_b = numpy.random.randn(sz_barycenter, d_barycenter)
-        if title in ["DTW", "softDTW"] and has_3d(spirals):
+        if title == "DTW" and has_3d(spirals):
             continue
         barycenter = barycenter_fun(spirals, sz_barycenter, init_b)
         ax = plt.subplot(len(list_dataset_generators),
