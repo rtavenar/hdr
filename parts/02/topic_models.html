@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Temporal Topic Models</title>
-  <meta name="description" content="        Temporal Topic Models    TODO         ">
+  <meta name="description" content="        Temporal Topic Models    Topic models are mixture models that can deal with documents represented asbags of features (BoF) and extract latent topics ...">
 
   <link rel="canonical" href="https://rtavenar.github.io/hdr/parts/02/topic_models.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://rtavenar.github.io/hdr/parts/02/topic_models.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Temporal Topic Models" />
-<meta property="og:description" content="        Temporal Topic Models    TODO         " />
+<meta property="og:description" content="        Temporal Topic Models    Topic models are mixture models that can deal with documents represented asbags of features (BoF) and extract latent topics ..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/02/topic_models.html",
   "headline": "Temporal Topic Models",
-  "datePublished": "2020-03-21T08:55:35+01:00",
-  "dateModified": "2020-03-21T08:55:35+01:00",
-  "description": "        Temporal Topic Models    TODO         ",
+  "datePublished": "2020-03-21T16:35:25+01:00",
+  "dateModified": "2020-03-21T16:35:25+01:00",
+  "description": "        Temporal Topic Models    Topic models are mixture models that can deal with documents represented asbags of features (BoF) and extract latent topics ...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -1003,7 +1003,16 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>TODO</strong></p>
+<p>Topic models are mixture models that can deal with documents represented as
+bags of features (BoF) and extract latent topics (a topic being a distribution
+over features) from a corpus of documents.
+For these methods, features are hence seen as bags of features extracted along
+time.
+In the methods presented here, the temporal dimension is either
+<a href="#Supervised-Hierarchical-Dirichlet-Latent-Semantic-Motifs">included in the BoF representation</a>
+or added
+<a href="#Two-step-Inference-for-Sequences-of-Ornstein-Uhlenbeck-Processes">in a refinement step</a>.</p>
+<h2 id="Supervised-Hierarchical-Dirichlet-Latent-Semantic-Motifs">Supervised Hierarchical Dirichlet Latent Semantic Motifs<a class="anchor-link" href="#Supervised-Hierarchical-Dirichlet-Latent-Semantic-Motifs"> </a></h2><h2 id="Two-step-Inference-for-Sequences-of-Ornstein-Uhlenbeck-Processes">Two-step Inference for Sequences of Ornstein Uhlenbeck Processes<a class="anchor-link" href="#Two-step-Inference-for-Sequences-of-Ornstein-Uhlenbeck-Processes"> </a></h2><h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"></ol></p>
 
 </div>
 </div>

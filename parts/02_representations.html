@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/02_representations.html",
   "headline": "Learning sensible representations for time series",
-  "datePublished": "2020-03-21T08:55:35+01:00",
-  "dateModified": "2020-03-21T08:55:35+01:00",
+  "datePublished": "2020-03-21T16:35:25+01:00",
+  "dateModified": "2020-03-21T16:35:25+01:00",
   "description": "        Learning sensible representations for time series    Another track of research I have been following over the past years is thelearning of latent rep...",
   "author": {
     "@type": "Person",
@@ -1005,13 +1005,13 @@ initFunction(initPrint)
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Another track of research I have been following over the past years is the
 learning of latent representations for time series.
-In <a href="02/topic_models.html">Sec 2.1</a>, latent representations consist in mixture
-coefficients, <em>ie.</em> time series are represented <em>via</em> the amount of presence of
-learned topics they hold.
-In <a href="02/shapelets_cnn.html">Sec 2.2</a>, time series are represented through their
-filter responses, either in a Convolutional Neural Network (CNN) or a variant
-of CNN.
-Finally, in <a href="02/early.html">Sec 2.3</a>, I consider the task of early
+These latent representations can either be mixture coefficients
+(<em>cf.</em> <a href="02/topic_models.html">Sec 2.1</a>) -- in which case time series are
+represented as multinomial distributions over latent topics -- or intermediate
+neural networks feature maps (as in <a href="02/shapelets_cnn.html">Sec 2.2</a> and
+<a href="02/early.html">Sec 2.3</a>) -- and then time series are represented through
+filter activations they trigger.
+More specifically, in <a href="02/early.html">Sec 2.3</a>, we focus on the task of early
 classification of time series. In this context, a method is introduced that
 learns an intermediate representation from which both the decision of
 triggering classification and the classification itself can be computed.</p>
