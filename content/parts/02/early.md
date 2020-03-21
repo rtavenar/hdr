@@ -34,12 +34,13 @@ classification of time series that balances earliness and accuracy.
 The cost function is of the following form:
 
 \begin{equation}
-\mathcal{L}(y, \hat{y}, t) = \mathcal{L}_c(y, \hat{y}) + \alpha t
+\mathcal{L}(y, \hat{y}, t, \boldsymbol{\theta}) =
+    \mathcal{L}_c(y, \hat{y}, \boldsymbol{\theta}) + \alpha t
 \label{eq:loss_early}
 \end{equation}
 
 where $\hat{y}$ is the class predicted by the model,
-$\mathcal{L}_c(\cdot,\cdot)$ is a
+$\mathcal{L}_c(\cdot,\cdot,\cdot)$ is a
 classification loss and $t$ is the timestamp at which a
 decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
@@ -205,13 +206,14 @@ the first time stamp, whatever the data).
 We introduced the following loss function:
 
 \begin{equation}
-    \mathcal{L}(y, \hat{y}, t) =
-        \alpha \mathcal{L}_c(y, \hat{y}) - (1-\alpha) P(\hat{y}=y)
+    \mathcal{L}(y, \hat{y}, t, \boldsymbol{\theta}) =
+        \alpha \mathcal{L}_c(y, \hat{y}, \boldsymbol{\theta})
+            - (1-\alpha) P_\boldsymbol{\theta}(\hat{y}=y)
             \left( \frac{T-t}{T} \right)
 \end{equation}
 
-where $P(\hat{y}=y)$ is the probability (as assigned by the classification
-model) to generate $y$ as an output.
+where $P_\boldsymbol{\theta}(\hat{y}=y)$ is the probability (as assigned by the
+classification model) to generate $y$ as an output.
 The second part in this loss function is an earliness reward, which is taken
 into account iff the procided decision is sound (_ie._ the correct class is
 predicted with non-zero probability).

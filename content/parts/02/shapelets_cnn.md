@@ -387,6 +387,233 @@ representation is useful for time series indexing tasks.
 
 ## Including Localization Information
 
+<!-- #region {"tags": ["popout"]} -->
+**Note.** This work was part of Mael Guillemé's PhD thesis.
+I was not involved in Mael's PhD supervision.
+<!-- #endregion -->
+
+The shapelet transform, as defined above, does not hold localization
+information. Several options could be considered to add such kind of
+information. First, the global pooling step could be turned into local pooling
+to keep track of local shapelet distances.
+In {% cite TODO %}}, we rather focused on augmenting the feature
+representation with shapelet match localization features.
+
+Relying on a set of random shapelets (shapelets that are extracted uniformly at
+random from the set of all subseries in the training set)
+$\{\mathbf{s_k}\}_{k < p}$,
+each time series is embedded into a $2p$-dimensional feature that stores, for
+each shapelet, the shapelet distance $d_{\mathbf{s_k}}(\cdot)$ as well as
+optimal  match localization $l_{\mathbf{s_k}}(\cdot)$:
+
+\begin{eqnarray}
+    d_{\mathbf{s_k}}(\mathbf{x}) &=& \min_t
+        \|\mathbf{x}_{t \rightarrow t+L_k} - \mathbf{s_k}\| \\
+    l_{\mathbf{s_k}}(\mathbf{x}) &=& \arg \min_t
+        \|\mathbf{x}_{t \rightarrow t+L_k} - \mathbf{s_k}\|
+\end{eqnarray}
+
+where $L_k$ is the length of the $k$-th shapelet and
+$\mathbf{x}_{t \rightarrow t+L_k}$
+is the subseries from $\mathbf{x}$ that starts at timestamp $t$ and has length
+$L_k$.
+
+In the random shapelet setting, a large number of shapelets are drawn and
+feature selection is used afterwards to focus on most useful shapelets.
+In our specific context, we have introduced a structured feature selection
+mechanism that allows, for each shapelet, to either:
+
+* discard all information (match magnitude and localization);
+* keep shapelet distance information and discard localization information;
+* keep all information (match magnitude and localization).
+
+To do so, we have introduced a modified Group-Lasso (called
+Semi-Sparse Group Lasso) loss that allows to enforce sparsity on some individual
+variables only:
+
+\begin{equation}
+    \mathcal{L}^{\mathrm{SSGL}}(y, \hat{y}, \boldsymbol{\theta}) =
+        \mathcal{L}(y, \hat{y}, \boldsymbol{\theta})
+        + \alpha \lambda
+            \left\| \mathbf{M}_\text{ind} \boldsymbol{\beta} \right\|_1
+        + (1-\alpha) \lambda \sum_{k=1}^{K} \sqrt{p_k}
+            \left\| \boldsymbol{\beta}^{(k)} \right\|_2
+\end{equation}
+
+where $\mathbf{M}_\text{ind}$ is a diagonal indicator matrix that has ones on
+the diagonal for features that could be discarded individually (localization
+features in our random shapelet case), $\boldsymbol{\theta}$ is the set of
+all model weights, including weights $\boldsymbol{\beta}$ that are directly
+connected to the features (_ie._ these are weights from the first layer), that
+are organized in groups $\boldsymbol{\beta}^{(k)}$ of size $p_k$ ($p_k=2$ in the
+random shapelet context), each group corresponding to a different shapelet.
+
+```python tags=["hide_input"]
+%config InlineBackend.figure_format = 'svg'
+import matplotlib.pyplot as plt
+import numpy
+
+plt.ion()
+
+def plot_results(beta_star,
+                 beta_hat_ssgl=None, mse_ssgl=None,
+                 beta_hat_sgl=None, mse_sgl=None):
+    plt.figure(figsize=(6, 2))
+    plt.set_cmap("tab10")
+    ind = numpy.arange(dim)
+    width = 0.25
+    plt.bar(ind, numpy.abs(beta_star), width,
+            label="Ground-truth",
+            lw=2,
+            alpha=0.6)
+    if beta_hat_ssgl is not None:
+        plt.bar(ind+width, numpy.abs(beta_hat_ssgl), width,
+                label="SSGL (MSE=%.2f)" % mse_ssgl,
+                lw=2,
+                alpha=0.6)
+    if beta_hat_sgl is not None:
+        plt.bar(ind+2*width, numpy.abs(beta_hat_sgl), width,
+                label="SGL (MSE=%.2f)" % mse_sgl,
+                lw=2,
+                alpha=0.6)
+    plt.gca().set_yscale("log")
+
+    labels = []
+    for group_id in range(3):
+        for feature_id in range(n_features_per_group):
+            labels.append("$\\beta_%d^{(%d)}$" % (feature_id + 1, group_id + 1))
+    plt.legend(loc="upper left")
+    plt.ylabel("Beta values")
+    plt.gca().set_xticklabels(labels)
+    plt.gca().set_xticks(numpy.arange(6) + .3)
+    plt.tight_layout(pad=2.)
+```
+
+Given data generated with a process that is similar to what our SSGL
+regularization can handle:
+
+```python
+numpy.random.seed(0)
+
+n_groups = 3
+n_features_per_group = 2
+n = 1000
+noise_level = .01
+
+dim = n_groups * n_features_per_group
+groups = numpy.repeat(numpy.arange(n_groups), n_features_per_group)
+ind_sparse = numpy.zeros((dim,))
+ind_sparse[0] = 1.
+ind_sparse[2] = 1.
+ind_sparse[4] = 1.
+
+beta_star = numpy.array([0., 0., 0.005, 0., 1.5, 2.])
+
+X = numpy.random.randn(n, dim)
+y = numpy.dot(X, beta_star) + noise_level * numpy.random.rand(n)
+
+X_test = numpy.random.randn(n, dim)
+y_test = numpy.dot(X_test, beta_star) + noise_level * numpy.random.rand(n)
+```
+
+and using the following `PyTorch` code for our model definition:
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class SemiSparseGroupLasso(nn.Module):
+    def __init__(self, dim_input, groups, indices_sparse, alpha, lbda):
+        super().__init__()
+        self.dim_input = dim_input
+        self.linear_layer = nn.Linear(dim_input, 1)
+        self.groups = torch.Tensor(groups)
+        self.indices_sparse = torch.Tensor(indices_sparse)
+        self.alpha = alpha
+        self.lbda = lbda
+        self.set_groups = set(groups)
+
+    @property
+    def coef_(self):
+        return self.linear_layer.weight.detach().numpy()
+
+    def forward(self, X):
+        return self.linear_layer(X)
+
+    def loss_(self, y_hat, y):
+        l = nn.MSELoss()(y_hat, y)
+        l1_norm = torch.norm(
+            self.linear_layer.weight.flatten() * self.indices_sparse,
+            p=1
+        )
+        l += self.lbda * self.alpha * l1_norm
+        for gr_id in self.set_groups:
+            indices_k = self.groups == gr_id
+            p_k = indices_k.sum(dtype=torch.float)
+            l2_norm_k = torch.norm(self.linear_layer.weight[0, indices_k], p=2)
+            l += self.lbda * (1. - self.alpha) * torch.sqrt(p_k) * l2_norm_k
+        return l
+
+    def fit(self, X, y):
+        X_ = torch.Tensor(X)
+        y_ = torch.Tensor(y.reshape((-1, 1)))
+        assert X_.size(1) == self.dim_input
+
+        optimizer = optim.Adam(self.parameters(), lr=1e-2)
+        for t in range(2000):
+            y_pred = self(X_)
+
+            loss = self.loss_(y_pred, y_)
+            self.zero_grad()
+            loss.backward()
+            optimizer.step()
+        return self
+
+    def predict_numpy1d(self, X):
+        X_ = torch.Tensor(X)
+        return self.linear_layer(X_).detach().numpy().reshape((-1, ))
+```
+
+we get:
+
+```python tags=["hide_input"]
+from sklearn.linear_model import Lasso
+
+numpy.random.seed(0)
+torch.manual_seed(0)
+
+model_ssgl = SemiSparseGroupLasso(dim_input=6, groups=groups,
+                                  indices_sparse=ind_sparse,
+                                  alpha=.5, lbda=1e-2)
+model_ssgl.fit(X, y)
+beta_hat_ssgl = model_ssgl.coef_.flatten()
+mse_ssgl = numpy.sum((model_ssgl.predict_numpy1d(X_test) - y_test) ** 2)
+
+model_sgl = SemiSparseGroupLasso(dim_input=6, groups=groups,
+                                 indices_sparse=numpy.ones(ind_sparse.shape),
+                                 alpha=.5, lbda=1e-2)
+model_sgl.fit(X, y)
+beta_hat_sgl = model_sgl.coef_.flatten()
+mse_sgl = numpy.sum((model_sgl.predict_numpy1d(X_test) - y_test) ** 2)
+
+plot_results(
+    beta_star,
+    beta_hat_ssgl=beta_hat_ssgl, mse_ssgl=mse_ssgl,
+    beta_hat_sgl=beta_hat_sgl, mse_sgl=mse_sgl
+)
+```
+
+and one can notice that SSGL slightly outperforms Sparse-Group Lasso (SGL) in
+terms of both Mean Squared Error (MSE) and estimation of zero coefficients.
+
+When applied to the specific case of random shapelets, we have shown that this
+lead to improved accuracy as soon as datasets are large enough for coefficients
+to be properly estimated.
+
+## Learning Shapelets that Look Like Time Series Snippets
+
+**TODO: decide whether I should include this or not**
 
 
 ## References

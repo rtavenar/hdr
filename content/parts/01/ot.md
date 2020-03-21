@@ -302,8 +302,6 @@ We also exhibit classification results for FGW embedded in a Gaussian kernel
 SVM which leads to state-of-the-art performance (even outperforming graph
 neural network approaches) on a wide range of graph classification problems.
 
-**TODO: at some point, highlight Sliced Gromov Wasserstein also.**
-
 ## References
 
 {% bibliography --cited %}
