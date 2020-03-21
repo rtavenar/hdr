@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/02/early.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-19T23:29:47+01:00",
-  "dateModified": "2020-03-19T23:29:47+01:00",
+  "datePublished": "2020-03-21T08:55:35+01:00",
+  "dateModified": "2020-03-21T08:55:35+01:00",
   "description": "# Early Classification of Time SeriesEarly classification of time series is the task of performing a classificationas early as possible for an incoming time ...",
   "author": {
     "@type": "Person",
@@ -1016,12 +1016,13 @@ classification of time series that balances earliness and accuracy.</p>
 <p>The cost function is of the following form:</p>
 
 <p>\begin{equation}
-\mathcal{L}(y, \hat{y}, t) = \mathcal{L}_c(y, \hat{y}) + \alpha t
+\mathcal{L}(y, \hat{y}, t, \boldsymbol{\theta}) =
+    \mathcal{L}_c(y, \hat{y}, \boldsymbol{\theta}) + \alpha t
 \label{eq:loss_early}
 \end{equation}</p>
 
 <p>where $\hat{y}$ is the class predicted by the model,
-$\mathcal{L}_c(\cdot,\cdot)$ is a
+$\mathcal{L}_c(\cdot,\cdot,\cdot)$ is a
 classification loss and $t$ is the timestamp at which a
 decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
@@ -1191,13 +1192,14 @@ the first time stamp, whatever the data).
 We introduced the following loss function:</p>
 
 <p>\begin{equation}
-    \mathcal{L}(y, \hat{y}, t) =
-        \alpha \mathcal{L}_c(y, \hat{y}) - (1-\alpha) P(\hat{y}=y)
+    \mathcal{L}(y, \hat{y}, t, \boldsymbol{\theta}) =
+        \alpha \mathcal{L}<em>c(y, \hat{y}, \boldsymbol{\theta})
+            - (1-\alpha) P</em>\boldsymbol{\theta}(\hat{y}=y)
             \left( \frac{T-t}{T} \right)
 \end{equation}</p>
 
-<p>where $P(\hat{y}=y)$ is the probability (as assigned by the classification
-model) to generate $y$ as an output.
+<p>where $P_\boldsymbol{\theta}(\hat{y}=y)$ is the probability (as assigned by the
+classification model) to generate $y$ as an output.
 The second part in this loss function is an earliness reward, which is taken
 into account iff the procided decision is sound (<em>ie.</em> the correct class is
 predicted with non-zero probability).</p>
@@ -1212,7 +1214,7 @@ in this context in <a class="citation" href="#ruwurm:hal-02343851">(Rußwurm, Ta
 <h2 id="references">References</h2>
 
 <ol class="bibliography"><li><span id="dachraoui2015early">Dachraoui, A., Bondu, A., &amp; Cornuéjols, A. (2015). Early classification of time series as a non myopic sequential decision making problem. In <i>Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i> (pp. 433–447). Springer.</span></li>
-<li><span id="tavenard:halshs-01339007">Tavenard, R., &amp; Malinowski, S. (2016). Cost-Aware Early Classification of Time Series. In <i>Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i> (pp. 632–647). Riva del Garda, Italy. Retrieved from https://halshs.archives-ouvertes.fr/halshs-01339007</span></li>
+<li><span id="tavenard:halshs-01339007">Tavenard, R., &amp; Malinowski, S. (2016). Cost-Aware Early Classification of Time Series. In <i>Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i> (pp. 632–647). Riva del Garda, Italy.</span></li>
 <li><span id="ruwurm:hal-02174314">Rußwurm, M., Lefevre, S., Courty, N., Emonet, R., Körner, M., &amp; Tavenard, R. (2019). <i>End-to-end Learning for Early Classification of Time Series</i>.</span></li>
 <li><span id="ruwurm:hal-02343851">Rußwurm, M., Tavenard, R., Lefèvre, S., &amp; Körner, M. (2019). Early Classification for Agricultural Monitoring from Satellite Time Series. In <i>AI for Social Good Workshop at International Conference on Machine Learning (ICML)</i>. Long Beach, United States.</span></li></ol>
 
