@@ -28,24 +28,27 @@ This work is available as preprint {% cite vayer2020time %}.
 
 ## Definition
 
-Let $\mathbf{x} \in \mathrm{R}^{T_x \times p_x}$ and
-$\mathbf{y} \in \mathrm{R}^{T_y \times p_y}$ be two time series.
-In the following, we assume $p_x \geq p_y$ without loss of generality.
-In order to allow comparison between time series $\mathbf{x}$ and $\mathbf{y}$,
-we will optimize on a family of functions $\mathcal{F}$ that map $\mathbf{y}$
-onto the feature space in which $\mathbf{x}$ lies.
+Let $\mathbf{x}$ and $\mathbf{x'}$ be two time series of respective lengths $n$
+and $m$.
+Here, features from both time series are not assumed to lie in the same ambient
+space, but it is assumed that features from $\mathbf{x}$ lie in $\mathrm{R}^p$
+while features from $\mathbf{x'}$ lie in $\mathrm{R}^{p'}$
+In the following, we assume $p \geq p'$ without loss of generality.
+In order to allow comparison between time series $\mathbf{x}$ and $\mathbf{x'}$,
+we will optimize on a family of functions $\mathcal{F}$ that map features from
+$\mathbf{x'}$ onto the feature space in which features from $\mathbf{x}$ lie.
 More formally, we define Dynamic Time Warping with Global Invariances
 (DTW-GI) as the solution of the following joint optimization problem:
 
 \begin{equation}
-    \text{DTW-GI}(\mathbf{x}, \mathbf{y}) =
-        \min_{f \in \mathcal{F}, \pi \in \mathcal{A}(\mathbf{x}, \mathbf{y})}
-            \sum_{(i, j) \in \pi} d(\mathbf{x}_i, f(\mathbf{y}_j)),
+    \text{DTW-GI}(\mathbf{x}, \mathbf{x'}) =
+        \min_{f \in \mathcal{F}, \pi \in \mathcal{A}(\mathbf{x}, \mathbf{x'})}
+            \sum_{(i, j) \in \pi} d(x_i, f({x'}_j)),
     \label{eq:dtwgi}
 \end{equation}
 
-where $\mathcal{F}$ is a family of functions from $\mathrm{R}^{p_y}$ to
-$\mathrm{R}^{p_x}$.
+where $\mathcal{F}$ is a family of functions from $\mathrm{R}^{p'}$ to
+$\mathrm{R}^{p}$.
 
 This similarity measure estimates both temporal alignment and feature space
 transformation between time series simultaneously, allowing the alignment of

@@ -39,32 +39,8 @@
   expand_sections: true
   sections:
   - url: /parts/02/topic_models
-    # expand_subsections: false
-    # subsections:
-    # - url: /parts/02/hdlsm
-    #   not_numbered: true
-    # - url: /parts/02/lda
-    #   not_numbered: true
-    # - url: /parts/02/traj
-    #   not_numbered: true
   - url: /parts/02/shapelets_cnn
-    # expand_subsections: false
-    # subsections:
-    # - url: /parts/02/data_aug
-    #   not_numbered: true
-    # - url: /parts/02/ldps
-    #   not_numbered: true
-    # - url: /parts/02/random_shapelets
-    #   not_numbered: true
-    # - url: /parts/02/realistic_shapelets
-    #   not_numbered: true
   - url: /parts/02/early
-    # expand_subsections: false
-    # subsections:
-    # - url: /parts/02/early_noclust
-    #   not_numbered: true
-    # - url: /parts/02/early_rnn
-    #   not_numbered: true
 
 - url: /parts/conclu
   not_numbered: true

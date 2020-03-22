@@ -20,43 +20,44 @@ This section covers my works related to Dynamic Time Warping for time series.
 <!-- #region {"tags": ["popout"]} -->
 **Note.** In ``tslearn``, such time series would be represented as arrays of
 respective
-shapes `(n, d)` and `(m, d)` and DTW can be computed using the following code:
+shapes `(n, p)` and `(m, p)` and DTW can be computed using the following code:
 
 ```python
 from tslearn.metrics import dtw, dtw_path
 
-dtw_score = dtw(x, y)
+dtw_score = dtw(x, x_prime)
 # Or, if the path is also
 # an important information:
-path, score = dtw_path(x, y)
+path, score = dtw_path(x, x_prime)
 ```
 <!-- #endregion -->
 
 Dynamic Time Warping (DTW) {% cite sakoe1978dynamic %} is a similarity measure
 between time series.
-Let us consider two time series $x = (x_0, \dots, x_{n-1})$ and
-$y = (y_0, \dots, y_{m-1})$ of respective lengths $n$ and
+Let us consider two time series $\mathbf{x}$ and
+$\mathbf{x'}$ of respective lengths $n$ and
 $m$.
-Here, all elements $x_i$ and $y_j$ are assumed to lie in the same
-$d$-dimensional space and the exact timestamps at which observations occur are
+Here, all elements $x_i$ and ${x'}_j$ are assumed to lie in the same
+$p$-dimensional space and the exact timestamps at which observations occur are
 considered uninformative: only their ordering matters.
 
 ## Optimization problem
 
-DTW between $x$ and $y$ is formulated as the following
+DTW between $\mathbf{x}$ and $\mathbf{x'}$ is formulated as the following
 optimization problem:
 
 \begin{equation}
-DTW(x, y) = \min_\pi \sqrt{ \sum_{(i, j) \in \pi} d(x_i, y_j)^2 }
+DTW(\mathbf{x}, \mathbf{x'}) =
+    \sqrt{ \min_{\pi \in \mathcal{A}(\mathbf{x}, \mathbf{x'})}
+        \sum_{(i, j) \in \pi} d(x_i, {x'}_j)^2 }
 \label{eq:dtw}
 \end{equation}
 
+where \mathcal{A}(\mathbf{x}, \mathbf{x'})} is the set of all admissible paths,
+_ie._ the set of paths $\pi$ that satisfy:
 
-where $\pi = [\pi_0, \dots , \pi_{K-1}]$ is a path that satisfies the
-following properties:
-
-* it is a list of index pairs $\pi_k = (i_k, j_k)$ with
-  $0 \leq i_k < n$ and $0 \leq j_k < m$
+* it is a list $\pi = [\pi_0, \dots , \pi_{K-1}]$ of index pairs
+  $\pi_k = (i_k, j_k)$ with $0 \leq i_k < n$ and $0 \leq j_k < m$
 * $\pi_0 = (0, 0)$ and $\pi_{K-1} = (n - 1, m - 1)$
 * for all $k > 0$ , $\pi_k = (i_k, j_k)$ is related to
   $\pi_{k-1} = (i_{k-1}, j_{k-1})$ as follows:
@@ -65,10 +66,10 @@ following properties:
   * $j_{k-1} \leq j_k \leq j_{k-1} + 1$
 
 Here, a path can be seen as a temporal alignment of time series such that
-Euclidean distance between aligned (ie. resampled) time series is minimal.
+Euclidean distance between aligned (_ie._ resampled) time series is minimal.
 
 The following image exhibits the DTW path (in white) for a given pair of time
-series, on top of the cross-similarity matrix that stores $d(x_i, y_j)$
+series, on top of the cross-similarity matrix that stores $d(x_i, {x'}_j)$
 values.
 
 <!-- #region {"tags": ["popout"]} -->
@@ -85,10 +86,10 @@ There exists an $O(mn)$ algorithm to compute the exact optimum for this
 problem:
 
 ```python
-def dtw(x, y):
+def dtw(x, x_prime):
   for i in range(n):
     for j in range(m):
-      dist = d(x[i], y[j]) ** 2
+      dist = d(x[i], x_prime[j]) ** 2
       if i == 0 and j == 0:
         C[i, j] = dist
       else:
@@ -107,10 +108,10 @@ def dtw(x, y):
 
 Dynamic Time Warping holds the following properties:
 
-* $\forall x, y, DTW(x, y) \geq 0$
-* $\forall x, DTW(x, x) = 0$
+* $\forall \mathbf{x}, \mathbf{x'}, DTW(\mathbf{x}, \mathbf{x'}) \geq 0$
+* $\forall \mathbf{x}, DTW(\mathbf{x}, \mathbf{x}) = 0$
 
-However, mathematically speaking, DTW is not a valid distance since it does
+However, mathematically speaking, DTW is not a valid metric since it does
 not satisfy the triangular inequality.
 
 ## Setting additional constraints
@@ -151,7 +152,7 @@ as illustrated below:
 ```python
 from tslearn.metrics import dtw
 cost = dtw(
-  x, y,
+  x, x_prime,
   global_constraint="sakoe_chiba",
   sakoe_chiba_radius=3
 )
@@ -181,7 +182,7 @@ paths, which leads to a parallelogram-shaped constraint:
 ```python
 from tslearn.metrics import dtw
 cost = dtw(
-  x, y,
+  x, x_prime,
   global_constraint="itakura",
   itakura_max_slope=2.
 )

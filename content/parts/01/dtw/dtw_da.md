@@ -77,14 +77,15 @@ This matching path can be viewed as the optimal way to perform point-wise
 alignment of time series.
 
 We used the matching path $\pi^\text{Q}$ to align each discharge time series to
-the same reference discharge time series $x_\text{ref}^\text{Q}$.
+the same reference discharge time series $* $\mathbf{x}_\text{ref}^\text{Q}$.
 The reference discharge time series used in this study was chosen
 as a storm event with full coverage of flow rise and flow recession phases.
 Alternatively, one could choose a synthetic idealized storm hydrograph.
 
 As stated above, the continuity condition imposed on admissible paths results
-in each element of reference time series $x_\text{ref}^\text{Q}$ being matched
-with at least one element in each discharge time series from the dataset.
+in each element of reference time series $\mathbf{x}_\text{ref}^\text{Q}$ being
+matched with at least one element in each discharge time series from the
+dataset.
 We then used barycentric mapping based on obtained matches to realign other
 modalities to the timestamps of the reference time series, as shown in the
 following Figure:
@@ -165,8 +166,6 @@ def plot_matches(ts0, ts1, ts0_resample, path):
     plt.tight_layout()
 ```
 
- **TODO Figure 5 in the notebook**
-
 ```python
 from tslearn.metrics import dtw_path
 
@@ -177,33 +176,33 @@ x_q_ref = to_time_series(
      0.30146932, 0.27417169]
 )
 
-y_q = to_time_series(
+x_prime_q = to_time_series(
     [0.12127299, 0.12750528, 0.14748864, 0.17853797, 0.2815324 , 0.3848446,
      0.51661235, 0.6876372 , 0.83539414, 0.96088103, 1.        , 0.82093283,
      0.70602368, 0.56334187, 0.47268893, 0.41283418, 0.3747808 , 0.34633213,
      0.32026957, 0.30550197]
 )
 
-y_srp = to_time_series(
+x_prime_srp = to_time_series(
     [0.26215067, 0.14032423, 0.07405513, 0.08556629, 0.07101746, 0.0891955 ,
      0.22119012, 0.32734859, 0.41433779, 0.43256379, 0.56561361, 0.81348724,
      0.93016563, 0.92843896, 0.71375583, 0.55979408, 0.43102897, 0.32704483,
      0.27554838, 0.26154313]
 )
 
-path, dist = dtw_path(y_q, x_q_ref)
+path, dist = dtw_path(x_prime_q, x_q_ref)
 
 # The resampling happens here:
 list_indices = [[ii for (ii, jj) in path if jj == j]
                 for j in range(len(x_q_ref))]
-y_q_resample = to_time_series(
-    [y_q[indices].mean(axis=0) for indices in list_indices]
+x_prime_q_resample = to_time_series(
+    [x_prime_q[indices].mean(axis=0) for indices in list_indices]
 )
-y_srp_resample = to_time_series(
-    [y_srp[indices].mean(axis=0) for indices in list_indices]
+x_prime_srp_resample = to_time_series(
+    [x_prime_srp[indices].mean(axis=0) for indices in list_indices]
 )
 
-plot_matches(y_q, x_q_ref, y_q_resample, path)
+plot_matches(x_prime_q, x_q_ref, x_prime_q_resample, path)
 ```
 
 ```python tags=["hide_input"]
@@ -263,9 +262,9 @@ plt.gca().axis("off")
 plt.tight_layout()
 ```
 
-At this point, each time series was transformed to series of $T_\text{ref}$
-$d$-dimensional measurements, where $T_\text{ref}$ is the length of the
-reference discharge time series and $d$ is the number of water quality
+At this point, each time series is transformed to series of $n$
+$p$-dimensional measurements, where $n$ is the length of the
+reference discharge time series and $p$ is the number of water quality
 parameters considered in the study (_i.e._ all modalities except discharge).
 In a second step, a standard $k$-means algorithm was used to cluster
 realigned time series.

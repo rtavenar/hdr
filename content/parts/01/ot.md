@@ -32,7 +32,8 @@ latter.
 
 ## Wasserstein and Gromov-Wasserstein distances
 
-Let $\mu = \sum_i h_i \delta_{x_i}$ and $\nu = \sum_j g_j \delta_{y_j}$ be two
+Let $\mu = \sum_i h_i \delta_{x_i}$ and $\mu' = \sum_i h^\prime_i \delta_{x^\prime_i}$
+be two
 discrete distributions lying in the same metric space $(\Omega, d)$.
 Then, the $p$-Wasserstein distance is defined as:
 
@@ -42,20 +43,20 @@ Time Warping in [Sec. 1.2](dtw.html)
 <!-- #endregion -->
 
 \begin{equation}
-    W_p(\mu, \nu) = \left(
-        \min_{\pi \in \Pi} \sum_{i,j} d(x_i, y_j)^p \pi_{i,j}
+    W_p(\mu, \mu') = \left(
+        \min_{\pi \in \Pi} \sum_{i,j} d(x_i, x^\prime_j)^p \pi_{i,j}
         \right)^{\frac{1}{p}}
     \label{eq:wass}
 \end{equation}
 
-where $\Pi$ is the set of all admissible couplings between $\mu$ and $\nu$
-(_ie._ the set of all matrices with maginals $h$ and $g$).
+where $\Pi$ is the set of all admissible couplings between $\mu$ and $\mu'$
+(_ie._ the set of all matrices with marginals $h$ and $h'$).
 
 This distance is illustrated in the following Figure:
 
 ![](../../images/wass.png)
 
-When distributions $\mu$ and $\nu$ do not lie in the same ambiant space,
+When distributions $\mu$ and $\mu'$ do not lie in the same ambient space,
 however, one cannot compute their Wasserstein distance. An alternative that was
 introduced in {% cite memoli2011gromov %} relies on matching intra-domain
 distances, as illustrated below:
@@ -65,16 +66,17 @@ distances, as illustrated below:
 The corresponding distance is the Gromov-Wasserstein distance, defined as:
 
 \begin{equation}
-    GW_p(\mu, \nu) = \left(
+    GW_p(\mu, \mu') = \left(
         \min_{\pi \in \Pi}
             \sum_{i,j,k,l}
-            \left| d_X(x_i, x_k) - d_Y(y_j, y_l) \right|^p \pi_{i,j} \pi_{k,l}
+            \left| d_\mu(x_i, x_k) - d_{\mu'}(x^\prime_j, x^\prime_l) \right|^p
+            \pi_{i,j} \pi_{k,l}
         \right)^{\frac{1}{p}}
     \label{eq:gw}
 \end{equation}
 
-where $d_X$ (resp. $d_Y$) is the metric associated to the space in which
-$\mu$ (resp. $\nu$) lies.
+where $d_\mu$ (resp. $d_{\mu'}$) is the metric associated to the space in which
+$\mu$ (resp. $\mu'$) lies.
 
 ### Sliced Gromov-Wasserstein
 
@@ -83,7 +85,7 @@ Equation \eqref{eq:gw} is high in general.
 However, we have shown in {% cite vayer:hal-02174309 %} that in the
 mono-dimensional case, this problem can be seen as an instance of the Quadratic
 Assignment Problem {% cite koopmans1957assignment %}.
-We have provided closed form solution for this instance.
+We have provided a closed form solution for this instance.
 In a nutshell, our solution consists in sorting mono-dimensional distributions
 and either matching elements from both distributions in order or in reverse
 order, leading to a $O(n \log n)$ algorithm that exactly solves this problem.
@@ -144,10 +146,10 @@ describes the entire structured data:
 
 ### Distance definition and properties
 
-Let $\mathcal{G}_1$ and $\mathcal{G}_2$ be two graphs, described respectively
+Let $\mathcal{G}$ and $\mathcal{G}'$ be two graphs, described respectively
 by their probability measure $\mu= \sum_{i=1}^{n} h_{i} \delta_{(x_{i},a_{i})}$
-and $\nu= \sum_{i=1}^{m} g_{j} \delta_{(y_{j},b_{j})}$.
-Their structure matrices are denoted $C_{1}$ and $C_{2}$, respectively.
+and $\mu' = \sum_{i=1}^{m} h^\prime_i \delta_{(x^\prime_i,a^\prime_i)}$.
+Their structure matrices are denoted $C$ and $C'$, respectively.
 
 
 We define a novel Optimal Transport discrepancy called the
@@ -156,21 +158,21 @@ It is defined, for a trade-off parameter  $\alpha \in [0,1]$, as
 
 \begin{equation}
 \label{discretefgw}
-FGW_{q, \alpha} (\mu, \nu) = \min_\pi E_{q}(\mathcal{G}_1, \mathcal{G}_2, \pi)
+FGW_{q, \alpha} (\mu, \mu') = \min_\pi E_{q}(\mathcal{G}, \mathcal{G}', \pi)
 \end{equation}
 
-where $\pi$ is a transport map (_i.e._ it has marginals $h$ and $g$) and
+where $\pi$ is a transport map (_i.e._ it has marginals $h$ and $h'$) and
 
 \begin{equation}
-E_{q}(\mathcal{G}_1, \mathcal{G}_2, \pi) =
-    \sum_{i,j,k,l} (1-\alpha) d(a_{i},b_{j})^{q}
-                    +\alpha |C_{1}(i,k)-C_{2}(j,l)|^{q} \pi_{i,j}\pi_{k,l} .
+E_{q}(\mathcal{G}, \mathcal{G}', \pi) =
+    \sum_{i,j,k,l} (1-\alpha) d(a_{i},a^\prime_j)^{q}
+                    +\alpha |C(i,k)-C'(j,l)|^{q} \pi_{i,j}\pi_{k,l} .
 \end{equation}
 
 The FGW distance looks for the coupling $\pi$ between vertices of the
 graphs that minimizes the cost $E_{q}$ which is a linear combination of a cost
-$d(a_{i},b_{j})$ of transporting one feature $a_{i}$ to a feature $b_{j}$ and a
-cost $|C_{1}(i,k)-C_{2}(j,l)|$ of transporting pairs of nodes in each structure.
+$d(a_{i},a^\prime_j)$ of transporting one feature $a_{i}$ to a feature $a^\prime_j$
+and a cost $|C(i,k)-C'(j,l)|$ of transporting pairs of nodes in each structure.
 As such, the optimal coupling tends to associate pairs of feature and
 structure points with similar distances within each structure pair and with
 similar features.

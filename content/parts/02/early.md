@@ -122,7 +122,7 @@ into account:
 
 In other words, for this method to work, it is important that accuracy differs
 significantly between clusters, which is a condition that is difficult to ensure
-in practice.
+_a priori_.
 
 ### Pushing the Method to the Limit
 
@@ -190,7 +190,7 @@ to be learned for each time series length).
 Then, this feature is provided as input to two different heads, as shown in the
 following Figure:
 
-![](../../images/double_head_early.png)
+![half-width](../../images/double_head_early.png)
 
 * the first head (left) outputs a probability $P_t$ of making a decision at
 time $t$ (given that no decision has been made before): it plays the same role

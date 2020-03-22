@@ -33,8 +33,6 @@ for shallow Convolutional Neural Networks.
 The data augmentation strategies that were investigated in this work are
 local warping and window slicing and both lead to improvements.
 
-**TODO: code snippets for these two simple DA techniques**
-
 ## Learning to Mimic a Target Distance
 
 <!-- #region {"tags": ["popout"]} -->

@@ -33,7 +33,7 @@ by setting constraints on the length of the admissible warping paths
 ```python
 from tslearn.metrics import dtw_limited_warping_length
 cost = dtw_limited_warping_length(
-  x, y,
+  x, x_prime,
   max_length
 )
 ```
@@ -59,10 +59,10 @@ alignment scores for all admissible alignment path lengths.
 This gives the general LDTW algorithm:
 
 ```python
-def ldtw(x, y, max_length):
+def ldtw(x, x_prime, max_length):
   for i in range(n):
     for j in range(m):
-      dist = d(x[i], y[j]) ** 2
+      dist = d(x[i], x_prime[j]) ** 2
       C[i, j, :] = inf  # Set infinite cost for non-admissible lengths
       # The core difference with DTW is the following line:
       for l in admissible_lengths(i, j, max_length):

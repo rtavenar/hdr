@@ -17,14 +17,6 @@ jupyter:
 
 The method presented in this section consists in defining a kernel between
 sets of timestamped objects (typically features).
-Hence, time series considered in this section are supposed to be of the
-following form:
-
-\begin{equation}
-    \textbf{x} = \{ (x_0, t_0), \dots , (x_{n-1}, t_{n-1}) \}
-\end{equation}
-
-(each observation in the sequence is timestamped).
 This allows, in particular, to consider the case of irregularly sampled time
 series.
 
@@ -41,7 +33,7 @@ Based on this local kernel, one can compute the match kernel
 {% cite NIPS2009_3874 %} between sets of local features as:
 
 \begin{equation}
-    K(\textbf{x}, \textbf{y}) = \sum_i \sum_j k(x_i, y_j).
+    K(\textbf{x}, \textbf{x'}) = \sum_i \sum_j k(x_i, {x'}_j).
 \end{equation}
 
 And the Signature Quadratic Form Distance (SQFD,
@@ -50,8 +42,8 @@ between feature sets embedded in the Reproducing Kernel Hilbert Space (RKHS)
 associated with $K$:
 
 \begin{equation}
-    SQFD(\textbf{x}, \textbf{y})^2 = K(\textbf{x}, \textbf{x}) +
-        K(\textbf{y}, \textbf{y}) - 2 K(\textbf{x}, \textbf{y}).
+    SQFD(\textbf{x}, \textbf{x'})^2 = K(\textbf{x}, \textbf{x}) +
+        K(\textbf{x'}, \textbf{x'}) - 2 K(\textbf{x}, \textbf{x'}).
 \end{equation}
 
 ## Local temporal kernel
@@ -59,14 +51,14 @@ associated with $K$:
 We introduce a time-sensitive local kernel defined as:
 
 \begin{equation}
-    k_t((x_i, t_i), (y_j, t_j)) = e^{\gamma_t (t_j, - t_i)^2} k(x_i, y_j).
+    k_t((x_i, t_i), ({x'}_j, {t'}_j)) = e^{\gamma_t ({t'}_j - t_i)^2} k(x_i, {x'}_j).
 \end{equation}
 
 This kernel is positive semi definite (psd), as the product of two psd kernels
 and, if $k$ is the RBF kernel, it can be written as:
 
 \begin{equation}
-    k_t((x_i, t_i), (y_j, t_j)) = k(g(x_i, t_i), g(y_j, t_j)).
+    k_t((x_i, t_i), ({x'}_j, {t'}_j)) = k(g(x_i, t_i), g({x'}_j, {t'}_j)).
 \end{equation}
 with
 \begin{equation}
@@ -171,21 +163,22 @@ ax_s_y.plot(- s_y1, numpy.arange(s_y1.shape[0])[::-1],
             "b-", linewidth=3.);
 ```
 
-$k_t$ is then a RBF kernel itself, and kernel approximation techniques can be
-used in order to approximate it with a linear kernel {% cite NIPS2007_3182 %}.
+$k_t$ is then a RBF kernel itself, and kernel approximation techniques such as
+Random Fourier Features {% cite NIPS2007_3182 %} can be
+used in order to approximate it with a linear kernel.
 
 Let us assume that we have a feature map $\phi$ such that
 
 \begin{equation}
 k_t((x_{i}, t_i), (y_{j}, t_j)) \approx
-    \left\langle\phi(g(x_{i}, t_i)), \phi(g(y_{j}, t_j))\right\rangle,
+    \left\langle\phi(g(x_{i}, t_i)), \phi(g({x'}_{j}, {t'}_j))\right\rangle,
 \end{equation}
 then we have:
 
 \begin{equation}
-SQFD(\mathbf{x}, \mathbf{y}) \approx \left\|
+SQFD(\mathbf{x}, \mathbf{x'}) \approx \left\|
     \underbrace{\frac{1}{n}\sum_i \phi(g(x_{i}, t_i))}_{b_\phi(\mathbf{x})} -
-    \underbrace{\frac{1}{m}\sum_j \phi(g(y_{j}, t_j))}_{b_\phi(\mathbf{y})}
+    \underbrace{\frac{1}{m}\sum_j \phi(g({x'}_{j}, {t'}_j))}_{b_\phi(\mathbf{x'})}
     \right\|.
 \end{equation}
 
@@ -195,7 +188,7 @@ computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
 followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
 the dimension of the feature map $\phi(x)$.
 Note that SQFD then corresponds to a biased estimator of the squared
-difference between the mean of the samples $\mathbf{x}$ and $\mathbf{y}$ which
+difference between the mean of the samples $\mathbf{x}$ and $\mathbf{x'}$ which
 is classically used to test the difference between distributions
 {% cite NIPS2006_3110 %}.
 
