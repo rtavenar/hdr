@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/02/early.html",
   "headline": "Early Classification of Time Series",
-  "datePublished": "2020-03-21T16:35:25+01:00",
-  "dateModified": "2020-03-21T16:35:25+01:00",
+  "datePublished": "2020-03-22T15:30:14+01:00",
+  "dateModified": "2020-03-22T15:30:14+01:00",
   "description": "        Early Classification of Time Series    Early classification of time series is the task of performing a classificationas early as possible for an inco...",
   "author": {
     "@type": "Person",
@@ -1104,7 +1104,7 @@ into account:</p>
         A_{t+\tau} + \alpha t \\
 \end{eqnarray}<p>In other words, for this method to work, it is important that accuracy differs
 significantly between clusters, which is a condition that is difficult to ensure
-in practice.</p>
+<em>a priori</em>.</p>
 <h3 id="Pushing-the-Method-to-the-Limit">Pushing the Method to the Limit<a class="anchor-link" href="#Pushing-the-Method-to-the-Limit"> </a></h3><p>In <a class="citation" href="#tavenard:halshs-01339007">(Tavenard &amp; Malinowski, 2016)</a>, we pushed this method to the limit
 where the number of clusters is equal to the number of training time series.
 In this case, the limitation exposed above does not hold anymore.</p>
@@ -1174,7 +1174,7 @@ series whatever their length (and hence a different feature extractor need not
 to be learned for each time series length).
 Then, this feature is provided as input to two different heads, as shown in the
 following Figure:</p>
-<p><img src="../../images/double_head_early.png" alt=""></p>
+<p><img src="../../images/double_head_early.png" alt="half-width"></p>
 <ul>
 <li>the first head (left) outputs a probability $P_t$ of making a decision at
 time $t$ (given that no decision has been made before): it plays the same role

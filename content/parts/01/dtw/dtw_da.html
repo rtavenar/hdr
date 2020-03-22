@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_da.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-21T16:35:25+01:00",
-  "dateModified": "2020-03-21T16:35:25+01:00",
+  "datePublished": "2020-03-22T15:30:14+01:00",
+  "dateModified": "2020-03-22T15:30:14+01:00",
   "description": "# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not involved ...",
   "author": {
     "@type": "Person",
@@ -1061,14 +1061,15 @@ This matching path can be viewed as the optimal way to perform point-wise
 alignment of time series.</p>
 
 <p>We used the matching path $\pi^\text{Q}$ to align each discharge time series to
-the same reference discharge time series $x_\text{ref}^\text{Q}$.
+the same reference discharge time series $* $\mathbf{x}_\text{ref}^\text{Q}$.
 The reference discharge time series used in this study was chosen
 as a storm event with full coverage of flow rise and flow recession phases.
 Alternatively, one could choose a synthetic idealized storm hydrograph.</p>
 
 <p>As stated above, the continuity condition imposed on admissible paths results
-in each element of reference time series $x_\text{ref}^\text{Q}$ being matched
-with at least one element in each discharge time series from the dataset.
+in each element of reference time series $\mathbf{x}_\text{ref}^\text{Q}$ being
+matched with at least one element in each discharge time series from the
+dataset.
 We then used barycentric mapping based on obtained matches to realign other
 modalities to the timestamps of the reference time series, as shown in the
 following Figure:</p>
@@ -1149,8 +1150,6 @@ plt.gca().axis("off")
 plt.tight_layout() ```
 </code></pre></div></div>
 
-<p><strong>TODO Figure 5 in the notebook</strong></p>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="kn">import</span> <span class="n">dtw_path</span>
 
 <span class="n">x_q_ref</span> <span class="o">=</span> <span class="n">to_time_series</span><span class="p">(</span>
@@ -1160,33 +1159,33 @@ plt.tight_layout() ```
      <span class="mf">0.30146932</span><span class="p">,</span> <span class="mf">0.27417169</span><span class="p">]</span>
 <span class="p">)</span>
 
-<span class="n">y_q</span> <span class="o">=</span> <span class="n">to_time_series</span><span class="p">(</span>
+<span class="n">x_prime_q</span> <span class="o">=</span> <span class="n">to_time_series</span><span class="p">(</span>
     <span class="p">[</span><span class="mf">0.12127299</span><span class="p">,</span> <span class="mf">0.12750528</span><span class="p">,</span> <span class="mf">0.14748864</span><span class="p">,</span> <span class="mf">0.17853797</span><span class="p">,</span> <span class="mf">0.2815324</span> <span class="p">,</span> <span class="mf">0.3848446</span><span class="p">,</span>
      <span class="mf">0.51661235</span><span class="p">,</span> <span class="mf">0.6876372</span> <span class="p">,</span> <span class="mf">0.83539414</span><span class="p">,</span> <span class="mf">0.96088103</span><span class="p">,</span> <span class="mf">1.</span>        <span class="p">,</span> <span class="mf">0.82093283</span><span class="p">,</span>
      <span class="mf">0.70602368</span><span class="p">,</span> <span class="mf">0.56334187</span><span class="p">,</span> <span class="mf">0.47268893</span><span class="p">,</span> <span class="mf">0.41283418</span><span class="p">,</span> <span class="mf">0.3747808</span> <span class="p">,</span> <span class="mf">0.34633213</span><span class="p">,</span>
      <span class="mf">0.32026957</span><span class="p">,</span> <span class="mf">0.30550197</span><span class="p">]</span>
 <span class="p">)</span>
 
-<span class="n">y_srp</span> <span class="o">=</span> <span class="n">to_time_series</span><span class="p">(</span>
+<span class="n">x_prime_srp</span> <span class="o">=</span> <span class="n">to_time_series</span><span class="p">(</span>
     <span class="p">[</span><span class="mf">0.26215067</span><span class="p">,</span> <span class="mf">0.14032423</span><span class="p">,</span> <span class="mf">0.07405513</span><span class="p">,</span> <span class="mf">0.08556629</span><span class="p">,</span> <span class="mf">0.07101746</span><span class="p">,</span> <span class="mf">0.0891955</span> <span class="p">,</span>
      <span class="mf">0.22119012</span><span class="p">,</span> <span class="mf">0.32734859</span><span class="p">,</span> <span class="mf">0.41433779</span><span class="p">,</span> <span class="mf">0.43256379</span><span class="p">,</span> <span class="mf">0.56561361</span><span class="p">,</span> <span class="mf">0.81348724</span><span class="p">,</span>
      <span class="mf">0.93016563</span><span class="p">,</span> <span class="mf">0.92843896</span><span class="p">,</span> <span class="mf">0.71375583</span><span class="p">,</span> <span class="mf">0.55979408</span><span class="p">,</span> <span class="mf">0.43102897</span><span class="p">,</span> <span class="mf">0.32704483</span><span class="p">,</span>
      <span class="mf">0.27554838</span><span class="p">,</span> <span class="mf">0.26154313</span><span class="p">]</span>
 <span class="p">)</span>
 
-<span class="n">path</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">dtw_path</span><span class="p">(</span><span class="n">y_q</span><span class="p">,</span> <span class="n">x_q_ref</span><span class="p">)</span>
+<span class="n">path</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">dtw_path</span><span class="p">(</span><span class="n">x_prime_q</span><span class="p">,</span> <span class="n">x_q_ref</span><span class="p">)</span>
 
 <span class="c1"># The resampling happens here:
 </span><span class="n">list_indices</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ii</span> <span class="k">for</span> <span class="p">(</span><span class="n">ii</span><span class="p">,</span> <span class="n">jj</span><span class="p">)</span> <span class="ow">in</span> <span class="n">path</span> <span class="k">if</span> <span class="n">jj</span> <span class="o">==</span> <span class="n">j</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_q_ref</span><span class="p">))]</span>
-<span class="n">y_q_resample</span> <span class="o">=</span> <span class="n">to_time_series</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">y_q</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">list_indices</span><span class="p">]</span>
+<span class="n">x_prime_q_resample</span> <span class="o">=</span> <span class="n">to_time_series</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">x_prime_q</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">list_indices</span><span class="p">]</span>
 <span class="p">)</span>
-<span class="n">y_srp_resample</span> <span class="o">=</span> <span class="n">to_time_series</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">y_srp</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">list_indices</span><span class="p">]</span>
+<span class="n">x_prime_srp_resample</span> <span class="o">=</span> <span class="n">to_time_series</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">x_prime_srp</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">list_indices</span><span class="p">]</span>
 <span class="p">)</span>
 
-<span class="n">plot_matches</span><span class="p">(</span><span class="n">y_q</span><span class="p">,</span> <span class="n">x_q_ref</span><span class="p">,</span> <span class="n">y_q_resample</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+<span class="n">plot_matches</span><span class="p">(</span><span class="n">x_prime_q</span><span class="p">,</span> <span class="n">x_q_ref</span><span class="p">,</span> <span class="n">x_prime_q_resample</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>```python tags=[“hide_input”]
@@ -1246,9 +1245,9 @@ plt.gca().axis(“off”) <br />
 plt.tight_layout()
 ```</p>
 
-<p>At this point, each time series was transformed to series of $T_\text{ref}$
-$d$-dimensional measurements, where $T_\text{ref}$ is the length of the
-reference discharge time series and $d$ is the number of water quality
+<p>At this point, each time series is transformed to series of $n$
+$p$-dimensional measurements, where $n$ is the length of the
+reference discharge time series and $p$ is the number of water quality
 parameters considered in the study (<em>i.e.</em> all modalities except discharge).
 In a second step, a standard $k$-means algorithm was used to cluster
 realigned time series.

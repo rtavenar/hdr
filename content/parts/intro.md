@@ -18,6 +18,29 @@ parts, the first one being dedicated to the design of adequate similarity
 measures between structured data, while the second one focuses on methods that
 learn latent representations for temporal data.
 
+## Notations
+
+Throughout this document, the following notations will be used.
+
+A time series is a set of $n$ timestamped features:
+
+\begin{equation}
+    \textbf{x} = \{ (x_0, t_0), \dots , (x_{n-1}, t_{n-1}) \}
+\end{equation}
+
+where all $x_i$ lie in the same ambient space $\mathrm{R}^{p}$.
+Time series datasets will be denoted $(\mathbf{X}, \mathbf{y})$ (or just
+$\mathbf{X}$ for unsupervised methods) where
+$\mathbf{X} = \left( \mathbf{x}^{(0)}, \cdots, \mathbf{x}^{(N-1)} \right)$ is
+a set of $N$ time series (that do not necessarily share the same length) and
+$\mathbf{y}$ is a vector of target values.
+
+When subseries have to be considered, we will denote by
+$\mathbf{x}_{i \rightarrow j}$ the subseries extracted from $\mathbf{x}$ that
+starts at time index $i$ and stops at time index $j$ (excluded), and
+$\mathbf{x}_{\rightarrow j}$ will be a shortcut notation for the subseries that
+cover indexes 0 to $j$.
+
 
 ## References
 

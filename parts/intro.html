@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/intro.html",
   "headline": "Introduction",
-  "datePublished": "2020-03-21T16:35:25+01:00",
-  "dateModified": "2020-03-21T16:35:25+01:00",
+  "datePublished": "2020-03-22T15:30:14+01:00",
+  "dateModified": "2020-03-22T15:30:14+01:00",
   "description": "        Introduction    TODO: blah blah about time series, how important they are, etc..This document is an attempt to summarize my recent work related to th...",
   "author": {
     "@type": "Person",
@@ -1018,6 +1018,21 @@ maintenance of <a href="https://tslearn.readthedocs.io"><code>tslearn</code></a>
 parts, the first one being dedicated to the design of adequate similarity
 measures between structured data, while the second one focuses on methods that
 learn latent representations for temporal data.</p>
+<h2 id="Notations">Notations<a class="anchor-link" href="#Notations"> </a></h2><p>Throughout this document, the following notations will be used.</p>
+<p>A time series is a set of $n$ timestamped features:</p>
+\begin{equation}
+    \textbf{x} = \{ (x_0, t_0), \dots , (x_{n-1}, t_{n-1}) \}
+\end{equation}<p>where all $x_i$ lie in the same ambient space $\mathrm{R}^{p}$.
+Time series datasets will be denoted $(\mathbf{X}, \mathbf{y})$ (or just
+$\mathbf{X}$ for unsupervised methods) where
+$\mathbf{X} = \left( \mathbf{x}^{(0)}, \cdots, \mathbf{x}^{(N-1)} \right)$ is
+a set of $N$ time series (that do not necessarily share the same length) and
+$\mathbf{y}$ is a vector of target values.</p>
+<p>When subseries have to be considered, we will denote by
+$\mathbf{x}_{i \rightarrow j}$ the subseries extracted from $\mathbf{x}$ that
+starts at time index $i$ and stops at time index $j$ (excluded), and
+$\mathbf{x}_{\rightarrow j}$ will be a shortcut notation for the subseries that
+cover indexes 0 to $j$.</p>
 <h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="tslearn">Tavenard, R., Faouzi, J., Vandewiele, G., Divo, F., Androz, G., Holtz, C., … Woods, E. (2017). tslearn: A machine learning toolkit dedicated to time-series data.</span></li></ol></p>
 
 </div>

@@ -9,6 +9,14 @@
     max-width: 1100px;
 }
 
+svg:not(:root), .output_png img, div.text_cell_render>p>img, div.text_cell_render>p>a>img {
+    max-width: 100%;
+}
+
+div.text_cell_render>p>img[alt=half-width], div.text_cell_render>p>a>img[alt=half-width] {
+    max-width: 300px;
+}
+
 @media (min-width: 64em) {
     div.jb_cell {
         width: 60%;

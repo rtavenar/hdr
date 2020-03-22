@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-21T16:35:25+01:00",
-  "dateModified": "2020-03-21T16:35:25+01:00",
+  "datePublished": "2020-03-22T15:30:14+01:00",
+  "dateModified": "2020-03-22T15:30:14+01:00",
   "description": "# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)...",
   "author": {
     "@type": "Person",
@@ -999,14 +999,6 @@ initFunction(initPrint)
 
 <p>The method presented in this section consists in defining a kernel between
 sets of timestamped objects (typically features).
-Hence, time series considered in this section are supposed to be of the
-following form:</p>
-
-<p>\begin{equation}
-    \textbf{x} = { (x_0, t_0), \dots , (x_{n-1}, t_{n-1}) }
-\end{equation}</p>
-
-<p>(each observation in the sequence is timestamped).
 This allows, in particular, to consider the case of irregularly sampled time
 series.</p>
 
@@ -1023,7 +1015,7 @@ Based on this local kernel, one can compute the match kernel
 <a class="citation" href="#NIPS2009_3874">(Bo &amp; Sminchisescu, 2009)</a> between sets of local features as:</p>
 
 <p>\begin{equation}
-    K(\textbf{x}, \textbf{y}) = \sum_i \sum_j k(x_i, y_j).
+    K(\textbf{x}, \textbf{x’}) = \sum_i \sum_j k(x_i, {x’}_j).
 \end{equation}</p>
 
 <p>And the Signature Quadratic Form Distance (SQFD,
@@ -1032,8 +1024,8 @@ between feature sets embedded in the Reproducing Kernel Hilbert Space (RKHS)
 associated with $K$:</p>
 
 <p>\begin{equation}
-    SQFD(\textbf{x}, \textbf{y})^2 = K(\textbf{x}, \textbf{x}) +
-        K(\textbf{y}, \textbf{y}) - 2 K(\textbf{x}, \textbf{y}).
+    SQFD(\textbf{x}, \textbf{x’})^2 = K(\textbf{x}, \textbf{x}) +
+        K(\textbf{x’}, \textbf{x’}) - 2 K(\textbf{x}, \textbf{x’}).
 \end{equation}</p>
 
 <h2 id="local-temporal-kernel">Local temporal kernel</h2>
@@ -1041,18 +1033,18 @@ associated with $K$:</p>
 <p>We introduce a time-sensitive local kernel defined as:</p>
 
 <p>\begin{equation}
-    k_t((x_i, t_i), (y_j, t_j)) = e^{\gamma_t (t_j, - t_i)^2} k(x_i, y_j).
+    k_t((x_i, t_i), ({x’}_j, {t’}_j)) = e^{\gamma_t ({t’}_j - t_i)^2} k(x_i, {x’}_j).
 \end{equation}</p>
 
 <p>This kernel is positive semi definite (psd), as the product of two psd kernels
 and, if $k$ is the RBF kernel, it can be written as:</p>
 
 <p>\begin{equation}
-    k_t((x_i, t_i), (y_j, t_j)) = k(g(x_i, t_i), g(y_j, t_j)).
+    k_t((x_i, t_i), ({x’}<em>j, {t’}_j)) = k(g(x_i, t_i), g({x’}_j, {t’}_j)).
 \end{equation}
 with
 \begin{equation}
-g(x_i, t_i) = \left( x_{i,0}, \dots , x_{i, d-1},
+g(x_i, t_i) = \left( x</em>{i,0}, \dots , x_{i, d-1},
                             \sqrt{\frac{\gamma_t}{\gamma_f}} t_i \right)
 \end{equation}</p>
 
@@ -1152,21 +1144,22 @@ ax_s_y.plot(- s_y1, numpy.arange(s_y1.shape[0])[::-1],
             "b-", linewidth=3.);
 </code></pre></div></div>
 
-<p>$k_t$ is then a RBF kernel itself, and kernel approximation techniques can be
-used in order to approximate it with a linear kernel <a class="citation" href="#NIPS2007_3182">(Rahimi &amp; Recht, 2008)</a>.</p>
+<p>$k_t$ is then a RBF kernel itself, and kernel approximation techniques such as
+Random Fourier Features <a class="citation" href="#NIPS2007_3182">(Rahimi &amp; Recht, 2008)</a> can be
+used in order to approximate it with a linear kernel.</p>
 
 <p>Let us assume that we have a feature map $\phi$ such that</p>
 
 <p>\begin{equation}
 k_t((x_{i}, t_i), (y_{j}, t_j)) \approx
-    \left\langle\phi(g(x_{i}, t_i)), \phi(g(y_{j}, t_j))\right\rangle,
+    \left\langle\phi(g(x_{i}, t_i)), \phi(g({x’}_{j}, {t’}_j))\right\rangle,
 \end{equation}
 then we have:</p>
 
 <p>\begin{equation}
-SQFD(\mathbf{x}, \mathbf{y}) \approx \left|
+SQFD(\mathbf{x}, \mathbf{x’}) \approx \left|
     \underbrace{\frac{1}{n}\sum_i \phi(g(x_{i}, t_i))}<em>{b</em>\phi(\mathbf{x})} -
-    \underbrace{\frac{1}{m}\sum_j \phi(g(y_{j}, t_j))}<em>{b</em>\phi(\mathbf{y})}
+    \underbrace{\frac{1}{m}\sum_j \phi(g({x’}<em>{j}, {t’}_j))}</em>{b_\phi(\mathbf{x’})}
     \right|.
 \end{equation}</p>
 
@@ -1176,7 +1169,7 @@ computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
 followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
 the dimension of the feature map $\phi(x)$.
 Note that SQFD then corresponds to a biased estimator of the squared
-difference between the mean of the samples $\mathbf{x}$ and $\mathbf{y}$ which
+difference between the mean of the samples $\mathbf{x}$ and $\mathbf{x’}$ which
 is classically used to test the difference between distributions
 <a class="citation" href="#NIPS2006_3110">(Gretton, Borgwardt, Rasch, Schölkopf, &amp; Smola, 2007)</a>.</p>
 
