@@ -57,6 +57,9 @@ The resulting model is an instance of a Siamese Network:
 
 ![](../../images/siamese_ldps.png)
 
+where $m_\theta(\cdot)$ is the feature extraction part of the model that
+maps a time series to its shapelet transform representation. 
+
 ```python  tags=["hide_input"]
 %config InlineBackend.figure_format = 'svg'
 import matplotlib.pyplot as plt

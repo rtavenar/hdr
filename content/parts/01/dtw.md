@@ -78,7 +78,7 @@ Gallery of
 examples](https://tslearn.readthedocs.io/en/latest/auto_examples/plot_dtw.html).
 <!-- #endregion -->
 
-![](../../images/dtw.png)
+![half-width](../../images/dtw.png)
 
 ## Algorithmic solution
 

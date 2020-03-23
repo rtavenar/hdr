@@ -215,7 +215,7 @@ plt.text(x=0.5, y=1.0,
          verticalalignment='center', transform=plt.gca().transAxes)
 
 # Plot series (with pos/neg offset for visu reasons)
-plt.plot(numpy.arange(x_prime_srp.shape[0]), y_srp.ravel(),
+plt.plot(numpy.arange(x_prime_srp.shape[0]), x_prime_srp.ravel(),
          color='k', linestyle='-', linewidth=2.)
 
 # Plot matches

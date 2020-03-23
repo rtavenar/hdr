@@ -49,12 +49,13 @@ Time Warping in [Sec. 1.2](dtw.html)
     \label{eq:wass}
 \end{equation}
 
-where $\Pi$ is the set of all admissible couplings between $\mu$ and $\mu'$
-(_ie._ the set of all matrices with marginals $h$ and $h'$).
+where $\Pi(\mu, \mu^\prime)$ is the set of all admissible couplings between
+$\mu$ and $\mu'$ (_ie._ the set of all matrices with marginals $h$ and $h'$).
 
 This distance is illustrated in the following Figure:
 
-![half-width](../../images/svg/wass.svg)
+![](../../images/svg/wass.svg)
+
 
 When distributions $\mu$ and $\mu'$ do not lie in the same ambient space,
 however, one cannot compute their Wasserstein distance. An alternative that was
@@ -76,7 +77,7 @@ The corresponding distance is the Gromov-Wasserstein distance, defined as:
 \end{equation}
 
 where $d_\mu$ (resp. $d_{\mu'}$) is the metric associated to $\mathcal{X}$
-(resp. $\mathcal{X}^\prime$) in which $\mu$ (resp. $\mu'$) lies.
+(resp. $\mathcal{X}^\prime$), the space in which $\mu$ (resp. $\mu'$) lies.
 
 ### Sliced Gromov-Wasserstein
 
@@ -142,7 +143,7 @@ represented by a fully supported probability measure over the product space
 feature/structure $\mu= \sum_{i=1}^{n} h_{i} \delta_{(x_{i},a_{i})}$ which
 describes the entire structured data:
 
-![](../../images/graph_as_distrib.svg)
+![half-width](../../images/graph_as_distrib.svg)
 
 ### Distance definition and properties
 

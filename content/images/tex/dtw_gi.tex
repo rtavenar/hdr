@@ -1,0 +1,47 @@
+\documentclass[10pt]{article}
+\usepackage[usenames, dvipsnames]{xcolor}
+
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\begin{document}
+\pagestyle{empty}
+\begin{tikzpicture}[scale=0.3,every node/.style={minimum size=1cm}]
+
+\node[inner sep=0pt] (first) at (0,0)
+    {\includegraphics[width=.3\textwidth]{folium_rot.pdf}};
+\node[inner sep=0pt] (two) at (20,0)
+    {\includegraphics[width=.3\textwidth]{folium_realigned.pdf}};
+\node[inner sep=0pt] (three) at (38,0)
+    {\includegraphics[width=.3\textwidth]{folium.pdf}};
+%\fontfamily{augie}{\fontsize{15}{15}\selectfont
+\draw[<-,thick] (25,0) -- (33,0);
+\node[align=center, below, text width=2.7cm, font=\footnotesize] at (29,0.9) {\scriptsize{Registration}};
+\node[align=center, above, text width=1.5cm, font=\footnotesize] at (29,-1){${\color{LimeGreen}{{f^*}}} \in \mathbb{V}_{2,3}$};
+\node[font=\small] at (35,3) {$\mathbf{x}^\prime$};
+\node[font=\small] at (24.5,3) {${\color{LimeGreen}{{f^*}}}(\mathbf{x}^\prime)$};
+\node[font=\small] at (3.5,3) {$\mathbf{x}$};
+\draw[<->,thick] (5,0) -- (15.5,0);
+
+ %   node[align=center, midway,below, text width=3.2cm, font=\small] {DTW path};
+%(10,-0.6)
+\node[align=center, above, text width=6cm, font=\footnotesize] at (29,-7.5) {\[ {\color{orange}{\pi^*}},{\color{LimeGreen}{{f^*}}}= {\arg \min}_{{\color{orange}{\pi}} ,{\color{LimeGreen}{{f}}}}
+\sqrt{
+    \sum_{(i, j) \in {\color{orange}{\pi}}} d(x_i, {\color{LimeGreen}{{f}}}(x^\prime_j))^2
+}  \]};
+\node[align=center, below, text width=4.5cm, font=\footnotesize] at (10,0.9) {\scriptsize{DTW path} {\color{orange}{$\pi^*$}}};
+%};
+\node[inner sep=0pt] (path) at (10,-5.1)
+    {\includegraphics[width=.19\textwidth]{folium_alignment.pdf}};
+\draw[orange,->, >=latex,line width=0.3mm,,dotted] (-0.1,-0.4)to[bend right](8.55,-2.1);
+\draw[orange] (-0.2,-0.15) circle (0.25);
+\draw[orange,->, >=latex,line width=0.3mm,,dotted] (19.6,-0.6)to[bend left](8.9,-2.1);
+\draw[orange] (19.8,-0.30) circle (0.25);
+\draw[LimeGreen,->, >=latex,line width=0.3mm,,dotted] (37.95,0.5)to[bend left](20,-0.4);
+\draw[LimeGreen] (38.15,0.73) circle (0.25);
+\end{tikzpicture}
+
+
+\end{document}

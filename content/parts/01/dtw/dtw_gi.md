@@ -65,8 +65,9 @@ following Figure:
    $f$ here). Time series represented here are color-coded trajectories, whose
    starting (resp. end) point is depicted in blue (resp. red)."
 %}
-![](../../../images/dtw_gi.png)
+![](../../../images/tex/dtw_gi.svg)
 {% endfigure %}
+
 
 ## Optimization
 
@@ -191,6 +192,17 @@ approach as the DTW Barycenter Averaging from {% cite PETITJEAN2011678 %}),
 even when time series to be averaged do not lie in the same ambient space:
 
 ```python tags=["hide_input"]
+%config InlineBackend.figure_format = 'svg'
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+plt.ion()
+
+from sklearn.exceptions import ConvergenceWarning
+from tslearn.utils import to_time_series, ts_size
+from tslearn.barycenters import dtw_barycenter_averaging
+
+
 def _set_weights(w, n):
     """Return w if it is a valid weight vector of size n, and a vector of n 1s
     otherwise.
@@ -384,11 +396,7 @@ def _mm_update_barycenter(X, diag_sum_v_k, list_w_k):
         sum_w_x += w_k.dot(x_k[:ts_size(x_k)])
     barycenter = numpy.diag(1. / diag_sum_v_k).dot(sum_w_x)
     return barycenter
-```
 
-```python
-from sklearn.exceptions import ConvergenceWarning
-from tslearn.utils import to_time_series, ts_size
 
 def dtw_gi_barycenter_averaging(X, barycenter_size=None, init_barycenter=None,
                                 max_iter=30, tol=1e-5, weights=None,
@@ -498,13 +506,6 @@ def dtw_gi_barycenter_averaging(X, barycenter_size=None, init_barycenter=None,
         else:
             cost_prev = cost
     return barycenter, cost
-```
-
-```python tags=["hide_input"]
-%config InlineBackend.figure_format = 'svg'
-import matplotlib.pyplot as plt
-
-plt.ion()
 
 # A list of data generation / plotting utils
 
@@ -613,14 +614,7 @@ def make_folia(n, sz, noise=.1, shift=False, some_3d=False):
             spiral += numpy.random.rand(2) * 3
         dataset.append(spiral)
     return dataset
-```
 
-
-```python
-import numpy as numpy
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from tslearn.barycenters import dtw_barycenter_averaging
 
 numpy.random.seed(0)
 
