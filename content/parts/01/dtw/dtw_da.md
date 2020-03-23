@@ -77,7 +77,7 @@ This matching path can be viewed as the optimal way to perform point-wise
 alignment of time series.
 
 We used the matching path $\pi^\text{Q}$ to align each discharge time series to
-the same reference discharge time series $* $\mathbf{x}_\text{ref}^\text{Q}$.
+the same reference discharge time series $\mathbf{x}_\text{ref}^\text{Q}$.
 The reference discharge time series used in this study was chosen
 as a storm event with full coverage of flow rise and flow recession phases.
 Alternatively, one could choose a synthetic idealized storm hydrograph.
@@ -210,23 +210,24 @@ fig = plt.figure(figsize=(6, 2))
 
 plt.subplot(1, 2, 1)
 plt.text(x=0.5, y=1.0,
-         s="Original SRP time series", fontsize=12, horizontalalignment='center',
+         s="Original SRP time series", fontsize=12,
+         horizontalalignment='center',
          verticalalignment='center', transform=plt.gca().transAxes)
 
 # Plot series (with pos/neg offset for visu reasons)
-plt.plot(numpy.arange(y_srp.shape[0]), y_srp.ravel(),
+plt.plot(numpy.arange(x_prime_srp.shape[0]), y_srp.ravel(),
          color='k', linestyle='-', linewidth=2.)
 
 # Plot matches
 for (i, j) in path:
     if [pair[0] for pair in path].count(i) > 1:
-        plt.plot([i, i], [y_srp[i, 0], y_srp[i, 0]],
+        plt.plot([i, i], [x_prime_srp[i, 0], x_prime_srp[i, 0]],
                  color="blue", marker='o', linestyle="dashed")
     elif [pair[1] for pair in path].count(j) > 1:
-        plt.plot([i, i], [y_srp[i, 0], y_srp[i, 0]],
+        plt.plot([i, i], [x_prime_srp[i, 0], x_prime_srp[i, 0]],
                  color="red", marker='o', linestyle="dashed")
     else:
-        plt.plot([i, i], [y_srp[i, 0], y_srp[i, 0]],
+        plt.plot([i, i], [x_prime_srp[i, 0], x_prime_srp[i, 0]],
                  color="grey", marker='o', linestyle="dashed")
 
 plt.xticks([])
@@ -235,26 +236,31 @@ plt.gca().axis("off")
 
 plt.subplot(1, 2, 2)
 plt.text(x=0.5, y=1.0,
-         s="Resampled SRP time series", fontsize=12, horizontalalignment='center',
+         s="Resampled SRP time series", fontsize=12,
+         horizontalalignment='center',
          verticalalignment='center', transform=plt.gca().transAxes)
 
 # Plot series (with pos/neg offset for visu reasons)
-plt.plot(numpy.arange(y_srp_resample.shape[0]), y_srp_resample.ravel(),
+plt.plot(numpy.arange(x_prime_srp_resample.shape[0]),
+         x_prime_srp_resample.ravel(),
          color='k', linestyle='-', linewidth=2.)
 
 # Plot matches
 for j in range(len(x_q_ref)):
     if [pair[1] for pair in path].count(j) > 1:
-        plt.plot([j, j], [y_srp_resample[j, 0], y_srp_resample[j, 0]],
+        plt.plot([j, j],
+                 [x_prime_srp_resample[j, 0], x_prime_srp_resample[j, 0]],
                  color="red", marker='o', linestyle="dashed")
     else:
         pair = path[[pair[1] for pair in path].index(j)]
         i = pair[0]
         if [pair[0] for pair in path].count(i) > 1:
-            plt.plot([j, j], [y_srp_resample[j, 0], y_srp_resample[j, 0]],
+            plt.plot([j, j],
+                     [x_prime_srp_resample[j, 0], x_prime_srp_resample[j, 0]],
                      color="blue", marker='o', linestyle="dashed")
         else:
-            plt.plot([j, j], [y_srp_resample[j, 0], y_srp_resample[j, 0]],
+            plt.plot([j, j],
+                     [x_prime_srp_resample[j, 0], x_prime_srp_resample[j, 0]],
                      color="grey", marker='o', linestyle="dashed")
 plt.xticks([])
 plt.yticks([])

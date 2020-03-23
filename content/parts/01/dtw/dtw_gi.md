@@ -28,27 +28,30 @@ This work is available as preprint {% cite vayer2020time %}.
 
 ## Definition
 
-Let $\mathbf{x}$ and $\mathbf{x'}$ be two time series of respective lengths $n$
-and $m$.
+Let $\mathbf{x}$ and $\mathbf{x^\prime}$ be two time series of respective
+lengths $n$ and $m$.
 Here, features from both time series are not assumed to lie in the same ambient
-space, but it is assumed that features from $\mathbf{x}$ lie in $\mathrm{R}^p$
-while features from $\mathbf{x'}$ lie in $\mathrm{R}^{p'}$
+space, but it is assumed that features from $\mathbf{x}$ lie in $\mathbb{R}^p$
+while features from $\mathbf{x^\prime}$ lie in $\mathbb{R}^{p'}$
 In the following, we assume $p \geq p'$ without loss of generality.
-In order to allow comparison between time series $\mathbf{x}$ and $\mathbf{x'}$,
+In order to allow comparison between time series $\mathbf{x}$ and
+$\mathbf{x^\prime}$,
 we will optimize on a family of functions $\mathcal{F}$ that map features from
-$\mathbf{x'}$ onto the feature space in which features from $\mathbf{x}$ lie.
-More formally, we define Dynamic Time Warping with Global Invariances
+$\mathbf{x^\prime}$ onto the feature space in which features from $\mathbf{x}$
+lie. More formally, we define Dynamic Time Warping with Global Invariances
 (DTW-GI) as the solution of the following joint optimization problem:
 
 \begin{equation}
-    \text{DTW-GI}(\mathbf{x}, \mathbf{x'}) =
-        \min_{f \in \mathcal{F}, \pi \in \mathcal{A}(\mathbf{x}, \mathbf{x'})}
-            \sum_{(i, j) \in \pi} d(x_i, f({x'}_j)),
+    \text{DTW-GI}(\mathbf{x}, \mathbf{x^\prime}) =
+        \sqrt{
+            \min_{f \in \mathcal{F}, \pi \in \mathcal{A}(\mathbf{x}, \mathbf{x^\prime})}
+                \sum_{(i, j) \in \pi} d(x_i, f(x^\prime_j))^2
+        } ,
     \label{eq:dtwgi}
 \end{equation}
 
-where $\mathcal{F}$ is a family of functions from $\mathrm{R}^{p'}$ to
-$\mathrm{R}^{p}$.
+where $\mathcal{F}$ is a family of functions from $\mathbb{R}^{p^\prime}$ to
+$\mathbb{R}^{p}$.
 
 This similarity measure estimates both temporal alignment and feature space
 transformation between time series simultaneously, allowing the alignment of

@@ -34,8 +34,8 @@ classification of time series that balances earliness and accuracy.
 The cost function is of the following form:
 
 \begin{equation}
-\mathcal{L}(y, \hat{y}, t, \boldsymbol{\theta}) =
-    \mathcal{L}_c(y, \hat{y}, \boldsymbol{\theta}) + \alpha t
+\mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
+    \mathcal{L}_c(\mathbf{x}, y, \boldsymbol{\theta}) + \alpha t
 \label{eq:loss_early}
 \end{equation}
 
@@ -142,10 +142,10 @@ _decision triggering classifier_
 were computed using the approach described above:
 
 \begin{equation}
-    \gamma_t(\mathbf{x}_{\rightarrow t}) = \left\{
+    \gamma_t(\mathbf{x}_{\rightarrow t}, y) = \left\{
         \begin{array}{l}
-            1 \text{ if } f_{0}(\mathbf{x}_{\rightarrow t})=\min_{\tau \geq 0}         
-                f_{\tau}(\mathbf{x}_{\rightarrow t}) \\
+            1 \text{ if } f_{0}(\mathbf{x}_{\rightarrow t}, y) =
+                \min_{\tau \geq 0} f_{\tau}(\mathbf{x}_{\rightarrow t}, y) \\
             0 \text{ otherwise. }
         \end{array} \right.
 \end{equation}
@@ -206,16 +206,16 @@ the first time stamp, whatever the data).
 We introduced the following loss function:
 
 \begin{equation}
-    \mathcal{L}(y, \hat{y}, t, \boldsymbol{\theta}) =
-        \alpha \mathcal{L}_c(y, \hat{y}, \boldsymbol{\theta})
-            - (1-\alpha) P_\boldsymbol{\theta}(\hat{y}=y)
+    \mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
+        \alpha \mathcal{L}_c(\mathbf{x}, y, \boldsymbol{\theta})
+            - (1-\alpha) P_\boldsymbol{\theta}(m_t(\mathbf{x})=y)
             \left( \frac{T-t}{T} \right)
 \end{equation}
 
-where $P_\boldsymbol{\theta}(\hat{y}=y)$ is the probability (as assigned by the
-classification model) to generate $y$ as an output.
+where $P_\boldsymbol{\theta}(m_t(\mathbf{x})=y)$ is the probability (as
+assigned by the classification model) to generate $y$ as an output.
 The second part in this loss function is an earliness reward, which is taken
-into account iff the procided decision is sound (_ie._ the correct class is
+into account iff the provided decision is sound (_ie._ the correct class is
 predicted with non-zero probability).
 
 We have shown that this model outperforms all known baselines in terms of both

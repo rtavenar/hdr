@@ -44,8 +44,8 @@ Time Warping in [Sec. 1.2](dtw.html)
 
 \begin{equation}
     W_p(\mu, \mu') = \left(
-        \min_{\pi \in \Pi} \sum_{i,j} d(x_i, x^\prime_j)^p \pi_{i,j}
-        \right)^{\frac{1}{p}}
+        \min_{\pi \in \Pi(\mu, \mu^\prime)}
+            \sum_{i,j} d(x_i, x^\prime_j)^p \pi_{i,j} \right)^{\frac{1}{p}}
     \label{eq:wass}
 \end{equation}
 
@@ -54,20 +54,20 @@ where $\Pi$ is the set of all admissible couplings between $\mu$ and $\mu'$
 
 This distance is illustrated in the following Figure:
 
-![](../../images/wass.png)
+![half-width](../../images/svg/wass.svg)
 
 When distributions $\mu$ and $\mu'$ do not lie in the same ambient space,
 however, one cannot compute their Wasserstein distance. An alternative that was
 introduced in {% cite memoli2011gromov %} relies on matching intra-domain
 distances, as illustrated below:
 
-![](../../images/gw.png)
+![](../../images/svg/gw.svg)
 
 The corresponding distance is the Gromov-Wasserstein distance, defined as:
 
 \begin{equation}
     GW_p(\mu, \mu') = \left(
-        \min_{\pi \in \Pi}
+        \min_{\pi \in \Pi(\mu, \mu^\prime)}
             \sum_{i,j,k,l}
             \left| d_\mu(x_i, x_k) - d_{\mu'}(x^\prime_j, x^\prime_l) \right|^p
             \pi_{i,j} \pi_{k,l}
@@ -75,8 +75,8 @@ The corresponding distance is the Gromov-Wasserstein distance, defined as:
     \label{eq:gw}
 \end{equation}
 
-where $d_\mu$ (resp. $d_{\mu'}$) is the metric associated to the space in which
-$\mu$ (resp. $\mu'$) lies.
+where $d_\mu$ (resp. $d_{\mu'}$) is the metric associated to $\mathcal{X}$
+(resp. $\mathcal{X}^\prime$) in which $\mu$ (resp. $\mu'$) lies.
 
 ### Sliced Gromov-Wasserstein
 
@@ -158,7 +158,8 @@ It is defined, for a trade-off parameter  $\alpha \in [0,1]$, as
 
 \begin{equation}
 \label{discretefgw}
-FGW_{q, \alpha} (\mu, \mu') = \min_\pi E_{q}(\mathcal{G}, \mathcal{G}', \pi)
+FGW_{q, \alpha} (\mu, \mu') = \min_{\pi \in \Pi(\mu, \mu^\prime)}
+    E_{q}(\mathcal{G}, \mathcal{G}', \pi)
 \end{equation}
 
 where $\pi$ is a transport map (_i.e._ it has marginals $h$ and $h'$) and

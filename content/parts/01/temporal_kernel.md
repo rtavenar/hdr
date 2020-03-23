@@ -33,7 +33,7 @@ Based on this local kernel, one can compute the match kernel
 {% cite NIPS2009_3874 %} between sets of local features as:
 
 \begin{equation}
-    K(\textbf{x}, \textbf{x'}) = \sum_i \sum_j k(x_i, {x'}_j).
+    K(\mathbf{x}, \mathbf{x}^\prime) = \sum_i \sum_j k(x_i, x^\prime_j).
 \end{equation}
 
 And the Signature Quadratic Form Distance (SQFD,
@@ -42,8 +42,8 @@ between feature sets embedded in the Reproducing Kernel Hilbert Space (RKHS)
 associated with $K$:
 
 \begin{equation}
-    SQFD(\textbf{x}, \textbf{x'})^2 = K(\textbf{x}, \textbf{x}) +
-        K(\textbf{x'}, \textbf{x'}) - 2 K(\textbf{x}, \textbf{x'}).
+    SQFD(\mathbf{x}, \mathbf{x}^\prime)^2 = K(\mathbf{x}, \mathbf{x}) +
+        K(\mathbf{x}^\prime, \mathbf{x}^\prime) - 2 K(\mathbf{x}, \mathbf{x}^\prime).
 \end{equation}
 
 ## Local temporal kernel
@@ -51,14 +51,14 @@ associated with $K$:
 We introduce a time-sensitive local kernel defined as:
 
 \begin{equation}
-    k_t((x_i, t_i), ({x'}_j, {t'}_j)) = e^{\gamma_t ({t'}_j - t_i)^2} k(x_i, {x'}_j).
+    k_t((x_i, t_i), (x^\prime_j, t^\prime_j)) = e^{\gamma_t (t^\prime_j - t_i)^2} k(x_i, x^\prime_j).
 \end{equation}
 
 This kernel is positive semi definite (psd), as the product of two psd kernels
 and, if $k$ is the RBF kernel, it can be written as:
 
 \begin{equation}
-    k_t((x_i, t_i), ({x'}_j, {t'}_j)) = k(g(x_i, t_i), g({x'}_j, {t'}_j)).
+    k_t((x_i, t_i), (x^\prime_j, t^\prime_j)) = k(g(x_i, t_i), g(x^\prime_j, t^\prime_j)).
 \end{equation}
 with
 \begin{equation}
@@ -171,14 +171,16 @@ Let us assume that we have a feature map $\phi$ such that
 
 \begin{equation}
 k_t((x_{i}, t_i), (y_{j}, t_j)) \approx
-    \left\langle\phi(g(x_{i}, t_i)), \phi(g({x'}_{j}, {t'}_j))\right\rangle,
+    \left\langle\phi(g(x_{i}, t_i)),
+        \phi(g(x^\prime_{j}, t^\prime_j))\right\rangle,
 \end{equation}
 then we have:
 
 \begin{equation}
-SQFD(\mathbf{x}, \mathbf{x'}) \approx \left\|
+SQFD(\mathbf{x}, \mathbf{x}^\prime) \approx \left\|
     \underbrace{\frac{1}{n}\sum_i \phi(g(x_{i}, t_i))}_{b_\phi(\mathbf{x})} -
-    \underbrace{\frac{1}{m}\sum_j \phi(g({x'}_{j}, {t'}_j))}_{b_\phi(\mathbf{x'})}
+    \underbrace{\frac{1}{m}\sum_j
+        \phi(g(x^\prime_{j}, t^\prime_j))}_{b_\phi(\mathbf{x}^\prime)}
     \right\|.
 \end{equation}
 
@@ -188,8 +190,8 @@ computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
 followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
 the dimension of the feature map $\phi(x)$.
 Note that SQFD then corresponds to a biased estimator of the squared
-difference between the mean of the samples $\mathbf{x}$ and $\mathbf{x'}$ which
-is classically used to test the difference between distributions
+difference between the mean of the samples $\mathbf{x}$ and $\mathbf{x}^\prime$
+which is classically used to test the difference between distributions
 {% cite NIPS2006_3110 %}.
 
 Overall, we have a distance between timestamped feature sets whose

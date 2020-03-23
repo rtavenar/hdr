@@ -28,7 +28,7 @@ A time series is a set of $n$ timestamped features:
     \textbf{x} = \{ (x_0, t_0), \dots , (x_{n-1}, t_{n-1}) \}
 \end{equation}
 
-where all $x_i$ lie in the same ambient space $\mathrm{R}^{p}$.
+where all $x_i$ lie in the same ambient space $\mathbb{R}^{p}$.
 Time series datasets will be denoted $(\mathbf{X}, \mathbf{y})$ (or just
 $\mathbf{X}$ for unsupervised methods) where
 $\mathbf{X} = \left( \mathbf{x}^{(0)}, \cdots, \mathbf{x}^{(N-1)} \right)$ is

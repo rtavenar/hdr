@@ -35,28 +35,28 @@ path, score = dtw_path(x, x_prime)
 Dynamic Time Warping (DTW) {% cite sakoe1978dynamic %} is a similarity measure
 between time series.
 Let us consider two time series $\mathbf{x}$ and
-$\mathbf{x'}$ of respective lengths $n$ and
+$\mathbf{x}^\prime$ of respective lengths $n$ and
 $m$.
-Here, all elements $x_i$ and ${x'}_j$ are assumed to lie in the same
+Here, all elements $x_i$ and $x^\prime_j$ are assumed to lie in the same
 $p$-dimensional space and the exact timestamps at which observations occur are
 considered uninformative: only their ordering matters.
 
 ## Optimization problem
 
-DTW between $\mathbf{x}$ and $\mathbf{x'}$ is formulated as the following
+DTW between $\mathbf{x}$ and $\mathbf{x}^\prime$ is formulated as the following
 optimization problem:
 
 \begin{equation}
-DTW(\mathbf{x}, \mathbf{x'}) =
-    \sqrt{ \min_{\pi \in \mathcal{A}(\mathbf{x}, \mathbf{x'})}
-        \sum_{(i, j) \in \pi} d(x_i, {x'}_j)^2 }
+DTW(\mathbf{x}, \mathbf{x}^\prime) =
+    \sqrt{ \min_{\pi \in \mathcal{A}(\mathbf{x}, \mathbf{x}^\prime)}
+        \sum_{(i, j) \in \pi} d(x_i, x^\prime_j)^2 }
 \label{eq:dtw}
 \end{equation}
 
-where \mathcal{A}(\mathbf{x}, \mathbf{x'})} is the set of all admissible paths,
-_ie._ the set of paths $\pi$ that satisfy:
+where $\mathcal{A}(\mathbf{x}, \mathbf{x}^\prime)$ is the set of all admissible
+paths, _ie._ the set of paths $\pi$ such that:
 
-* it is a list $\pi = [\pi_0, \dots , \pi_{K-1}]$ of index pairs
+* $\pi$ a list $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
   $\pi_k = (i_k, j_k)$ with $0 \leq i_k < n$ and $0 \leq j_k < m$
 * $\pi_0 = (0, 0)$ and $\pi_{K-1} = (n - 1, m - 1)$
 * for all $k > 0$ , $\pi_k = (i_k, j_k)$ is related to
@@ -69,7 +69,7 @@ Here, a path can be seen as a temporal alignment of time series such that
 Euclidean distance between aligned (_ie._ resampled) time series is minimal.
 
 The following image exhibits the DTW path (in white) for a given pair of time
-series, on top of the cross-similarity matrix that stores $d(x_i, {x'}_j)$
+series, on top of the cross-similarity matrix that stores $d(x_i, {x}^\prime_j)$
 values.
 
 <!-- #region {"tags": ["popout"]} -->
@@ -108,7 +108,7 @@ def dtw(x, x_prime):
 
 Dynamic Time Warping holds the following properties:
 
-* $\forall \mathbf{x}, \mathbf{x'}, DTW(\mathbf{x}, \mathbf{x'}) \geq 0$
+* $\forall \mathbf{x}, \mathbf{x}^\prime, DTW(\mathbf{x}, \mathbf{x}^\prime) \geq 0$
 * $\forall \mathbf{x}, DTW(\mathbf{x}, \mathbf{x}) = 0$
 
 However, mathematically speaking, DTW is not a valid metric since it does
