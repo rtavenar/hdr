@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/ot.html",
   "headline": "Optimal Transport for Structured Data",
-  "datePublished": "2020-03-22T15:30:14+01:00",
-  "dateModified": "2020-03-22T15:30:14+01:00",
+  "datePublished": "2020-03-23T14:23:08+01:00",
+  "dateModified": "2020-03-23T14:23:08+01:00",
   "description": "        Optimal Transport for Structured Data    This section covers my works related to Optimal Transport distances forstructured data such as graphs.In ord...",
   "author": {
     "@type": "Person",
@@ -1061,29 +1061,29 @@ Time Warping in <a href="dtw.html">Sec. 1.2</a></p>
 <div class="text_cell_render border-box-sizing rendered_html">
 \begin{equation}
     W_p(\mu, \mu') = \left(
-        \min_{\pi \in \Pi} \sum_{i,j} d(x_i, x^\prime_j)^p \pi_{i,j}
-        \right)^{\frac{1}{p}}
+        \min_{\pi \in \Pi(\mu, \mu^\prime)}
+            \sum_{i,j} d(x_i, x^\prime_j)^p \pi_{i,j} \right)^{\frac{1}{p}}
     \label{eq:wass}
 \end{equation}<p>where $\Pi$ is the set of all admissible couplings between $\mu$ and $\mu'$
 (<em>ie.</em> the set of all matrices with marginals $h$ and $h'$).</p>
 <p>This distance is illustrated in the following Figure:</p>
-<p><img src="../../images/wass.png" alt=""></p>
+<p><img src="../../images/svg/wass.svg" alt="half-width"></p>
 <p>When distributions $\mu$ and $\mu'$ do not lie in the same ambient space,
 however, one cannot compute their Wasserstein distance. An alternative that was
 introduced in <a class="citation" href="#memoli2011gromov">(Mémoli, 2011)</a> relies on matching intra-domain
 distances, as illustrated below:</p>
-<p><img src="../../images/gw.png" alt=""></p>
+<p><img src="../../images/svg/gw.svg" alt=""></p>
 <p>The corresponding distance is the Gromov-Wasserstein distance, defined as:</p>
 \begin{equation}
     GW_p(\mu, \mu') = \left(
-        \min_{\pi \in \Pi}
+        \min_{\pi \in \Pi(\mu, \mu^\prime)}
             \sum_{i,j,k,l}
             \left| d_\mu(x_i, x_k) - d_{\mu'}(x^\prime_j, x^\prime_l) \right|^p
             \pi_{i,j} \pi_{k,l}
         \right)^{\frac{1}{p}}
     \label{eq:gw}
-\end{equation}<p>where $d_\mu$ (resp. $d_{\mu'}$) is the metric associated to the space in which
-$\mu$ (resp. $\mu'$) lies.</p>
+\end{equation}<p>where $d_\mu$ (resp. $d_{\mu'}$) is the metric associated to $\mathcal{X}$
+(resp. $\mathcal{X}^\prime$) in which $\mu$ (resp. $\mu'$) lies.</p>
 <h3 id="Sliced-Gromov-Wasserstein">Sliced Gromov-Wasserstein<a class="anchor-link" href="#Sliced-Gromov-Wasserstein"> </a></h3><p>Computational complexity associated to the optimization problem in
 Equation \eqref{eq:gw} is high in general.
 However, we have shown in <a class="citation" href="#vayer:hal-02174309">(Vayer, Flamary, Tavenard, Chapel, &amp; Courty, 2019)</a> that in the
@@ -1159,7 +1159,8 @@ Fused Gromov-Wasserstein distance.
 It is defined, for a trade-off parameter  $\alpha \in [0,1]$, as</p>
 \begin{equation}
 \label{discretefgw}
-FGW_{q, \alpha} (\mu, \mu') = \min_\pi E_{q}(\mathcal{G}, \mathcal{G}', \pi)
+FGW_{q, \alpha} (\mu, \mu') = \min_{\pi \in \Pi(\mu, \mu^\prime)}
+    E_{q}(\mathcal{G}, \mathcal{G}', \pi)
 \end{equation}<p>where $\pi$ is a transport map (<em>i.e.</em> it has marginals $h$ and $h'$) and</p>
 \begin{equation}
 E_{q}(\mathcal{G}, \mathcal{G}', \pi) =

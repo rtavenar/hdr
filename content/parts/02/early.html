@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/02/early.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-22T15:30:14+01:00",
-  "dateModified": "2020-03-22T15:30:14+01:00",
+  "datePublished": "2020-03-23T14:23:08+01:00",
+  "dateModified": "2020-03-23T14:23:08+01:00",
   "description": "# Early Classification of Time SeriesEarly classification of time series is the task of performing a classificationas early as possible for an incoming time ...",
   "author": {
     "@type": "Person",
@@ -1016,8 +1016,8 @@ classification of time series that balances earliness and accuracy.</p>
 <p>The cost function is of the following form:</p>
 
 <p>\begin{equation}
-\mathcal{L}(y, \hat{y}, t, \boldsymbol{\theta}) =
-    \mathcal{L}_c(y, \hat{y}, \boldsymbol{\theta}) + \alpha t
+\mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
+    \mathcal{L}_c(\mathbf{x}, y, \boldsymbol{\theta}) + \alpha t
 \label{eq:loss_early}
 \end{equation}</p>
 
@@ -1126,10 +1126,10 @@ _decision triggering classifier</em>
 were computed using the approach described above:</p>
 
 <p>\begin{equation}
-    \gamma_t(\mathbf{x}<em>{\rightarrow t}) = \left{
+    \gamma_t(\mathbf{x}<em>{\rightarrow t}, y) = \left{
         \begin{array}{l}
-            1 \text{ if } f</em>{0}(\mathbf{x}<em>{\rightarrow t})=\min</em>{\tau \geq 0}       <br />
-                f_{\tau}(\mathbf{x}_{\rightarrow t}) <br />
+            1 \text{ if } f</em>{0}(\mathbf{x}<em>{\rightarrow t}, y) =
+                \min</em>{\tau \geq 0} f_{\tau}(\mathbf{x}_{\rightarrow t}, y) <br />
             0 \text{ otherwise. }
         \end{array} \right.
 \end{equation}</p>
@@ -1192,16 +1192,16 @@ the first time stamp, whatever the data).
 We introduced the following loss function:</p>
 
 <p>\begin{equation}
-    \mathcal{L}(y, \hat{y}, t, \boldsymbol{\theta}) =
-        \alpha \mathcal{L}<em>c(y, \hat{y}, \boldsymbol{\theta})
-            - (1-\alpha) P</em>\boldsymbol{\theta}(\hat{y}=y)
+    \mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
+        \alpha \mathcal{L}<em>c(\mathbf{x}, y, \boldsymbol{\theta})
+            - (1-\alpha) P</em>\boldsymbol{\theta}(m_t(\mathbf{x})=y)
             \left( \frac{T-t}{T} \right)
 \end{equation}</p>
 
-<p>where $P_\boldsymbol{\theta}(\hat{y}=y)$ is the probability (as assigned by the
-classification model) to generate $y$ as an output.
+<p>where $P_\boldsymbol{\theta}(m_t(\mathbf{x})=y)$ is the probability (as
+assigned by the classification model) to generate $y$ as an output.
 The second part in this loss function is an earliness reward, which is taken
-into account iff the procided decision is sound (<em>ie.</em> the correct class is
+into account iff the provided decision is sound (<em>ie.</em> the correct class is
 predicted with non-zero probability).</p>
 
 <p>We have shown that this model outperforms all known baselines in terms of both

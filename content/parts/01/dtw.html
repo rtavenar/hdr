@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-22T15:30:14+01:00",
-  "dateModified": "2020-03-22T15:30:14+01:00",
+  "datePublished": "2020-03-23T14:23:08+01:00",
+  "dateModified": "2020-03-23T14:23:08+01:00",
   "description": "# Dynamic Time WarpingThis section covers my works related to Dynamic Time Warping for time series.**Note.** In ``tslearn``, such time series would be repres...",
   "author": {
     "@type": "Person",
@@ -1016,29 +1016,29 @@ shapes <code class="highlighter-rouge">(n, p)</code> and <code class="highlighte
 <p>Dynamic Time Warping (DTW) <a class="citation" href="#sakoe1978dynamic">(Sakoe &amp; Chiba, 1978)</a> is a similarity measure
 between time series.
 Let us consider two time series $\mathbf{x}$ and
-$\mathbf{x’}$ of respective lengths $n$ and
+$\mathbf{x}^\prime$ of respective lengths $n$ and
 $m$.
-Here, all elements $x_i$ and ${x’}_j$ are assumed to lie in the same
+Here, all elements $x_i$ and $x^\prime_j$ are assumed to lie in the same
 $p$-dimensional space and the exact timestamps at which observations occur are
 considered uninformative: only their ordering matters.</p>
 
 <h2 id="optimization-problem">Optimization problem</h2>
 
-<p>DTW between $\mathbf{x}$ and $\mathbf{x’}$ is formulated as the following
+<p>DTW between $\mathbf{x}$ and $\mathbf{x}^\prime$ is formulated as the following
 optimization problem:</p>
 
 <p>\begin{equation}
-DTW(\mathbf{x}, \mathbf{x’}) =
-    \sqrt{ \min_{\pi \in \mathcal{A}(\mathbf{x}, \mathbf{x’})}
-        \sum_{(i, j) \in \pi} d(x_i, {x’}_j)^2 }
+DTW(\mathbf{x}, \mathbf{x}^\prime) =
+    \sqrt{ \min_{\pi \in \mathcal{A}(\mathbf{x}, \mathbf{x}^\prime)}
+        \sum_{(i, j) \in \pi} d(x_i, x^\prime_j)^2 }
 \label{eq:dtw}
 \end{equation}</p>
 
-<p>where \mathcal{A}(\mathbf{x}, \mathbf{x’})} is the set of all admissible paths,
-<em>ie.</em> the set of paths $\pi$ that satisfy:</p>
+<p>where $\mathcal{A}(\mathbf{x}, \mathbf{x}^\prime)$ is the set of all admissible
+paths, <em>ie.</em> the set of paths $\pi$ such that:</p>
 
 <ul>
-  <li>it is a list $\pi = [\pi_0, \dots , \pi_{K-1}]$ of index pairs
+  <li>$\pi$ a list $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
 $\pi_k = (i_k, j_k)$ with $0 \leq i_k &lt; n$ and $0 \leq j_k &lt; m$</li>
   <li>$\pi_0 = (0, 0)$ and $\pi_{K-1} = (n - 1, m - 1)$</li>
   <li>
@@ -1056,7 +1056,7 @@ $\pi_{k-1} = (i_{k-1}, j_{k-1})$ as follows:</p>
 Euclidean distance between aligned (<em>ie.</em> resampled) time series is minimal.</p>
 
 <p>The following image exhibits the DTW path (in white) for a given pair of time
-series, on top of the cross-similarity matrix that stores $d(x_i, {x’}_j)$
+series, on top of the cross-similarity matrix that stores $d(x_i, {x}^\prime_j)$
 values.</p>
 
 <!-- #region {"tags": ["popout"]} -->
@@ -1094,7 +1094,7 @@ problem:</p>
 <p>Dynamic Time Warping holds the following properties:</p>
 
 <ul>
-  <li>$\forall \mathbf{x}, \mathbf{x’}, DTW(\mathbf{x}, \mathbf{x’}) \geq 0$</li>
+  <li>$\forall \mathbf{x}, \mathbf{x}^\prime, DTW(\mathbf{x}, \mathbf{x}^\prime) \geq 0$</li>
   <li>$\forall \mathbf{x}, DTW(\mathbf{x}, \mathbf{x}) = 0$</li>
 </ul>
 
