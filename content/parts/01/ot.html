@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/ot.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-23T14:23:08+01:00",
-  "dateModified": "2020-03-23T14:23:08+01:00",
+  "datePublished": "2020-03-23T19:00:33+01:00",
+  "dateModified": "2020-03-23T19:00:33+01:00",
   "description": "# Optimal Transport for Structured DataThis section covers my works related to Optimal Transport distances forstructured data such as graphs.In order to comp...",
   "author": {
     "@type": "Person",
@@ -1031,12 +1031,12 @@ Time Warping in <a href="dtw.html">Sec. 1.2</a>
     \label{eq:wass}
 \end{equation}</p>
 
-<p>where $\Pi$ is the set of all admissible couplings between $\mu$ and $\mu’$
-(<em>ie.</em> the set of all matrices with marginals $h$ and $h’$).</p>
+<p>where $\Pi(\mu, \mu^\prime)$ is the set of all admissible couplings between
+$\mu$ and $\mu’$ (<em>ie.</em> the set of all matrices with marginals $h$ and $h’$).</p>
 
 <p>This distance is illustrated in the following Figure:</p>
 
-<p><img src="../../images/svg/wass.svg" alt="half-width" /></p>
+<p><img src="../../images/svg/wass.svg" alt="" /></p>
 
 <p>When distributions $\mu$ and $\mu’$ do not lie in the same ambient space,
 however, one cannot compute their Wasserstein distance. An alternative that was
@@ -1058,7 +1058,7 @@ distances, as illustrated below:</p>
 \end{equation}</p>
 
 <p>where $d_\mu$ (resp. $d_{\mu’}$) is the metric associated to $\mathcal{X}$
-(resp. $\mathcal{X}^\prime$) in which $\mu$ (resp. $\mu’$) lies.</p>
+(resp. $\mathcal{X}^\prime$), the space in which $\mu$ (resp. $\mu’$) lies.</p>
 
 <h3 id="sliced-gromov-wasserstein">Sliced Gromov-Wasserstein</h3>
 
@@ -1124,7 +1124,7 @@ represented by a fully supported probability measure over the product space
 feature/structure $\mu= \sum_{i=1}^{n} h_{i} \delta_{(x_{i},a_{i})}$ which
 describes the entire structured data:</p>
 
-<p><img src="../../images/graph_as_distrib.svg" alt="" /></p>
+<p><img src="../../images/graph_as_distrib.svg" alt="half-width" /></p>
 
 <h3 id="distance-definition-and-properties">Distance definition and properties</h3>
 
