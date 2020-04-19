@@ -39,7 +39,7 @@ When subseries have to be considered, we will denote by
 $\mathbf{x}_{i \rightarrow j}$ the subseries extracted from $\mathbf{x}$ that
 starts at time index $i$ and stops at time index $j$ (excluded), and
 $\mathbf{x}_{\rightarrow j}$ will be a shortcut notation for the subseries that
-cover indexes 0 to $j$.
+cover indexes 0 to $j-1$.
 
 
 ## References

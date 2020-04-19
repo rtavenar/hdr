@@ -209,6 +209,11 @@ barycenters _w.r.t._ FGW.
 
 We show that FGW allows to extract meaningful barycenters:
 
+<!-- #region {"tags": ["popout"]} -->
+**Note.** The code provided here uses integration of FGW provided by the
+Python Optimal Transport (POT) toolbox.
+<!-- #endregion -->
+
 ```python tags=["hide_input"]
 import numpy as np
 import networkx as nx
