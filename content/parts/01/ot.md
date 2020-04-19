@@ -38,8 +38,14 @@ discrete distributions lying in the same metric space $(\Omega, d)$.
 Then, the $p$-Wasserstein distance is defined as:
 
 <!-- #region {"tags": ["popout"]} -->
-**Note** the close connection between this definition and that of the Dynamic
-Time Warping in [Sec. 1.2](dtw.html)
+**Note** that the 2-Wasserstein distance is very similar in its formulation to
+the Dynamic Time Warping similarity presented in [Sec. 1.2](dtw.html).
+The only difference lies in the constraints that are enforced in the
+optimization problems.
+For Wasserstein, a coupling needs to meet marginal constraints to be considered
+valid while for Dynamic Time Warping, a path shall (i) not break the order of
+the sequences at stake and (ii) enforce alignment of complete series (from
+beginning to end).
 <!-- #endregion -->
 
 \begin{equation}
@@ -55,7 +61,6 @@ $\mu$ and $\mu'$ (_ie._ the set of all matrices with marginals $h$ and $h'$).
 This distance is illustrated in the following Figure:
 
 ![](../../images/svg/wass.svg)
-
 
 When distributions $\mu$ and $\mu'$ do not lie in the same ambient space,
 however, one cannot compute their Wasserstein distance. An alternative that was
@@ -213,7 +218,8 @@ from matplotlib import cm
 plt.ion()
 
 
-def build_noisy_circular_graph(n_nodes, mu=0, sigma=0.3, with_noise=False,
+def build_noisy_circular_graph(n_nodes, mu=0, sigma=0.3,
+                               with_noise=False,
                                structure_noise=False, p=None):
         g = nx.Graph()
         g.add_nodes_from(range(n_nodes))
