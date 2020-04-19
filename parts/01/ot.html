@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/01/ot.html",
   "headline": "Optimal Transport for Structured Data",
-  "datePublished": "2020-04-19T15:47:37+02:00",
-  "dateModified": "2020-04-19T15:47:37+02:00",
+  "datePublished": "2020-04-19T16:02:17+02:00",
+  "dateModified": "2020-04-19T16:02:17+02:00",
   "description": "        Optimal Transport for Structured Data    This section covers my works related to Optimal Transport distances forstructured data such as graphs.In ord...",
   "author": {
     "@type": "Person",
@@ -1047,8 +1047,14 @@ Then, the $p$-Wasserstein distance is defined as:</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Note</strong> the close connection between this definition and that of the Dynamic
-Time Warping in <a href="dtw.html">Sec. 1.2</a></p>
+<p><strong>Note</strong> that the 2-Wasserstein distance is very similar in its formulation to
+the Dynamic Time Warping similarity presented in <a href="dtw.html">Sec. 1.2</a>.
+The only difference lies in the constraints that are enforced in the
+optimization problems.
+For Wasserstein, a coupling needs to meet marginal constraints to be considered
+valid while for Dynamic Time Warping, a path shall (i) not break the order of
+the sequences at stake and (ii) enforce alignment of complete series (from
+beginning to end).</p>
 
 </div>
 </div>
@@ -1068,16 +1074,6 @@ Time Warping in <a href="dtw.html">Sec. 1.2</a></p>
 $\mu$ and $\mu'$ (<em>ie.</em> the set of all matrices with marginals $h$ and $h'$).</p>
 <p>This distance is illustrated in the following Figure:</p>
 <p><img src="../../images/svg/wass.svg" alt=""></p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>When distributions $\mu$ and $\mu'$ do not lie in the same ambient space,
 however, one cannot compute their Wasserstein distance. An alternative that was
 introduced in <a class="citation" href="#memoli2011gromov">(Mémoli, 2011)</a> relies on matching intra-domain
@@ -1224,7 +1220,8 @@ barycenters <em>w.r.t.</em> FGW.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">build_noisy_circular_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">with_noise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">build_noisy_circular_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+                               <span class="n">with_noise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                <span class="n">structure_noise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">g</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
         <span class="n">g</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">))</span>
@@ -1363,7 +1360,7 @@ barycenters <em>w.r.t.</em> FGW.</p>
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/parts/01/ot_8_0.png"
+<img src="../../images/parts/01/ot_7_0.png"
 >
 </div>
 

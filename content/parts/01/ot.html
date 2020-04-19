@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/ot.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-04-19T15:47:37+02:00",
-  "dateModified": "2020-04-19T15:47:37+02:00",
+  "datePublished": "2020-04-19T16:02:17+02:00",
+  "dateModified": "2020-04-19T16:02:17+02:00",
   "description": "# Optimal Transport for Structured DataThis section covers my works related to Optimal Transport distances forstructured data such as graphs.In order to comp...",
   "author": {
     "@type": "Person",
@@ -1020,8 +1020,14 @@ discrete distributions lying in the same metric space $(\Omega, d)$.
 Then, the $p$-Wasserstein distance is defined as:</p>
 
 <!-- #region {"tags": ["popout"]} -->
-<p><strong>Note</strong> the close connection between this definition and that of the Dynamic
-Time Warping in <a href="dtw.html">Sec. 1.2</a>
+<p><strong>Note</strong> that the 2-Wasserstein distance is very similar in its formulation to
+the Dynamic Time Warping similarity presented in <a href="dtw.html">Sec. 1.2</a>.
+The only difference lies in the constraints that are enforced in the
+optimization problems.
+For Wasserstein, a coupling needs to meet marginal constraints to be considered
+valid while for Dynamic Time Warping, a path shall (i) not break the order of
+the sequences at stake and (ii) enforce alignment of complete series (from
+beginning to end).
 <!-- #endregion --></p>
 
 <p>\begin{equation}
@@ -1194,7 +1200,8 @@ import matplotlib.colors as mcol
 from matplotlib import cm
 plt.ion()</p>
 
-<p>def build_noisy_circular_graph(n_nodes, mu=0, sigma=0.3, with_noise=False,
+<p>def build_noisy_circular_graph(n_nodes, mu=0, sigma=0.3,
+                               with_noise=False,
                                structure_noise=False, p=None):
         g = nx.Graph()
         g.add_nodes_from(range(n_nodes))
