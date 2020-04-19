@@ -205,100 +205,126 @@ barycenters _w.r.t._ FGW.
 We show that FGW allows to extract meaningful barycenters:
 
 ```python tags=["hide_input"]
+import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcol
+from matplotlib import cm
 plt.ion()
 
 
-def build_noisy_circular_graph(n_nodes=20, mu_features=0., sigma_features=0.3,
-                               with_noise=False, structure_noise=False, p=None):
-    g=Graph()
-    g.add_nodes(list(range(N)))
-    for i in range(N):
-        noise=float(np.random.normal(mu,sigma,1))
-        if with_noise:
-            g.add_one_attribute(i,math.sin((2*i*math.pi/N))+noise)
-        else:
-            g.add_one_attribute(i,math.sin(2*i*math.pi/N))
-        g.add_edge((i,i+1))
-        if structure_noise:
-            randomint=np.random.randint(0,p)
-            if randomint==0:
-                if i<=N-3:
-                    g.add_edge((i,i+2))
-                if i==N-2:
-                    g.add_edge((i,0))
-                if i==N-1:
-                    g.add_edge((i,1))
-    g.add_edge((N,0))
-    noise=float(np.random.normal(mu,sigma,1))
-    if with_noise:
-        g.add_one_attribute(N,math.sin((2*N*math.pi/N))+noise)
-    else:
-        g.add_one_attribute(N,math.sin(2*N*math.pi/N))
-    return g
+def build_noisy_circular_graph(n_nodes, mu=0, sigma=0.3, with_noise=False,
+                               structure_noise=False, p=None):
+        g = nx.Graph()
+        g.add_nodes_from(range(n_nodes))
+        for i in range(n_nodes + 1):
+            noise = np.random.normal(mu, sigma, 1)[0]
+            val = np.sin(2 * i * np.pi / n_nodes)
+            g.add_node(i, feature=val + noise if with_noise else val)
+            g.add_edge(i, (i + 1) % (n_nodes + 1))
+            if structure_noise:
+                randomint = np.random.randint(0, p)
+                if randomint == 0:
+                    if i <= n_nodes - 3:
+                        g.add_edge(i, i + 2)
+                    elif i == n_nodes - 2:
+                        g.add_edge(i, 0)
+                    elif i == n_nodes - 1:
+                        g.add_edge(i, 1)
+        return g
+
+
+def sp_to_adjacency(C, threshold=1.8):
+    new_adj = np.zeros_like(C)
+    new_adj[C <= threshold] = 1.
+    np.fill_diagonal(new_adj, 0.)
+    return new_adj
+
+
+def graph_colors(g, vmin=0, vmax=7):
+    cnorm = mcol.Normalize(vmin=vmin,vmax=vmax)
+    cpick = cm.ScalarMappable(norm=cnorm,cmap='viridis')
+    cpick.set_array([])
+    val_map = {}
+    for k, v in nx.get_node_attributes(g, 'feature').items():
+        val_map[k]=cpick.to_rgba(v)
+    colors=[]
+    for node in g.nodes():
+        colors.append(val_map[node])
+    return colors
+
+
+def get_features(g):
+    l = [v for (k, v) in nx.get_node_attributes(g, 'feature').items()]
+    arr = np.array(l)
+    if arr.ndim == 1:
+        arr = arr.reshape((-1, 1))
+    return arr
 
 
 def draw_graph(g):
-    pos = nx.kamada_kawai_layout(g.nx_graph)
-    nx.draw(g.nx_graph, pos=pos,
-            node_color=graph_colors(g.nx_graph, vmin=-1, vmax=1),
-            with_labels=False)
+    pos = nx.kamada_kawai_layout(g)
+    nx.draw(g, pos=pos,
+            node_color=graph_colors(g, vmin=-1, vmax=1),
+            with_labels=False, node_size=100)
 
+
+def shortest_path_matrix(g):
+    all_paths = nx.shortest_path(g)
+    mat = np.zeros((len(g), len(g))) + np.inf
+    for i in all_paths.keys():
+        for j in all_paths[i].keys():
+            mat[i, j] = len(all_paths[i][j])
+    np.fill_diagonal(mat, 0.)
+    return mat
 ```
 
 ```python
-import numpy
+import numpy as np
+import networkx as nx
+from ot.gromov import fgw_barycenters
 
-np.random.seed(0)
+np.random.seed(42)
 
 n_graphs = 10
 n_graphs_shown = 5
 
-dataset = []
-for k in range(n_graphs):
-    dataset.append(
-        build_noisy_circular_graph(np.random.randint(15,25),
-                                   with_noise=True,
-                                   structure_noise=True,
-                                   p=3)
-    )
+dataset = [
+    build_noisy_circular_graph(np.random.randint(15, 25),
+                               with_noise=True,
+                               structure_noise=True,
+                               p=3)
+    for _ in range(n_graphs)
+]
 
-Cs=[x.distance_matrix(force_recompute=True,method='shortest_path') for x in X0]
-ps=[np.ones(len(x.nodes()))/len(x.nodes()) for x in X0]
-Ys=[x.values() for x in X0]
-lambdas=np.array([np.ones(len(Ys))/len(Ys)]).ravel()
-sizebary=15 # we choose a barycenter with 15 nodes
-init_X=np.repeat(sizebary,sizebary)
+Cs = [shortest_path_matrix(x) for x in dataset]
+ps = [np.ones(len(x)) / len(x) for x in dataset]
+Ys = [get_features(g) for g in dataset]
 
-features, C_matrix, log = fgw_barycenters(sizebary,
-                                          Ys, Cs, ps, lambdas,
-                                          alpha=0.95,
-                                          init_X=init_X)
+lambdas = np.ones(n_graphs) / n_graphs
+n_nodes = 15 # we choose a barycenter with 15 nodes
 
-# Build graph from barycenter parts (C1 and D1)
+features, C_matrix = fgw_barycenters(n_nodes, Ys, Cs, ps,
+                                     lambdas, alpha=0.95)
+
+# Build graph from barycenter parts (C_matrix and features)
 barycenter = nx.from_numpy_matrix(
-    sp_to_adjency(C_matrix,
-                  threshinf=0,
-                  threshsup=find_thresh(C1,sup=100,step=100)[0])
+    sp_to_adjacency(C_matrix, threshold=3.)
 )
 for i in range(len(features)):
-    barycenter.add_node(i, attr_name=float(features[i]))
+    barycenter.add_node(i, feature=float(features[i]))
 
 # Plot stuff
-for i in range(len(dataset)):
+plt.figure(figsize=(2 * (n_graphs_shown + 1), 2))
+for i in range(n_graphs_shown):
     plt.subplot(1, n_graphs_shown + 1, i + 1)
-    g = dataset[i]
-    draw_graph(g)
+    draw_graph(dataset[i])
     plt.title('Sample %d' % (i + 1))
+
 plt.subplot(1, n_graphs_shown + 1, n_graphs_shown + 1)
 draw_graph(barycenter)
-plt.title('FGW Barycenter')
+plt.title('FGW Barycenter');
 ```
-
-**TODO toy barycenters**
-Use that:
-<https://pot.readthedocs.io/en/stable/all.html#ot.gromov.fgw_barycenters>
 
 We also show that these barycenters can be used for graph clustering.
 
