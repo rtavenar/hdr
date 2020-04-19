@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_warping_length.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-23T19:00:33+01:00",
-  "dateModified": "2020-03-23T19:00:33+01:00",
+  "datePublished": "2020-04-19T09:35:47+02:00",
+  "dateModified": "2020-04-19T09:35:47+02:00",
   "description": "# Constrained Dynamic Time Warping**Note.** This work was a part of Zheng Zhang's PhD thesis. It was performedduring Zheng's stay at LETG in 2015-2016.I was ...",
   "author": {
     "@type": "Person",
@@ -733,7 +733,7 @@ initFunction(initPrint)
                       1.2.2
                       
                     
-                    DTW alignment as a temporal domain adaptation strategy
+                    DTW alignment as an adaptive resampling strategy
                   </a>
                 </li>
               
@@ -1022,7 +1022,7 @@ by setting constraints on the length of the admissible warping paths
 
 <p>As discussed <a href="../dtw.html#Setting-additional-constraints">above</a>, a common way
 to restrict the set of admissible temporal distortions for Dynamic Time Warping
-consists in forcing path to lie stay close to the diagonal through the use of
+consists in forcing path to lie close to the diagonal through the use of
 Sakoe-Chiba band or Itakura parallelogram constraints.
 A limitation of these global constraints is that they completely
 discard some regions of the alignment matrix <em>a priori</em> (<em>i.e.</em> whatever the
@@ -1062,7 +1062,7 @@ This gives the general LDTW algorithm:</p>
 </code></pre></div></div>
 
 <p>The question is then to compute the set <code class="highlighter-rouge">admissible_lengths(i, j, max_length)</code>.
-We have shown that this set is actually rather simple to compute and its length
+We have shown that this set can be computed explicitly and that its length
 is $O(\min(i, j))$.
 Overall, we have a $O(mn^2 + nm^2)$ complexity for this exact algorithm.</p>
 
@@ -1105,8 +1105,8 @@ compared to DTW:</p>
     <span class="n">dtw_path</span>
 <span class="kn">from</span> <span class="nn">tslearn.datasets</span> <span class="kn">import</span> <span class="n">UCR_UEA_datasets</span>
 
-<span class="n">dataset</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">UCR_UEA_datasets</span><span class="p">()</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">"CBF"</span><span class="p">)</span>
-<span class="n">max_length</span> <span class="o">=</span> <span class="mi">149</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">UCR_UEA_datasets</span><span class="p">()</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">"CBF"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">max_length</span> <span class="o">=</span> <span class="mi">150</span>
 <span class="n">path</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">dtw_path_limited_warping_length</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                                              <span class="n">dataset</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                                              <span class="n">max_length</span><span class="p">)</span>

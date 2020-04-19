@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-23T19:00:33+01:00",
-  "dateModified": "2020-03-23T19:00:33+01:00",
+  "datePublished": "2020-04-19T09:35:47+02:00",
+  "dateModified": "2020-04-19T09:35:47+02:00",
   "description": "# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)...",
   "author": {
     "@type": "Person",
@@ -733,7 +733,7 @@ initFunction(initPrint)
                       1.2.2
                       
                     
-                    DTW alignment as a temporal domain adaptation strategy
+                    DTW alignment as an adaptive resampling strategy
                   </a>
                 </li>
               
@@ -1111,11 +1111,14 @@ rect_s_x = [left_h, bottom_h, width, h_ts]</p>
 def g(x, ratio):
     sz = x.shape[0]
     return numpy.hstack(
-        (x, numpy.linspace(0., 1., sz).reshape((-1, 1)))
+        (
+            x,
+            ratio * numpy.linspace(0., 1., sz).reshape((-1, 1))
+        )
     )
 
 gamma_f = 10.
-gamma_t = 1000 * 1000.
+gamma_t = 50.
 ratio = numpy.sqrt(gamma_t / gamma_f)
 
 # Build augmented representations ($g$ function)

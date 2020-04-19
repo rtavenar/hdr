@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Machine Learning for Time Series</title>
-  <meta name="description" content="# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not involved ...">
+  <meta name="description" content="# DTW alignment as an adaptive resampling strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not involved in Rém...">
 
   <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_da.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_da.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Machine Learning for Time Series" />
-<meta property="og:description" content="# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not involved ..." />
+<meta property="og:description" content="# DTW alignment as an adaptive resampling strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not involved in Rém..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_da.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-23T19:00:33+01:00",
-  "dateModified": "2020-03-23T19:00:33+01:00",
-  "description": "# DTW alignment as a temporal domain adaptation strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not involved ...",
+  "datePublished": "2020-04-19T09:35:47+02:00",
+  "dateModified": "2020-04-19T09:35:47+02:00",
+  "description": "# DTW alignment as an adaptive resampling strategy**Note.** This work was a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not involved in Rém...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -733,7 +733,7 @@ initFunction(initPrint)
                       1.2.2
                       
                     
-                    DTW alignment as a temporal domain adaptation strategy
+                    DTW alignment as an adaptive resampling strategy
                   </a>
                 </li>
               
@@ -995,7 +995,7 @@ initFunction(initPrint)
 
       <main class="c-textbook__page" tabindex="-1">
             <div class="c-textbook__content" id="textbook_content">
-              <h1 id="dtw-alignment-as-a-temporal-domain-adaptation-strategy">DTW alignment as a temporal domain adaptation strategy</h1>
+              <h1 id="dtw-alignment-as-an-adaptive-resampling-strategy">DTW alignment as an adaptive resampling strategy</h1>
 
 <!-- #region {"tags": ["popout"]} -->
 <p><strong>Note.</strong> This work was a part of Rémi Dupas’ PhD thesis (in Environment
@@ -1045,8 +1045,8 @@ climate and geology, but differ in land use and P pressure intensity.</p>
 <p>In the above-described setting, we have access to one modality (discharge,
 commonly denoted $Q$) that is representative of the evolution of the flood.
 Temporal realignment based on this modality allows to overcome three
-difficulties that may arise when comparing storm-event data: time series may
-have</p>
+difficulties that may arise when comparing storm-event data.
+Indeed, time series may have</p>
 
 <ol>
   <li>different starting times due to the discharge threshold at which the
@@ -1056,23 +1056,24 @@ autosamplers were triggered,</li>
 and of concentration data points relative to the hydrograph.</li>
 </ol>
 
-<p>To align time series, we used path associated to DTW.
+<p>To align time series, we use the path associated to DTW.
 This matching path can be viewed as the optimal way to perform point-wise
 alignment of time series.</p>
 
-<p>We used the matching path $\pi^\text{Q}$ to align each discharge time series to
-the same reference discharge time series $\mathbf{x}_\text{ref}^\text{Q}$.
-The reference discharge time series used in this study was chosen
+<p>For each discharge time series $\mathbf{x}^{(i)}<em>\text{Q}$, we compute the
+matching path $\pi</em>\text{Q}$ and use it to find the optimal alignment wrt.
+the same reference discharge time series $\mathbf{x}^\text{ref}_\text{Q}$.
+The reference discharge time series used in this study is chosen
 as a storm event with full coverage of flow rise and flow recession phases.
 Alternatively, one could choose a synthetic idealized storm hydrograph.</p>
 
 <p>As stated above, the continuity condition imposed on admissible paths results
-in each element of reference time series $\mathbf{x}_\text{ref}^\text{Q}$ being
+in each element of reference time series $\mathbf{x}^\text{ref}_\text{Q}$ being
 matched with at least one element in each discharge time series from the
 dataset.
-We then used barycentric mapping based on obtained matches to realign other
+We then use barycentric mapping based on obtained matches to realign other
 modalities to the timestamps of the reference time series, as shown in the
-following Figure:</p>
+following Figures:</p>
 
 <p>```python tags=[“hide_input”]
 %config InlineBackend.figure_format = ‘svg’
@@ -1087,10 +1088,10 @@ from tslearn.utils import to_time_series</p>
     fig = plt.figure(figsize=(6, 3))</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plt.subplot(1, 2, 1)
-plt.text(x=0.5, y=1.0,
+plt.text(x=0.5, y=1.05,
          s="Original discharge time series", fontsize=12, horizontalalignment='center',
          verticalalignment='center', transform=plt.gca().transAxes)
-plt.text(x=0.5, y=0.0,
+plt.text(x=0.5, y=-0.05,
          s="Reference discharge time series", fontsize=12, horizontalalignment='center',
          verticalalignment='center', transform=plt.gca().transAxes)
 
@@ -1117,10 +1118,10 @@ plt.yticks([])
 plt.gca().axis("off")
 
 plt.subplot(1, 2, 2)
-plt.text(x=0.5, y=1.0,
+plt.text(x=0.5, y=1.05,
          s="Resampled discharge time series", fontsize=12, horizontalalignment='center',
          verticalalignment='center', transform=plt.gca().transAxes)
-plt.text(x=0.5, y=0.0,
+plt.text(x=0.5, y=-0.05,
          s="Reference discharge time series", fontsize=12, horizontalalignment='center',
          verticalalignment='center', transform=plt.gca().transAxes)
 
@@ -1192,7 +1193,7 @@ plt.tight_layout() ```
 fig = plt.figure(figsize=(6, 2))</p>
 
 <p>plt.subplot(1, 2, 1)
-plt.text(x=0.5, y=1.0,
+plt.text(x=0.5, y=1.05,
          s=”Original SRP time series”, fontsize=12,
          horizontalalignment=’center’,
          verticalalignment=’center’, transform=plt.gca().transAxes)</p>
@@ -1218,7 +1219,7 @@ plt.yticks([])
 plt.gca().axis(“off”)</p>
 
 <p>plt.subplot(1, 2, 2)
-plt.text(x=0.5, y=1.0,
+plt.text(x=0.5, y=1.05,
          s=”Resampled SRP time series”, fontsize=12,
          horizontalalignment=’center’,
          verticalalignment=’center’, transform=plt.gca().transAxes)</p>
@@ -1255,11 +1256,11 @@ plt.tight_layout()
 $p$-dimensional measurements, where $n$ is the length of the
 reference discharge time series and $p$ is the number of water quality
 parameters considered in the study (<em>i.e.</em> all modalities except discharge).
-In a second step, a standard $k$-means algorithm was used to cluster
+In a second step, a standard $k$-means algorithm is used to cluster
 realigned time series.
 Note that a Euclidean distance can be used for clustering since time series
-had already been temporally realigned; hence, no time-sensitive metric (such as
-DTW) was needed anymore.</p>
+have already been temporally realigned; hence, no time-sensitive metric (such as
+DTW) is needed anymore.</p>
 
 <p>This method proved useful to extract meaningful clusters and an <em>a posteriori</em>
 analysis of the clusters enabled to identify the export dynamics of pollutants

@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_gi.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-23T19:00:33+01:00",
-  "dateModified": "2020-03-23T19:00:33+01:00",
+  "datePublished": "2020-04-19T09:35:47+02:00",
+  "dateModified": "2020-04-19T09:35:47+02:00",
   "description": "# DTW with Global Invariances**Note.** This work was part of Titouan Vayer's PhD thesis.We were co-supervising Titouan together with Laetitia Chapel and Nico...",
   "author": {
     "@type": "Person",
@@ -733,7 +733,7 @@ initFunction(initPrint)
                       1.2.2
                       
                     
-                    DTW alignment as a temporal domain adaptation strategy
+                    DTW alignment as an adaptive resampling strategy
                   </a>
                 </li>
               
@@ -1585,24 +1585,25 @@ return barycenter, cost
             spiral += numpy.random.rand(2) * 3
         dataset.append(spiral)
     return dataset</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```python tags=["hide_input"]
+numpy.random.seed(0)
 
-<p>numpy.random.seed(0)</p>
-
-<h1 id="parameters-of-the-experiment">Parameters of the experiment</h1>
-<p>n_spirals = 3
+# Parameters of the experiment
+n_spirals = 3
 n_spirals_shown = 3
 sz = 50
 sz_barycenter = 25
-d_barycenter = 2</p>
+d_barycenter = 2
 
-<h1 id="datasets">Datasets</h1>
-<p>list_dataset_generators = [
+# Datasets
+list_dataset_generators = [
     lambda n, sz: make_folia(n, sz=sz, shift=False, some_3d=False),
     lambda n, sz: make_spirals(n, sz=sz, noise=.01, shift=False, some_3d=True)
-]</p>
+]
 
-<h1 id="methods">Methods</h1>
-<p>list_barycenter_fun = [
+# Methods
+list_barycenter_fun = [
     lambda dataset, sz, b: dtw_barycenter_averaging(dataset,
                                                     init_barycenter=b,
                                                     barycenter_size=sz,
@@ -1614,56 +1615,56 @@ d_barycenter = 2</p>
                                                        max_iter=1000,
                                                        keep_p_matrices=True,
                                                        metric_params={
-                                                           “max_iter”: 1000
+                                                           "max_iter": 1000
                                                        })[0]
 ]
-list_method_names = [“DTW”, “DTW-GI”]</p>
+list_method_names = ["DTW", "DTW-GI"]
 
-<p>angles_visu = [90, numpy.nan, -120]</p>
+angles_visu = [90, numpy.nan, -120]
 
-<p>fig = plt.figure(figsize=(.67 * (3 * n_spirals_shown + len(list_barycenter_fun)),
+fig = plt.figure(figsize=(.67 * (3 * n_spirals_shown + len(list_barycenter_fun)),
                           2. * len(list_dataset_generators)))
 for idx_dataset, dataset_fun in enumerate(list_dataset_generators):
-    spirals = dataset_fun(n_spirals, sz)</p>
+    spirals = dataset_fun(n_spirals, sz)
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Plot sample spirals
-for i in range(n_spirals_shown):
-    if spirals[i].shape[-1] == 3:
-        ax = fig.add_subplot(len(list_dataset_generators),
-                             n_spirals_shown + len(list_barycenter_fun),
-                             (n_spirals_shown + len(list_barycenter_fun))
-                             * idx_dataset + i + 1, projection="3d")
-        plot_trajectory(spirals[i], ax=ax, plot_3d=True)
-        ax.set_zticks([])
-        ax.view_init(elev=20., azim=angles_visu[i])
-    else:
-        ax = fig.add_subplot(len(list_dataset_generators),
-                             n_spirals_shown + len(list_barycenter_fun),
-                             (n_spirals_shown + len(list_barycenter_fun))
-                             * idx_dataset + i + 1)
-        plot_trajectory(spirals[i], ax=ax)
-    ax.set_xticks([])
-    ax.set_yticks([])
-    if idx_dataset == 0:
-        ax.set_title("Sample {}".format(i + 1))
+    # Plot sample spirals
+    for i in range(n_spirals_shown):
+        if spirals[i].shape[-1] == 3:
+            ax = fig.add_subplot(len(list_dataset_generators),
+                                 n_spirals_shown + len(list_barycenter_fun),
+                                 (n_spirals_shown + len(list_barycenter_fun))
+                                 * idx_dataset + i + 1, projection="3d")
+            plot_trajectory(spirals[i], ax=ax, plot_3d=True)
+            ax.set_zticks([])
+            ax.view_init(elev=20., azim=angles_visu[i])
+        else:
+            ax = fig.add_subplot(len(list_dataset_generators),
+                                 n_spirals_shown + len(list_barycenter_fun),
+                                 (n_spirals_shown + len(list_barycenter_fun))
+                                 * idx_dataset + i + 1)
+            plot_trajectory(spirals[i], ax=ax)
+        ax.set_xticks([])
+        ax.set_yticks([])
+        if idx_dataset == 0:
+            ax.set_title("Sample {}".format(i + 1))
 
-# Plot barycenters
-for i, (barycenter_fun, title) in enumerate(zip(list_barycenter_fun,
-                                                list_method_names)):
-    init_b = numpy.random.randn(sz_barycenter, d_barycenter)
-    if title == "DTW" and has_3d(spirals):
-        continue
-    barycenter = barycenter_fun(spirals, sz_barycenter, init_b)
-    ax = plt.subplot(len(list_dataset_generators),
-                     n_spirals_shown + len(list_barycenter_fun),
-                     (n_spirals_shown + len(list_barycenter_fun))
-                     * idx_dataset +
-                     n_spirals_shown + i + 1)
-    plot_trajectory(barycenter, ax=ax)
-    ax.set_xticks([])
-    ax.set_yticks([])
-    if idx_dataset == 0:
-        ax.set_title(title) ```
+    # Plot barycenters
+    for i, (barycenter_fun, title) in enumerate(zip(list_barycenter_fun,
+                                                    list_method_names)):
+        init_b = numpy.random.randn(sz_barycenter, d_barycenter)
+        if title == "DTW" and has_3d(spirals):
+            continue
+        barycenter = barycenter_fun(spirals, sz_barycenter, init_b)
+        ax = plt.subplot(len(list_dataset_generators),
+                         n_spirals_shown + len(list_barycenter_fun),
+                         (n_spirals_shown + len(list_barycenter_fun))
+                         * idx_dataset +
+                         n_spirals_shown + i + 1)
+        plot_trajectory(barycenter, ax=ax)
+        ax.set_xticks([])
+        ax.set_yticks([])
+        if idx_dataset == 0:
+            ax.set_title(title)
 </code></pre></div></div>
 
 <p>We also introduce soft counterparts following the definition of softDTW from

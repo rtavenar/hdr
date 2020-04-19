@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-03-23T19:00:33+01:00",
-  "dateModified": "2020-03-23T19:00:33+01:00",
+  "datePublished": "2020-04-19T09:35:47+02:00",
+  "dateModified": "2020-04-19T09:35:47+02:00",
   "description": "# Dynamic Time WarpingThis section covers my works related to Dynamic Time Warping for time series.**Note.** In ``tslearn``, such time series would be repres...",
   "author": {
     "@type": "Person",
@@ -733,7 +733,7 @@ initFunction(initPrint)
                       1.2.2
                       
                     
-                    DTW alignment as a temporal domain adaptation strategy
+                    DTW alignment as an adaptive resampling strategy
                   </a>
                 </li>
               
@@ -1038,7 +1038,7 @@ DTW(\mathbf{x}, \mathbf{x}^\prime) =
 paths, <em>ie.</em> the set of paths $\pi$ such that:</p>
 
 <ul>
-  <li>$\pi$ a list $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
+  <li>$\pi$ is a list $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
 $\pi_k = (i_k, j_k)$ with $0 \leq i_k &lt; n$ and $0 \leq j_k &lt; m$</li>
   <li>$\pi_0 = (0, 0)$ and $\pi_{K-1} = (n - 1, m - 1)$</li>
   <li>
@@ -1052,7 +1052,8 @@ $\pi_{k-1} = (i_{k-1}, j_{k-1})$ as follows:</p>
   </li>
 </ul>
 
-<p>Here, a path can be seen as a temporal alignment of time series such that
+<p>Here, a path can be seen as a temporal alignment of time series and the optimal
+path is such that
 Euclidean distance between aligned (<em>ie.</em> resampled) time series is minimal.</p>
 
 <p>The following image exhibits the DTW path (in white) for a given pair of time
@@ -1099,7 +1100,7 @@ problem:</p>
 </ul>
 
 <p>However, mathematically speaking, DTW is not a valid metric since it does
-not satisfy the triangular inequality.</p>
+not satisfy the triangular inequality nor the identity of indiscernibles.</p>
 
 <h2 id="setting-additional-constraints">Setting additional constraints</h2>
 
@@ -1133,7 +1134,8 @@ as illustrated below:
 
 
 &lt;!-- #region {"tags": ["popout"]} --&gt;
-**Note.** The corresponding code in ``tslearn`` would be:
+**Note.** A typical call to DTW with Sakoe-Chiba band constraint in
+``tslearn`` would be:
 
 ```python
 from tslearn.metrics import dtw
@@ -1162,7 +1164,8 @@ cost = dtw(
 paths, which leads to a parallelogram-shaped constraint:</p>
 
 <!-- #region {"tags": ["popout"]} -->
-<p><strong>Note.</strong> The corresponding code in <code class="highlighter-rouge">tslearn</code> would be:</p>
+<p><strong>Note.</strong> A typical call to DTW with Itakura parallelogram constraint in
+<code class="highlighter-rouge">tslearn</code> would be:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="kn">import</span> <span class="n">dtw</span>
 <span class="n">cost</span> <span class="o">=</span> <span class="n">dtw</span><span class="p">(</span>
