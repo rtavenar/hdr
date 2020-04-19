@@ -56,7 +56,7 @@ DTW(\mathbf{x}, \mathbf{x}^\prime) =
 where $\mathcal{A}(\mathbf{x}, \mathbf{x}^\prime)$ is the set of all admissible
 paths, _ie._ the set of paths $\pi$ such that:
 
-* $\pi$ a list $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
+* $\pi$ is a list $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
   $\pi_k = (i_k, j_k)$ with $0 \leq i_k < n$ and $0 \leq j_k < m$
 * $\pi_0 = (0, 0)$ and $\pi_{K-1} = (n - 1, m - 1)$
 * for all $k > 0$ , $\pi_k = (i_k, j_k)$ is related to
@@ -65,7 +65,8 @@ paths, _ie._ the set of paths $\pi$ such that:
   * $i_{k-1} \leq i_k \leq i_{k-1} + 1$
   * $j_{k-1} \leq j_k \leq j_{k-1} + 1$
 
-Here, a path can be seen as a temporal alignment of time series such that
+Here, a path can be seen as a temporal alignment of time series and the optimal
+path is such that
 Euclidean distance between aligned (_ie._ resampled) time series is minimal.
 
 The following image exhibits the DTW path (in white) for a given pair of time
@@ -112,7 +113,7 @@ Dynamic Time Warping holds the following properties:
 * $\forall \mathbf{x}, DTW(\mathbf{x}, \mathbf{x}) = 0$
 
 However, mathematically speaking, DTW is not a valid metric since it does
-not satisfy the triangular inequality.
+not satisfy the triangular inequality nor the identity of indiscernibles.
 
 ## Setting additional constraints
 
@@ -147,7 +148,8 @@ as illustrated below:
 
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** The corresponding code in ``tslearn`` would be:
+**Note.** A typical call to DTW with Sakoe-Chiba band constraint in
+``tslearn`` would be:
 
 ```python
 from tslearn.metrics import dtw
@@ -177,7 +179,8 @@ Second, the Itakura parallelogram sets a maximum slope $s$ for alignment
 paths, which leads to a parallelogram-shaped constraint:
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** The corresponding code in ``tslearn`` would be:
+**Note.** A typical call to DTW with Itakura parallelogram constraint in
+``tslearn`` would be:
 
 ```python
 from tslearn.metrics import dtw

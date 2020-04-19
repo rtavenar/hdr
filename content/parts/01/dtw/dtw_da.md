@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# DTW alignment as a temporal domain adaptation strategy
+# DTW alignment as an adaptive resampling strategy
 
 <!-- #region {"tags": ["popout"]} -->
 **Note.** This work was a part of Rémi Dupas' PhD thesis (in Environment
@@ -63,8 +63,8 @@ climate and geology, but differ in land use and P pressure intensity.
 In the above-described setting, we have access to one modality (discharge,
 commonly denoted $Q$) that is representative of the evolution of the flood.
 Temporal realignment based on this modality allows to overcome three
-difficulties that may arise when comparing storm-event data: time series may
-have
+difficulties that may arise when comparing storm-event data.
+Indeed, time series may have
 
 1. different starting times due to the discharge threshold at which the
 autosamplers were triggered,
@@ -72,23 +72,24 @@ autosamplers were triggered,
 3. differences in phase that yield different positions of the discharge peak
 and of concentration data points relative to the hydrograph.
 
-To align time series, we used path associated to DTW.
+To align time series, we use the path associated to DTW.
 This matching path can be viewed as the optimal way to perform point-wise
 alignment of time series.
 
-We used the matching path $\pi^\text{Q}$ to align each discharge time series to
-the same reference discharge time series $\mathbf{x}_\text{ref}^\text{Q}$.
-The reference discharge time series used in this study was chosen
+For each discharge time series $\mathbf{x}^{(i)}_\text{Q}$, we compute the
+matching path $\pi_\text{Q}$ and use it to find the optimal alignment wrt.
+the same reference discharge time series $\mathbf{x}^\text{ref}_\text{Q}$.
+The reference discharge time series used in this study is chosen
 as a storm event with full coverage of flow rise and flow recession phases.
 Alternatively, one could choose a synthetic idealized storm hydrograph.
 
 As stated above, the continuity condition imposed on admissible paths results
-in each element of reference time series $\mathbf{x}_\text{ref}^\text{Q}$ being
+in each element of reference time series $\mathbf{x}^\text{ref}_\text{Q}$ being
 matched with at least one element in each discharge time series from the
 dataset.
-We then used barycentric mapping based on obtained matches to realign other
+We then use barycentric mapping based on obtained matches to realign other
 modalities to the timestamps of the reference time series, as shown in the
-following Figure:
+following Figures:
 
 ```python tags=["hide_input"]
 %config InlineBackend.figure_format = 'svg'
@@ -103,10 +104,10 @@ def plot_matches(ts0, ts1, ts0_resample, path):
     fig = plt.figure(figsize=(6, 3))
 
     plt.subplot(1, 2, 1)
-    plt.text(x=0.5, y=1.0,
+    plt.text(x=0.5, y=1.05,
              s="Original discharge time series", fontsize=12, horizontalalignment='center',
              verticalalignment='center', transform=plt.gca().transAxes)
-    plt.text(x=0.5, y=0.0,
+    plt.text(x=0.5, y=-0.05,
              s="Reference discharge time series", fontsize=12, horizontalalignment='center',
              verticalalignment='center', transform=plt.gca().transAxes)
 
@@ -133,10 +134,10 @@ def plot_matches(ts0, ts1, ts0_resample, path):
     plt.gca().axis("off")
 
     plt.subplot(1, 2, 2)
-    plt.text(x=0.5, y=1.0,
+    plt.text(x=0.5, y=1.05,
              s="Resampled discharge time series", fontsize=12, horizontalalignment='center',
              verticalalignment='center', transform=plt.gca().transAxes)
-    plt.text(x=0.5, y=0.0,
+    plt.text(x=0.5, y=-0.05,
              s="Reference discharge time series", fontsize=12, horizontalalignment='center',
              verticalalignment='center', transform=plt.gca().transAxes)
 
@@ -209,7 +210,7 @@ plot_matches(x_prime_q, x_q_ref, x_prime_q_resample, path)
 fig = plt.figure(figsize=(6, 2))
 
 plt.subplot(1, 2, 1)
-plt.text(x=0.5, y=1.0,
+plt.text(x=0.5, y=1.05,
          s="Original SRP time series", fontsize=12,
          horizontalalignment='center',
          verticalalignment='center', transform=plt.gca().transAxes)
@@ -235,7 +236,7 @@ plt.yticks([])
 plt.gca().axis("off")
 
 plt.subplot(1, 2, 2)
-plt.text(x=0.5, y=1.0,
+plt.text(x=0.5, y=1.05,
          s="Resampled SRP time series", fontsize=12,
          horizontalalignment='center',
          verticalalignment='center', transform=plt.gca().transAxes)
@@ -272,11 +273,11 @@ At this point, each time series is transformed to series of $n$
 $p$-dimensional measurements, where $n$ is the length of the
 reference discharge time series and $p$ is the number of water quality
 parameters considered in the study (_i.e._ all modalities except discharge).
-In a second step, a standard $k$-means algorithm was used to cluster
+In a second step, a standard $k$-means algorithm is used to cluster
 realigned time series.
 Note that a Euclidean distance can be used for clustering since time series
-had already been temporally realigned; hence, no time-sensitive metric (such as
-DTW) was needed anymore.
+have already been temporally realigned; hence, no time-sensitive metric (such as
+DTW) is needed anymore.
 
 This method proved useful to extract meaningful clusters and an _a posteriori_
 analysis of the clusters enabled to identify the export dynamics of pollutants

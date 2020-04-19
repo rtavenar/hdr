@@ -614,8 +614,9 @@ def make_folia(n, sz, noise=.1, shift=False, some_3d=False):
             spiral += numpy.random.rand(2) * 3
         dataset.append(spiral)
     return dataset
+```
 
-
+```python tags=["hide_input"]
 numpy.random.seed(0)
 
 # Parameters of the experiment

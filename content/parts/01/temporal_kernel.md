@@ -130,11 +130,14 @@ rect_s_x = [left_h, bottom_h, width, h_ts]
 def g(x, ratio):
     sz = x.shape[0]
     return numpy.hstack(
-        (x, numpy.linspace(0., 1., sz).reshape((-1, 1)))
+        (
+            x,
+            ratio * numpy.linspace(0., 1., sz).reshape((-1, 1))
+        )
     )
 
 gamma_f = 10.
-gamma_t = 1000 * 1000.
+gamma_t = 50.
 ratio = numpy.sqrt(gamma_t / gamma_f)
 
 # Build augmented representations ($g$ function)
