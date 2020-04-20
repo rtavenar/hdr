@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/02/topic_models.html",
   "headline": "Temporal Topic Models",
-  "datePublished": "2020-04-20T18:38:52+02:00",
-  "dateModified": "2020-04-20T18:38:52+02:00",
+  "datePublished": "2020-04-20T18:48:19+02:00",
+  "dateModified": "2020-04-20T18:48:19+02:00",
   "description": "        Temporal Topic Models    Topic models are mixture models that can deal with documents represented asbags of features (BoF) and extract latent topics ...",
   "author": {
     "@type": "Person",
@@ -1051,11 +1051,11 @@ occurrences and starting time for each motif occurrence.
 Other variables are either integrated out or deduced, when a deterministic
 relation holds.</p>
 <p>Our supervised variant relies on the same generative process except that an
-extra component is added that maps topics to classes in a supervised learning
+extra component is added that maps motifs to classes in a supervised learning
 context.
 Therefore, this mapping needs to be learned and, once the model is trained,
 classifying a new instance $\mathbf{x}$ consists in
-(i) extracting topic probabilities $P(z | \mathbf{x})$ and
+(i) extracting motif probabilities $P(z | \mathbf{x})$ and
 (ii) deriving class probabilities as:</p>
 \begin{equation}
     P(y | \mathbf{x}) = \sum_z P(y | z) P(z | \mathbf{x})
