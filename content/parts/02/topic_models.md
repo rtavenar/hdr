@@ -54,11 +54,11 @@ Other variables are either integrated out or deduced, when a deterministic
 relation holds.
 
 Our supervised variant relies on the same generative process except that an
-extra component is added that maps topics to classes in a supervised learning
+extra component is added that maps motifs to classes in a supervised learning
 context.
 Therefore, this mapping needs to be learned and, once the model is trained,
 classifying a new instance $\mathbf{x}$ consists in
-(i) extracting topic probabilities $P(z | \mathbf{x})$ and
+(i) extracting motif probabilities $P(z | \mathbf{x})$ and
 (ii) deriving class probabilities as:
 
 \begin{equation}
