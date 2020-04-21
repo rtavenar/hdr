@@ -22,7 +22,8 @@ Figure:
 
 ![half-width](../../images/hdlsm.svg)
 
-The HDLSM model takes as input a set of quantized time series.
+The HDLSM model takes as input a set of quantized time series (aka temporal
+documents).
 More specifically, a time series is represented as a table of counts that
 informs, for
 each pair $(w, t)$, whether word $w$ (typically a quantized feature) was
