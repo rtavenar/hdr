@@ -1,5 +1,3 @@
-# Interactive notebooks rely on the following packages
-
 name: env-hdr
 channels:
   - conda-forge
