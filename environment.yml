@@ -1,0 +1,12 @@
+# Interactive notebooks rely on the following packages
+
+name: env-hdr
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - numpy
+  - matplotlib
+  - nbinteract
+  - scipy
+  - tslearn
