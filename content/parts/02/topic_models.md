@@ -118,7 +118,7 @@ in the segmentation of trajectories into homogeneous _movement modes_;
 ### Use case
 
 The monitoring of maritime traffic relies on several sources of data, in a
-rising context of maritime big data~\citep{garnier2016exploiting}.
+rising context of maritime big data {% cite garnier2016exploiting %}.
 Among these sources lies the Automatic Identification System (AIS), which
 automatically collects messages from vessels around the world, at a high
 frequency.
