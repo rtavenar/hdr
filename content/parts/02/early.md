@@ -35,7 +35,7 @@ The cost function is of the following form:
 
 \begin{equation}
 \mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
-    \mathcal{L}_c(\mathbf{x}, y, \boldsymbol{\theta}) + \alpha t
+    \mathcal{L}_c(\mathbf{x}_{\rightarrow t}, y, \boldsymbol{\theta}) + \alpha t
 \label{eq:loss_early}
 \end{equation}
 
@@ -46,7 +46,8 @@ decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
 and is supposed to be a hyper-parameter of the method.
 
-In {% cite dachraoui2015early %}, they rely on (i) a clustering of the training
+In {% cite dachraoui2015early %}, authors rely on (i) a clustering of the
+training
 time series and (ii) individual classifiers $m_t(\cdot)$ trained at all possible
 timestamps, so as to be able to predict, at time $t$, an expected cost for all
 times $t + \tau$ with $\tau \geq 0$:
@@ -79,8 +80,7 @@ then a decision is made using classifier $m_t(\cdot)$.
 
 <!-- #region {"tags": ["popout"]} -->
 **Note.** This unpublished note is part of François Painblanc's PhD work.
-We are co-supervising François together with Laetitia Chapel, Chloé Friguet and
-Pierre Gloaguen.
+We are co-supervising François together with Laetitia Chapel and Chloé Friguet.
 <!-- #endregion -->
 
 Relying on Equation \eqref{eq:dachraoui} to decide prediction time can be
@@ -98,18 +98,18 @@ Using Bayes rule, Equation \eqref{eq:dachraoui} can be re-written
         + \alpha t \\
     &=&
         \sum_k P(C_k | \mathbf{x}_{\rightarrow t})
-        \underbrace{\sum_i 1 - P_{t+\tau}(\hat{y} = i, y=i | C_k)}_{A_{t+\tau}(k)}
+        \underbrace{\sum_i 1 - P_{t+\tau}(\hat{y} = i, y=i | C_k)}_{A_{t+\tau}(C_k)}
         + \alpha t \\
 \end{eqnarray}
 
-where $A_{t+\tau}(k)$ is the sum of off-diagonal elements in the training time
-confusion matrix built from time series in cluster $k$ using classifier
-$m_{t+\tau}(\cdot)$.
+where $A_{t+\tau}(C_k)$ is the sum of off-diagonal elements in the (normalized)
+training time confusion matrix built from time series in cluster $k$ using
+classifier $m_{t+\tau}(\cdot)$.
 
 In practice, this means that if the sum of off-diagonal elements of confusion
 matrices is equal to the same $A_{t+\tau}$ for all clusters, then this method
-will make a decision without taking the data $\mathbf{x}_{\rightarrow t}$
-into account:
+will make a decision on the most adequate prediction time without taking the
+data $\mathbf{x}_{\rightarrow t}$ into account:
 
 \begin{eqnarray}
     f_\tau(\mathbf{x}_{\rightarrow t}, y) &=&
@@ -120,7 +120,8 @@ into account:
         A_{t+\tau} + \alpha t \\
 \end{eqnarray}
 
-In other words, for this method to work, it is important that accuracy differs
+In other words, for this method to adapt the decision time $t$ in a
+data-dependent fashion, it is important that accuracy differs
 significantly between clusters, which is a condition that is difficult to ensure
 _a priori_.
 

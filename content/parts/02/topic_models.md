@@ -1,3 +1,18 @@
+---
+jupyter:
+  jupytext:
+    formats: md
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.1'
+      jupytext_version: 1.2.1
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
 # Temporal Topic Models
 
 Topic models are mixture models that can deal with documents represented as
@@ -76,6 +91,131 @@ features.
 
 ## Two-step Inference for Sequences of Ornstein Uhlenbeck Processes
 
+<!-- #region {"tags": ["popout"]} -->
+**Note.** This work is part of Pierre Gloaguen's postdoc.
+This is joint work with Laetitia Chapel and Chloé Friguet.
+<!-- #endregion -->
+
+More recently, I have been involved in a project related to the surveillance of
+the maritime traffic.
+In this context, a major challenge
+is the automatic identification of traffic flows from a set of observed
+trajectories, in order to derive good management measures or to detect abnormal
+or illegal behaviors for example.
+
+The model we have proposed in this context differs from the one described above
+in several aspects:
+
+* we are not in a supervised framework, we have no labelled data at our disposal
+and our goal will rather be to extract meaningful trajectory clusters;
+* we are not looking for motifs to be localized in time series (with
+a possible overlap between motifs, as in the method described above) but rather
+in the segmentation of trajectories into homogeneous _movement modes_;
+* each movement mode will be described using a continuous time model;
+* in order to scale to larger datasets, stochastic variational inference is used
+(in place of Gibbs sampling) for inference.
+
+### Use case
+
+The monitoring of maritime traffic relies on several sources of data, in a
+rising context of maritime big data~\citep{garnier2016exploiting}.
+Among these sources lies the Automatic Identification System (AIS), which
+automatically collects messages from vessels around the world, at a high
+frequency.
+AIS data basically consist in GPS-like data, together with the instantaneous
+speed and heading, and some vessel specific static information.
+These data are characterized by their diversity as they (1) are collected at
+different frequencies (2) have different lengths (3) are not necessarily
+regularly sampled (4) represent very different behaviors, but (5) share common
+trends or similar subparts (called hereafter _movement modes_).
+
+One major challenge in this context is the extraction of movement patterns
+emerging from the observed data, considering trajectories that share similar
+movement modes.
+This issue can be restated from a machine learning point of view as a
+large-scale clustering task involving the definition of clustering methods
+that can handle such complex data while being efficient on large databases,
+and that both cluster trajectories as a whole and detect common
+sub-trajectories.
+
+### The model
+
+We define a parametric framework to model trajectory data,
+_i.e._ sequences of geographical positions recorded through time.
+The modeling framework aims to account for two levels of heterogeneity possibly
+present in trajectory data:
+
+1. heterogeneity of an individual's movement within a single trajectory, and
+2. heterogeneity between observed trajectories of several individuals.
+
+Following a common paradigm, we assume that a moving individual's trajectory
+is a heterogeneous sequence of patterns that we call _movement modes_.
+Different movement modes along a trajectory refer to different ways of moving
+in terms of velocity distribution, reflecting different behaviors, activities,
+or routes.
+It is assumed that a given movement mode can be adopted by several individuals.
+
+As done in {% cite gurarie2017correlated %}, we characterize
+movement modes using a specific correlated velocity model, defined in a
+continuous-time framework, namely the Ornstein-Uhlenbeck Process
+{% cite uhlenbeck1930theory %} (OUP).
+One important property of the OUP is that, under mild conditions,
+the velocity process is an asymptotically stationary Gaussian Process.
+
+**TODO: OUP simulation in Python**
+
+### Parameter estimation
+
+In order to perform scalable parameter inference and clustering of both
+trajectories and GPS observations (into movement modes), we adopt a pragmatic
+two step approach that takes advantage of the inherent properties of the OUP:
+
+1. A first dual clustering is performed based on a simpler independent
+Gaussian mixture model, in order to estimate potential movement modes and
+trajectory clusters: it allows getting rid of within mode autocorrelation in
+the inference, and therefore eases the computations, yet it does not rely on any
+temporal or sequential information.
+Here again, we use a Hierarchical Dirichlet Process as a model for this
+two-level clustering, hence allowing for infinite mixtures of both movement
+modes and trajectory clusters.
+The Gaussian hypothesis in this case is in line with our choice of the OUP as
+our velocity process, since the OUP stationary distribution is Gaussian.
+2. Among the estimated movement modes, only those meeting a temporal consistency
+constraint are kept.
+Parameters of these consistent movement modes are then estimated, and used to
+reassign observations that were assigned to inconsistent movement modes (_i.e._
+movement modes that do not last long enough to be considered reliable).
+It ensures that only trajectory segments for which the stationary distribution
+is reached are kept to estimate movement modes.
+
+The resulting consistent movement mode concept allows one to (1) have a good
+estimation of OUP parameters within a movement mode (as a consistent sequence
+will often be related to a large amount of points) and (2) filter out
+"noise" movement modes gathering few observations in a temporally
+inconsistent manner.
+
+Parameter estimation for step 1. described above is performed through stochastic
+variational inference (SVI) to allow scalability to large datasets of AIS data,
+and movement mode parameter estimation is performed using standard tools from
+the OUP literature.
+
+Computational complexity of the inference step is dominated by the clustering
+step, since the OUP parameter estimation can be performed independently for each
+movement mode.
+It is quasilinear in the number of
+observations and, as stochastic variational inference is used, parts of the
+computations involved can be distributed.
+
+### Results
+
+We have provided [a dataset](https://github.com/rtavenar/ushant_ais) of several
+millions of observations in the AIS context.
+This dataset is used to validate our model qualitatively (through visual
+analysis of extracted movement modes and trajectory clusters) and should
+allow future competitive methods to compare on a real-world large-scale
+trajectory dataset.
+
+**TODO: add ref to online tech report**
 
 ## References
 
