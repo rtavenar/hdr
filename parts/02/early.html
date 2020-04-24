@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/02/early.html",
   "headline": "Early Classification of Time Series",
-  "datePublished": "2020-04-20T18:48:19+02:00",
-  "dateModified": "2020-04-20T18:48:19+02:00",
+  "datePublished": "2020-04-24T09:04:51+02:00",
+  "dateModified": "2020-04-24T09:04:51+02:00",
   "description": "        Early Classification of Time Series    Early classification of time series is the task of performing a classificationas early as possible for an inco...",
   "author": {
     "@type": "Person",
@@ -1017,7 +1017,7 @@ classification of time series that balances earliness and accuracy.</p>
 <p>The cost function is of the following form:</p>
 \begin{equation}
 \mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
-    \mathcal{L}_c(\mathbf{x}, y, \boldsymbol{\theta}) + \alpha t
+    \mathcal{L}_c(\mathbf{x}_{\rightarrow t}, y, \boldsymbol{\theta}) + \alpha t
 \label{eq:loss_early}
 \end{equation}<p>where $\hat{y}$ is the class predicted by the model,
 $\mathcal{L}_c(\cdot,\cdot,\cdot)$ is a
@@ -1025,7 +1025,8 @@ classification loss and $t$ is the timestamp at which a
 decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
 and is supposed to be a hyper-parameter of the method.</p>
-<p>In <a class="citation" href="#dachraoui2015early">(Dachraoui, Bondu, &amp; Cornuéjols, 2015)</a>, they rely on (i) a clustering of the training
+<p>In <a class="citation" href="#dachraoui2015early">(Dachraoui, Bondu, &amp; Cornuéjols, 2015)</a>, authors rely on (i) a clustering of the
+training
 time series and (ii) individual classifiers $m_t(\cdot)$ trained at all possible
 timestamps, so as to be able to predict, at time $t$, an expected cost for all
 times $t + \tau$ with $\tau \geq 0$:</p>
@@ -1061,8 +1062,7 @@ then a decision is made using classifier $m_t(\cdot)$.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Note.</strong> This unpublished note is part of François Painblanc's PhD work.
-We are co-supervising François together with Laetitia Chapel, Chloé Friguet and
-Pierre Gloaguen.</p>
+We are co-supervising François together with Laetitia Chapel and Chloé Friguet.</p>
 
 </div>
 </div>
@@ -1086,15 +1086,15 @@ to undesirable behaviors.</p>
         + \alpha t \\
     &amp;=&amp;
         \sum_k P(C_k | \mathbf{x}_{\rightarrow t})
-        \underbrace{\sum_i 1 - P_{t+\tau}(\hat{y} = i, y=i | C_k)}_{A_{t+\tau}(k)}
+        \underbrace{\sum_i 1 - P_{t+\tau}(\hat{y} = i, y=i | C_k)}_{A_{t+\tau}(C_k)}
         + \alpha t \\
-\end{eqnarray}<p>where $A_{t+\tau}(k)$ is the sum of off-diagonal elements in the training time
-confusion matrix built from time series in cluster $k$ using classifier
-$m_{t+\tau}(\cdot)$.</p>
+\end{eqnarray}<p>where $A_{t+\tau}(C_k)$ is the sum of off-diagonal elements in the (normalized)
+training time confusion matrix built from time series in cluster $k$ using
+classifier $m_{t+\tau}(\cdot)$.</p>
 <p>In practice, this means that if the sum of off-diagonal elements of confusion
 matrices is equal to the same $A_{t+\tau}$ for all clusters, then this method
-will make a decision without taking the data $\mathbf{x}_{\rightarrow t}$
-into account:</p>
+will make a decision on the most adequate prediction time without taking the
+data $\mathbf{x}_{\rightarrow t}$ into account:</p>
 \begin{eqnarray}
     f_\tau(\mathbf{x}_{\rightarrow t}, y) &amp;=&amp;
         \sum_k P(C_k | \mathbf{x}_{\rightarrow t})
@@ -1102,7 +1102,8 @@ into account:</p>
         + \alpha t \\
      &amp;=&amp;
         A_{t+\tau} + \alpha t \\
-\end{eqnarray}<p>In other words, for this method to work, it is important that accuracy differs
+\end{eqnarray}<p>In other words, for this method to adapt the decision time $t$ in a
+data-dependent fashion, it is important that accuracy differs
 significantly between clusters, which is a condition that is difficult to ensure
 <em>a priori</em>.</p>
 <h3 id="Pushing-the-Method-to-the-Limit">Pushing the Method to the Limit<a class="anchor-link" href="#Pushing-the-Method-to-the-Limit"> </a></h3><p>In <a class="citation" href="#tavenard:halshs-01339007">(Tavenard &amp; Malinowski, 2016)</a>, we pushed this method to the limit
