@@ -162,13 +162,33 @@ continuous-time framework, namely the Ornstein-Uhlenbeck Process
 One important property of the OUP is that, under mild conditions,
 the velocity process is an asymptotically stationary Gaussian Process.
 
-```python tags=["hide_input"]
-%config InlineBackend.figure_format = 'svg'
+```python tags=["hide_input", "hide_output"]
 import matplotlib.pyplot as plt
+from matplotlib import animation
+from IPython.display import HTML
 import numpy as np
 import scipy.linalg
 
 plt.ion()
+
+def gen_animation(Vt, mu_k):
+    plt.scatter([mu_k[0]], [mu_k[1]], color='k', zorder=1)
+    plt.text(x=mu_k[0] + .3, y=mu_k[1] + .3, s="$\mu$", fontsize=16)
+    line, = plt.plot([], [], 'rx-', zorder=0)
+
+    # initialization function: plot the background of each frame
+    def init():
+      line.set_data([], [])
+      return (line,)
+
+    # animation function. This is called sequentially
+    def animate(t):
+      line.set_data(Vt[:t, 0], Vt[:t, 1])
+      return (line,)
+
+    anim = animation.FuncAnimation(fig, animate, init_func=init,
+                                   frames=Vt.shape[0], interval=20, blit=True)
+    return anim
 ```
 
 ```python
@@ -225,13 +245,16 @@ Vt[0] = np.array([10., 10.])
 Vt[1:] = simulate_oup(V0=Vt[0], mu=mu_k, gamma=gamma_k, sigma=sigma_k,
                       delta_t=dt, n_samples=n_times)
 
-plt.figure(figsize=(6, 6))
-plt.plot(Vt[:, 0], Vt[:, 1], 'rx-', zorder=0)
-plt.scatter([mu_k[0]], [mu_k[1]], color='k', zorder=1)
-plt.text(x=mu_k[0] + .3, y=mu_k[1] + .3, s="$\mu$", fontsize=16)
+fig = plt.figure(figsize=(6, 6))
 plt.xlabel("X-Velocity")
 plt.ylabel("Y-Velocity")
-plt.show()
+plt.gca().set_xlim([-3, 11])
+plt.gca().set_ylim([-3, 11])
+
+anim = gen_animation(Vt, mu_k)
+plt.close()
+
+HTML(anim.to_jshtml())
 ```
 
 ### Parameter estimation
