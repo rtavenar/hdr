@@ -162,7 +162,77 @@ continuous-time framework, namely the Ornstein-Uhlenbeck Process
 One important property of the OUP is that, under mild conditions,
 the velocity process is an asymptotically stationary Gaussian Process.
 
-**TODO: OUP simulation in Python**
+```python tags=["hide_input"]
+%config InlineBackend.figure_format = 'svg'
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy.linalg
+
+plt.ion()
+```
+
+```python
+def simulate_oup(V0, mu, gamma, sigma, delta_t, n_samples):
+    """An Ornstein Uhlenbeck is a solution of:
+
+    dX(t) = \Gamma (X(t)−μ) dt + \Sigma dW(t), X0=x0
+
+    In this case, the solution is a Markov process Markov, with an explicit
+    transition law:
+
+    X(t+\Delta) | {X(t)=x_t} \sim \mathcal{N}(m_\Delta,V_\Delta)
+
+    with:
+
+    m_\Delta = \mu + \exp(−\Gamma \Delta)(x_t−\mu)
+
+    V_\Delta = S − \exp(−\Gamma \Delta) S \exp(−\Gamma \Delta)^T
+
+    vec(S)=(\Gamma \oplus \Gamma) − 1 vec(\Sigma \Sigma^T)
+    """
+    d = mu.shape[0]
+
+    exp_g = scipy.linalg.expm(-delta_t * gamma)
+
+    S = scipy.linalg.solve(
+        np.kron(gamma, np.eye(d)) + np.kron(np.eye(d), gamma),
+        sigma.dot(sigma.T).reshape((-1, ))
+    ).reshape((d, d))
+    v_delta = S - exp_g.dot(S).dot(exp_g.T)
+
+    samples = np.empty((n_samples, d))
+    for t in range(n_samples):
+        V_prev = V0 if t == 0 else samples[t - 1]
+        m_delta = mu + np.dot(exp_g, V_prev)
+        samples[t] = np.random.multivariate_normal(mean=m_delta,
+                                                   cov=v_delta)
+    return samples
+
+
+np.random.seed(0)
+
+dt = .05
+n_times = 300  # Number of timestamps
+d = 2
+
+# UOP parameters
+mu_k = np.array([0., 0.])
+gamma_k = np.array([[3., 1.], [-1., 2.]])
+sigma_k = np.diag([.5, 2.])
+
+Vt = np.empty((n_times + 1, d))
+Vt[0] = np.array([10., 10.])
+Vt[1:] = simulate_oup(V0=Vt[0], mu=mu_k, gamma=gamma_k, sigma=sigma_k,
+                      delta_t=dt, n_samples=n_times)
+
+plt.figure(figsize=(6, 6))
+plt.plot(Vt[:, 0], Vt[:, 1], 'rx-', zorder=0)
+plt.scatter([mu_k[0]], [mu_k[1]], color='k', zorder=1)
+plt.text(x=mu_k[0] + .3, y=mu_k[1] + .3, s="$\mu$", fontsize=16)
+plt.xlabel("X-Velocity")
+plt.ylabel("Y-Velocity")
+plt.show()
+```
 
 ### Parameter estimation
 
