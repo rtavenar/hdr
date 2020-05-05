@@ -172,10 +172,10 @@ import scipy.linalg
 
 plt.ion()
 
-def gen_animation(Vt, mu_k):
-    plt.scatter([mu_k[0]], [mu_k[1]], color='k', zorder=1)
-    plt.text(x=mu_k[0] + .3, y=mu_k[1] + .3, s="$\mu$",
-             fontsize=16, bbox=dict(alpha=1., color="w", linewidth=0.))
+def gen_animation(Vt, mu):
+    plt.text(x=mu[0] + .5, y=mu[1] + 1.5,
+             s="Asymptotic distribution:\n$\mathcal{N}(\mu, S)$",
+             fontsize=16)
     line, = plt.plot([], [], 'rx-', zorder=0)
 
     # initialization function
@@ -226,7 +226,7 @@ def plot_gaussian(mu, sigma, xlim, ylim):
 def simulate_oup(V0, mu, gamma, sigma, delta_t, n_samples):
     """An Ornstein Uhlenbeck is a solution of:
 
-    dX(t) = \Gamma (X(t)−μ) dt + \Sigma dW(t), X0=x0
+    dX(t) = \Gamma (X(t)−\mu) dt + \Sigma dW(t), X0=x0
 
     In this case, the solution is a Markov process Markov, with an
     explicit transition law:
@@ -267,13 +267,13 @@ n_times = 300  # Number of timestamps
 d = 2
 
 # UOP parameters
-mu_k = np.array([0., 0.])
-gamma_k = np.array([[3., 1.], [-1., 2.]])
-sigma_k = np.diag([.5, 2.])
+mu = np.array([0., 0.])
+gamma = np.array([[3., 1.], [-1., 2.]])
+sigma = np.diag([.5, 2.])
 
 Vt = np.empty((n_times + 1, d))
 Vt[0] = np.array([10., 10.])
-Vt[1:] = simulate_oup(V0=Vt[0], mu=mu_k, gamma=gamma_k, sigma=sigma_k,
+Vt[1:] = simulate_oup(V0=Vt[0], mu=mu, gamma=gamma, sigma=sigma,
                       delta_t=dt, n_samples=n_times)
 
 fig = plt.figure(figsize=(6, 6))
@@ -282,14 +282,14 @@ plt.ylabel("Y-Velocity")
 plt.gca().set_xlim([-3, 11])
 plt.gca().set_ylim([-3, 11])
 # Asymptotic distribution of the OUP is
-# N(mu_k, S) (see definition of S above)
+# N(mu, S) (see definition of S above)
 S = scipy.linalg.solve(
-    np.kron(gamma_k, np.eye(d)) + np.kron(np.eye(d), gamma_k),
-    sigma_k.dot(sigma_k.T).reshape((-1, ))
+    np.kron(gamma, np.eye(d)) + np.kron(np.eye(d), gamma),
+    sigma.dot(sigma.T).reshape((-1, ))
 ).reshape((d, d))
-plot_gaussian(mu_k, scipy.linalg.sqrtm(S), [-3, 11], [-3, 11])
+plot_gaussian(mu, scipy.linalg.sqrtm(S), [-3, 11], [-3, 11])
 
-anim = gen_animation(Vt, mu_k)
+anim = gen_animation(Vt, mu)
 plt.close()
 
 HTML(anim.to_jshtml())
