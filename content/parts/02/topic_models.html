@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/02/topic_models.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-05-05T14:41:56+02:00",
-  "dateModified": "2020-05-05T14:41:56+02:00",
+  "datePublished": "2020-05-05T15:49:23+02:00",
+  "dateModified": "2020-05-05T15:49:23+02:00",
   "description": "# Temporal Topic ModelsTopic models are mixture models that can deal with documents represented asbags of features (BoF) and extract latent topics (a topic b...",
   "author": {
     "@type": "Person",
@@ -1165,22 +1165,53 @@ import scipy.linalg</p>
 
 <p>def gen_animation(Vt, mu_k):
     plt.scatter([mu_k[0]], [mu_k[1]], color=’k’, zorder=1)
-    plt.text(x=mu_k[0] + .3, y=mu_k[1] + .3, s=”$\mu$”, fontsize=16)
+    plt.text(x=mu_k[0] + .3, y=mu_k[1] + .3, s=”$\mu$”,
+             fontsize=16, bbox=dict(alpha=1., color=”w”, linewidth=0.))
     line, = plt.plot([], [], ‘rx-‘, zorder=0)</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># initialization function: plot the background of each frame
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># initialization function
 def init():
   line.set_data([], [])
   return (line,)
 
-# animation function. This is called sequentially
+# animation function
 def animate(t):
   line.set_data(Vt[:t, 0], Vt[:t, 1])
   return (line,)
 
 anim = animation.FuncAnimation(fig, animate, init_func=init,
-                               frames=Vt.shape[0], interval=20, blit=True)
-return anim ```
+                               frames=Vt.shape[0],
+                               interval=20, blit=True)
+return anim
+</code></pre></div></div>
+
+<p>def plot_gaussian(mu, sigma, xlim, ylim):
+    N = 100
+    X = np.linspace(xlim[0], xlim[1], N)
+    Y = np.linspace(ylim[0], ylim[1], N)
+    X, Y = np.meshgrid(X, Y)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Pack X and Y into a single 3-dimensional array
+pos = np.empty(X.shape + (2,))
+pos[:, :, 0] = X
+pos[:, :, 1] = Y
+
+def multivariate_gaussian(pos):
+    n = mu.shape[0]
+    Sigma_det = np.linalg.det(sigma)
+    Sigma_inv = np.linalg.inv(sigma)
+    N = np.sqrt((2*np.pi)**n * Sigma_det)
+    # This einsum call calculates (x-mu)T.Sigma-1.(x-mu) in a vectorized
+    # way across all the input variables.
+    fac = np.einsum('...k,kl,...l-&gt;...', pos-mu, Sigma_inv, pos-mu)
+
+    return np.exp(-fac / 2) / N
+
+# The distribution on the variables X, Y packed into pos.
+Z = multivariate_gaussian(pos)
+
+# Create a contour plot
+plt.contour(X, Y, Z, levels=5, colors=["k"]) ```
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">simulate_oup</span><span class="p">(</span><span class="n">V0</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">delta_t</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">):</span>
@@ -1188,8 +1219,8 @@ return anim ```
 
     dX(t) = </span><span class="err">\</span><span class="s">Gamma (X(t)−μ) dt + </span><span class="err">\</span><span class="s">Sigma dW(t), X0=x0
 
-    In this case, the solution is a Markov process Markov, with an explicit
-    transition law:
+    In this case, the solution is a Markov process Markov, with an
+    explicit transition law:
 
     X(t+</span><span class="err">\</span><span class="s">Delta) | {X(t)=x_t} </span><span class="err">\</span><span class="s">sim </span><span class="err">\</span><span class="s">mathcal{N}(m_</span><span class="err">\</span><span class="s">Delta,V_</span><span class="err">\</span><span class="s">Delta)
 
@@ -1241,13 +1272,18 @@ return anim ```
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Y-Velocity"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
+<span class="c1"># Asymptotic distribution of the OUP is
+# N(mu_k, S) (see definition of S above)
+</span><span class="n">S</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">gamma_k</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">gamma_k</span><span class="p">),</span>
+    <span class="n">sigma_k</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sigma_k</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+<span class="n">plot_gaussian</span><span class="p">(</span><span class="n">mu_k</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">sqrtm</span><span class="p">(</span><span class="n">S</span><span class="p">),</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
 
 <span class="n">anim</span> <span class="o">=</span> <span class="n">gen_animation</span><span class="p">(</span><span class="n">Vt</span><span class="p">,</span> <span class="n">mu_k</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_jshtml</span><span class="p">())</span>
-</code></pre></div></div>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_html5_video</span><span class="p">())</span>
 </code></pre></div></div>
 
 <h3 id="parameter-estimation">Parameter estimation</h3>
