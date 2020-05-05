@@ -160,9 +160,10 @@ movement modes using a specific correlated velocity model, defined in a
 continuous-time framework, namely the Ornstein-Uhlenbeck Process
 {% cite uhlenbeck1930theory %} (OUP).
 One important property of the OUP is that, under mild conditions,
-the velocity process is an asymptotically stationary Gaussian Process.
+the velocity process is an asymptotically stationary Gaussian Process, which
+can be visualized in the following animation:
 
-```python tags=["hide_input", "hide_output"]
+```python tags=["hide_input"]
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from IPython.display import HTML
@@ -173,22 +174,52 @@ plt.ion()
 
 def gen_animation(Vt, mu_k):
     plt.scatter([mu_k[0]], [mu_k[1]], color='k', zorder=1)
-    plt.text(x=mu_k[0] + .3, y=mu_k[1] + .3, s="$\mu$", fontsize=16)
+    plt.text(x=mu_k[0] + .3, y=mu_k[1] + .3, s="$\mu$",
+             fontsize=16, bbox=dict(alpha=1., color="w", linewidth=0.))
     line, = plt.plot([], [], 'rx-', zorder=0)
 
-    # initialization function: plot the background of each frame
+    # initialization function
     def init():
       line.set_data([], [])
       return (line,)
 
-    # animation function. This is called sequentially
+    # animation function
     def animate(t):
       line.set_data(Vt[:t, 0], Vt[:t, 1])
       return (line,)
 
     anim = animation.FuncAnimation(fig, animate, init_func=init,
-                                   frames=Vt.shape[0], interval=20, blit=True)
+                                   frames=Vt.shape[0],
+                                   interval=20, blit=True)
     return anim
+
+def plot_gaussian(mu, sigma, xlim, ylim):
+    N = 100
+    X = np.linspace(xlim[0], xlim[1], N)
+    Y = np.linspace(ylim[0], ylim[1], N)
+    X, Y = np.meshgrid(X, Y)
+
+    # Pack X and Y into a single 3-dimensional array
+    pos = np.empty(X.shape + (2,))
+    pos[:, :, 0] = X
+    pos[:, :, 1] = Y
+
+    def multivariate_gaussian(pos):
+        n = mu.shape[0]
+        Sigma_det = np.linalg.det(sigma)
+        Sigma_inv = np.linalg.inv(sigma)
+        N = np.sqrt((2*np.pi)**n * Sigma_det)
+        # This einsum call calculates (x-mu)T.Sigma-1.(x-mu) in a vectorized
+        # way across all the input variables.
+        fac = np.einsum('...k,kl,...l->...', pos-mu, Sigma_inv, pos-mu)
+
+        return np.exp(-fac / 2) / N
+
+    # The distribution on the variables X, Y packed into pos.
+    Z = multivariate_gaussian(pos)
+
+    # Create a contour plot
+    plt.contour(X, Y, Z, levels=5, colors=["k"])
 ```
 
 ```python
@@ -197,8 +228,8 @@ def simulate_oup(V0, mu, gamma, sigma, delta_t, n_samples):
 
     dX(t) = \Gamma (X(t)−μ) dt + \Sigma dW(t), X0=x0
 
-    In this case, the solution is a Markov process Markov, with an explicit
-    transition law:
+    In this case, the solution is a Markov process Markov, with an
+    explicit transition law:
 
     X(t+\Delta) | {X(t)=x_t} \sim \mathcal{N}(m_\Delta,V_\Delta)
 
@@ -250,6 +281,13 @@ plt.xlabel("X-Velocity")
 plt.ylabel("Y-Velocity")
 plt.gca().set_xlim([-3, 11])
 plt.gca().set_ylim([-3, 11])
+# Asymptotic distribution of the OUP is
+# N(mu_k, S) (see definition of S above)
+S = scipy.linalg.solve(
+    np.kron(gamma_k, np.eye(d)) + np.kron(np.eye(d), gamma_k),
+    sigma_k.dot(sigma_k.T).reshape((-1, ))
+).reshape((d, d))
+plot_gaussian(mu_k, scipy.linalg.sqrtm(S), [-3, 11], [-3, 11])
 
 anim = gen_animation(Vt, mu_k)
 plt.close()
