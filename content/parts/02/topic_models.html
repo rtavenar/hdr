@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/02/topic_models.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-05-05T00:45:41+02:00",
-  "dateModified": "2020-05-05T00:45:41+02:00",
+  "datePublished": "2020-05-05T14:41:56+02:00",
+  "dateModified": "2020-05-05T14:41:56+02:00",
   "description": "# Temporal Topic ModelsTopic models are mixture models that can deal with documents represented asbags of features (BoF) and extract latent topics (a topic b...",
   "author": {
     "@type": "Person",
@@ -1151,9 +1151,10 @@ movement modes using a specific correlated velocity model, defined in a
 continuous-time framework, namely the Ornstein-Uhlenbeck Process
 <a class="citation" href="#uhlenbeck1930theory">(Uhlenbeck &amp; Ornstein, 1930)</a> (OUP).
 One important property of the OUP is that, under mild conditions,
-the velocity process is an asymptotically stationary Gaussian Process.</p>
+the velocity process is an asymptotically stationary Gaussian Process, which
+can be visualized in the following animation:</p>
 
-<p>```python tags=[“hide_input”, “hide_output”]
+<p>```python tags=[“hide_input”]
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from IPython.display import HTML
@@ -1245,6 +1246,8 @@ return anim ```
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_jshtml</span><span class="p">())</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_html5_video</span><span class="p">())</span>
 </code></pre></div></div>
 
 <h3 id="parameter-estimation">Parameter estimation</h3>
