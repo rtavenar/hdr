@@ -223,7 +223,8 @@ Feature Transform (SIFT) framework introduced in Computer Vision
 
 ### Results
 
-Our experiments show that kernel approximation leads to lower computational
+We show in {% cite tavenard:halshs-01561461 %} show that kernel approximation
+leads to lower computational
 complexity than a pre-processing of the feature sets that would consist in
 performing a $k$-means clustering of each set and using centroids as
 representative features.

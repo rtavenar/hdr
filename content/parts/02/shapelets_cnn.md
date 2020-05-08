@@ -58,7 +58,7 @@ The resulting model is an instance of a Siamese Network:
 ![](../../images/siamese_ldps.png)
 
 where $m_\theta(\cdot)$ is the feature extraction part of the model that
-maps a time series to its shapelet transform representation. 
+maps a time series to its shapelet transform representation.
 
 ```python  tags=["hide_input"]
 %config InlineBackend.figure_format = 'svg'
@@ -397,7 +397,7 @@ The shapelet transform, as defined above, does not hold localization
 information. Several options could be considered to add such kind of
 information. First, the global pooling step could be turned into local pooling
 to keep track of local shapelet distances.
-In {% cite TODO %}}, we rather focused on augmenting the feature
+In {% cite guilleme:hal-02513295 %}, we rather focused on augmenting the feature
 representation with shapelet match localization features.
 
 Relying on a set of random shapelets (shapelets that are extracted uniformly at

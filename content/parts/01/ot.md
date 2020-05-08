@@ -298,7 +298,7 @@ from ot.gromov import fgw_barycenters
 np.random.seed(42)
 
 n_graphs = 10
-n_graphs_shown = 5
+n_graphs_shown = 4
 
 dataset = [
     build_noisy_circular_graph(np.random.randint(15, 25),

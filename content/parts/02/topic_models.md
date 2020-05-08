@@ -92,7 +92,7 @@ features.
 ## Two-step Inference for Sequences of Ornstein Uhlenbeck Processes
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work is part of Pierre Gloaguen's postdoc.
+**Note.** This work was part of Pierre Gloaguen's postdoc.
 This is joint work with Laetitia Chapel and Chloé Friguet.
 <!-- #endregion -->
 
@@ -228,7 +228,7 @@ def simulate_oup(V0, mu, gamma, sigma, delta_t, n_samples):
 
     dX(t) = \Gamma (X(t)−\mu) dt + \Sigma dW(t), X0=x0
 
-    In this case, the solution is a Markov process Markov, with an
+    In this case, the solution is a Markov process, with an
     explicit transition law:
 
     X(t+\Delta) | {X(t)=x_t} \sim \mathcal{N}(m_\Delta,V_\Delta)
