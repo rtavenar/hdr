@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Introduction</title>
-  <meta name="description" content="        Introduction    TODO: blah blah about time series, how important they are, etc..This document is an attempt to summarize my recent work related to th...">
+  <meta name="description" content="        Introduction    This document is an attempt to summarize my recent work related to the design ofmachine learning methods specifically tailored to han...">
 
   <link rel="canonical" href="https://rtavenar.github.io/hdr/parts/intro.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://rtavenar.github.io/hdr/parts/intro.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Introduction" />
-<meta property="og:description" content="        Introduction    TODO: blah blah about time series, how important they are, etc..This document is an attempt to summarize my recent work related to th..." />
+<meta property="og:description" content="        Introduction    This document is an attempt to summarize my recent work related to the design ofmachine learning methods specifically tailored to han..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/intro.html",
   "headline": "Introduction",
-  "datePublished": "2020-05-05T17:15:30+02:00",
-  "dateModified": "2020-05-05T17:15:30+02:00",
-  "description": "        Introduction    TODO: blah blah about time series, how important they are, etc..This document is an attempt to summarize my recent work related to th...",
+  "datePublished": "2020-05-08T16:00:39+02:00",
+  "dateModified": "2020-05-08T16:00:39+02:00",
+  "description": "        Introduction    This document is an attempt to summarize my recent work related to the design ofmachine learning methods specifically tailored to han...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -998,12 +998,10 @@ initFunction(initPrint)
                   <main class="jupyter-page">
     <div id="page-info"><div id="page-title">Introduction</div>
 </div>
-    
-<div class="jb_cell">
+    <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>TODO: blah blah about time series, how important they are, <em>etc.</em>.</strong></p>
 <p>This document is an attempt to summarize my recent work related to the design of
 machine learning methods specifically tailored to handle structured data such
 as graphs (in <a href="01/ot.html">Sec. 1.3</a>) or time series (in the rest of the
@@ -1014,6 +1012,38 @@ this document (or just marginally in its
 source software development, especially through the creation and
 maintenance of <a href="https://tslearn.readthedocs.io"><code>tslearn</code></a>
 <a class="citation" href="#tslearn">(Tavenard et al., 2017)</a>.</p>
+<p>I realize while writing this document that, over the past few years, I
+have treated time series as if they were several different things.
+First, from an application point of view, I have worked with video recordings
+during my post-doc at Idiap and moved to earth observation time series
+(be it pollutant levels in water streams, satellite image time series or ship
+trajectories) when I joined LETG (<em>Littoral, Environnement, Géomatique,
+Télédétection</em>) in 2013.
+Most importantly, these diverse applications have lead to different views
+over what time series can be and these views are connected to how the temporal
+nature of the data is included (or not) in the representation at stake.
+In <strong>TODO ref Gloaguen</strong>, for the sake of efficiency, we have relied on a fully
+non-temporal pre-clustering of the data so as to be able, in a refinement step,
+to model series segments using a beautiful tool called Ornstein Uhlenbeck
+Processes.
+At the other extreme of the spectrum, we have
+<a class="citation" href="#guilleme:hal-02513295">(Guilleme, Malinowski, Tavenard, &amp; Renard, 2019)</a> and <a class="citation" href="#tavenard:halshs-01561461">(Tavenard et al., 2017)</a>,
+in which we have postulated that temporal localization information is key for
+prediction and hence we have used timestamps as additional features of the
+input data.
+Elastic alignment-based approaches (such as the well-known Dynamic Time Warping)
+somehow belong somewhere in-between those two extremes.
+Indeed, they only rely on temporal ordering
+(not on timestamps) to assess similarity between series.
+Note also that, compared to other approaches considered in this document,
+convolutional models presented in <a href="02/shapelets_cnn.html">Sec. 2.2</a> make an
+extra assumption about the regularity of the sampling process.
+I have, more recently, turned my focus to other structured data such as graphs,
+and it appears that choosing an adequate encoding for the structural information
+in these cases is also a very important question.
+This study relies on the use of Optimal Transport distances that, surprisingly
+or not, use formulations that are very similar in spirit to the one of
+Dynamic Time Warping.</p>
 <p>Coming back to the current document, my contributions are organized in two
 parts, the first one being dedicated to the design of adequate similarity
 measures between structured data, while the second one focuses on methods that
@@ -1032,8 +1062,10 @@ $\mathbf{y}$ is a vector of target values.</p>
 $\mathbf{x}_{i \rightarrow j}$ the subseries extracted from $\mathbf{x}$ that
 starts at time index $i$ and stops at time index $j$ (excluded), and
 $\mathbf{x}_{\rightarrow j}$ will be a shortcut notation for the subseries that
-cover indexes 0 to $j-1$.</p>
-<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="tslearn">Tavenard, R., Faouzi, J., Vandewiele, G., Divo, F., Androz, G., Holtz, C., … Woods, E. (2017). tslearn: A machine learning toolkit dedicated to time-series data.</span></li></ol></p>
+covers indexes 0 to $j-1$.</p>
+<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="tslearn">Tavenard, R., Faouzi, J., Vandewiele, G., Divo, F., Androz, G., Holtz, C., … Woods, E. (2017). tslearn: A machine learning toolkit dedicated to time-series data.</span></li>
+<li><span id="guilleme:hal-02513295">Guilleme, M., Malinowski, S., Tavenard, R., &amp; Renard, X. (2019). Localized Random Shapelets. In <i>International Workshop on Advanced Analysis and Learning on Temporal Data</i> (pp. 85–97).</span></li>
+<li><span id="tavenard:halshs-01561461">Tavenard, R., Malinowski, S., Chapel, L., Bailly, A., Sanchez, H., &amp; Bustos, B. (2017). Efficient Temporal Kernels between Feature Sets for Time Series Classification. In <i>European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i>.</span></li></ol></p>
 
 </div>
 </div>

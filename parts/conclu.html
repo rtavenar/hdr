@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Conclusion and Perspectives</title>
-  <meta name="description" content="        Conclusion and Perspectives    TODOA list of perspectives that could be discussed:Gromov-DTW (and Siamese nets to learn it efficiently)Metric learnin...">
+  <meta name="description" content="        Conclusion and Perspectives    In this part, I will first describe some current and future works that we planto investigate.Finally, I will discuss s...">
 
   <link rel="canonical" href="https://rtavenar.github.io/hdr/parts/conclu.html">
   <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://rtavenar.github.io/hdr/parts/conclu.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Conclusion and Perspectives" />
-<meta property="og:description" content="        Conclusion and Perspectives    TODOA list of perspectives that could be discussed:Gromov-DTW (and Siamese nets to learn it efficiently)Metric learnin..." />
+<meta property="og:description" content="        Conclusion and Perspectives    In this part, I will first describe some current and future works that we planto investigate.Finally, I will discuss s..." />
 <meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/conclu.html",
   "headline": "Conclusion and Perspectives",
-  "datePublished": "2020-05-05T17:15:30+02:00",
-  "dateModified": "2020-05-05T17:15:30+02:00",
-  "description": "        Conclusion and Perspectives    TODOA list of perspectives that could be discussed:Gromov-DTW (and Siamese nets to learn it efficiently)Metric learnin...",
+  "datePublished": "2020-05-08T16:00:39+02:00",
+  "dateModified": "2020-05-08T16:00:39+02:00",
+  "description": "        Conclusion and Perspectives    In this part, I will first describe some current and future works that we planto investigate.Finally, I will discuss s...",
   "author": {
     "@type": "Person",
     "name": "Romain Tavenard"
@@ -998,17 +998,71 @@ initFunction(initPrint)
                   <main class="jupyter-page">
     <div id="page-info"><div id="page-title">Conclusion and Perspectives</div>
 </div>
-    
-<div class="jb_cell">
+    <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>TODO</strong></p>
-<p>A list of perspectives that could be discussed:</p>
+<p>In this part, I will first describe some current and future works that we plan
+to investigate.
+Finally, I will discuss some more fundamental and general questions that
+I expect to be of importance to the future of machine learning for time series.</p>
+<h2 id="Current-and-future-works">Current and future works<a class="anchor-link" href="#Current-and-future-works"> </a></h2><h3 id="Dealing-with-sequences-of-arbitrary-objects">Dealing with sequences of arbitrary objects<a class="anchor-link" href="#Dealing-with-sequences-of-arbitrary-objects"> </a></h3><p>As described in <a href="01/dtw/dtw_gi.html">Sec 1.2.3</a>, we have started to investigate
+the design of invariant alignment similarity measures.
+This work can be seen as a first attempt to accommodate time series alignments
+(such as Dynamic Time Warping) and optimal transport distances
+(and more specifically the work presented in <a class="citation" href="#alvarez2018towards">(Alvarez-Melis, Jegelka, &amp; Jaakkola, 2019)</a>).</p>
+<p>One step forward in this direction could be to take direct inspiration from
+the Gromov-Wasserstein distance <a class="citation" href="#memoli2011gromov">(Mémoli, 2011)</a> to design a time
+series alignment strategy.
+While our DTW-GI already can deal with series of features that do not have the
+same dimension, this formulation would allow the comparison of
+sequences of arbitrary objects that lie in different metric spaces (not
+necessarily of the form $\mathbb{R}^d$), like, for example, graphs evolving
+over time.</p>
+<p>Though this extension seems appealing, it would come with additional
+computing costs since the Bellmann recursion that is at the core of the Dynamic
+Time Warping algorithm cannot be used anymore.
+It is likely that approximate solvers will have to be used in this case.
+Also, one typical use-case for such a similarity measure would be to serve as
+a loss function in a structured prediction setting, in which case the
+computational complexity would be an even higher concern which could necessitate
+to train dedicated Siamese networks (<em>e.g.</em> by taking inspiration from the
+method presented in
+<a href="02/shapelets_cnn.html#Learning-to-Mimic-a-Target-Distance">Sec. 2.2</a>).</p>
+<h3 id="Temporal-Domain-Adaptation">Temporal Domain Adaptation<a class="anchor-link" href="#Temporal-Domain-Adaptation"> </a></h3><p>Another track of research that we are considering at the moment concerns
+temporal domain adaptation, that is the task of temporally realigning time
+series datasets in order to be able to transfer knowledge (<em>e.g.</em> a trained
+classifier) from one domain to the other.</p>
+<p>In this context, and in close relation with application needs, several settings
+can be considered:</p>
+<ol>
+<li>time series can be matched with no particular general structure for temporal
+alignments (<em>i.e.</em> individual alignments are considered independent);</li>
+<li>time series are matched with a strong constraint that a single temporal
+alignment map is used for all time series comparison;</li>
+<li>there exists a finite number of different temporal alignment patterns and
+one should extract these patterns, the matching between series of source
+to target datasets and the pattern used for each match.</li>
+</ol>
+<p>In the <strong>first
+case</strong>, matching can be performed using optimal transport and DTW as the ground
+metric, and the method from <a class="citation" href="#courty:hal-02112785">(Courty, Flamary, Tuia, &amp; Rakotomamonjy, 2017)</a> can be used.
+One straight-forward approach for the <strong>second case</strong> would be to alternate
+between (i) an optimal transport
+problem (finding time series pairs) for a fixed temporal realignment and (ii) a
+Dynamic Time Warping between synthetic series (that are built from the source
+and target datasets respectively) given a fixed series matching.
+The <strong>latter case</strong> is probably the most ambitious one, yet it is of prime
+importance in real-world settings such as the classification of satellite image
+time series.
+Indeed, in this context, images can contain pixels representing different land
+cover classes, which have different temporal responses to a given input
+(<em>e.g.</em> change in meteorological conditions).
+Hence each cluster of temporal response could be assigned a different temporal
+alignment pattern.</p>
+<h2 id="Broader-questions-related-to-learning-from-time-series">Broader questions related to learning from time series<a class="anchor-link" href="#Broader-questions-related-to-learning-from-time-series"> </a></h2><h3 id="Metric-learning-for-time-series-alignments">Metric learning for time series alignments<a class="anchor-link" href="#Metric-learning-for-time-series-alignments"> </a></h3><p>TODO</p>
+<h3 id="Structure-as-a-guide-for-weakly-supervised-learning">Structure as a guide for weakly-supervised learning<a class="anchor-link" href="#Structure-as-a-guide-for-weakly-supervised-learning"> </a></h3><p>TODO</p>
 <ul>
-<li>Gromov-DTW (and Siamese nets to learn it efficiently)</li>
-<li>Metric learning for time series alignments</li>
-<li>Domain Adaptation</li>
 <li>Few-shot learning (related to representations)<ul>
 <li>citer le papier de Dustin Tran<ul>
 <li>generative models for various tasks<ul>
@@ -1019,9 +1073,10 @@ initFunction(initPrint)
 </li>
 </ul>
 </li>
-<li>More on problem-driven: eg. Agricultural practices</li>
-<li>Make tslearn more generalist (cover more basic stats models, more tasks)</li>
 </ul>
+<h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="alvarez2018towards">Alvarez-Melis, D., Jegelka, S., &amp; Jaakkola, T. S. (2019). Towards optimal transport with global invariances. In <i>Proceedings of the International Conference on Artificial Intelligence and Statistics</i>.</span></li>
+<li><span id="memoli2011gromov">Mémoli, F. (2011). Gromov–Wasserstein distances and the metric approach to object matching. <i>Foundations of Computational Mathematics</i>, <i>11</i>(4), 417–487.</span></li>
+<li><span id="courty:hal-02112785">Courty, N., Flamary, R., Tuia, D., &amp; Rakotomamonjy, A. (2017). Optimal Transport for Domain Adaptation. <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>.</span></li></ol></p>
 
 </div>
 </div>

@@ -1,15 +1,92 @@
 # Conclusion and Perspectives
 
-**TODO**
+In this part, I will first describe some current and future works that we plan
+to investigate.
+Finally, I will discuss some more fundamental and general questions that
+I expect to be of importance to the future of machine learning for time series.
 
-A list of perspectives that could be discussed:
+## Current and future works
 
-* Gromov-DTW (and Siamese nets to learn it efficiently)
-* Metric learning for time series alignments
-* Domain Adaptation
+### Dealing with sequences of arbitrary objects
+
+As described in [Sec 1.2.3](01/dtw/dtw_gi.html), we have started to investigate
+the design of invariant alignment similarity measures.
+This work can be seen as a first attempt to accommodate time series alignments
+(such as Dynamic Time Warping) and optimal transport distances
+(and more specifically the work presented in {% cite alvarez2018towards %}).
+
+One step forward in this direction could be to take direct inspiration from
+the Gromov-Wasserstein distance {% cite memoli2011gromov %} to design a time
+series alignment strategy.
+While our DTW-GI already can deal with series of features that do not have the
+same dimension, this formulation would allow the comparison of
+sequences of arbitrary objects that lie in different metric spaces (not
+necessarily of the form $\mathbb{R}^d$), like, for example, graphs evolving
+over time.
+
+Though this extension seems appealing, it would come with additional
+computing costs since the Bellmann recursion that is at the core of the Dynamic
+Time Warping algorithm cannot be used anymore.
+It is likely that approximate solvers will have to be used in this case.
+Also, one typical use-case for such a similarity measure would be to serve as
+a loss function in a structured prediction setting, in which case the
+computational complexity would be an even higher concern which could necessitate
+to train dedicated Siamese networks (_e.g._ by taking inspiration from the
+method presented in
+[Sec. 2.2](02/shapelets_cnn.html#Learning-to-Mimic-a-Target-Distance)).
+
+### Temporal Domain Adaptation
+
+Another track of research that we are considering at the moment concerns
+temporal domain adaptation, that is the task of temporally realigning time
+series datasets in order to be able to transfer knowledge (_e.g._ a trained
+classifier) from one domain to the other.
+
+In this context, and in close relation with application needs, several settings
+can be considered:
+
+1. time series can be matched with no particular general structure for temporal
+alignments (_i.e._ individual alignments are considered independent);
+2. time series are matched with a strong constraint that a single temporal
+alignment map is used for all time series comparison;
+3. there exists a finite number of different temporal alignment patterns and
+one should extract these patterns, the matching between series of source
+to target datasets and the pattern used for each match.
+
+In the **first
+case**, matching can be performed using optimal transport and DTW as the ground
+metric, and the method from {% cite courty:hal-02112785 %} can be used.
+One straight-forward approach for the **second case** would be to alternate
+between (i) an optimal transport
+problem (finding time series pairs) for a fixed temporal realignment and (ii) a
+Dynamic Time Warping between synthetic series (that are built from the source
+and target datasets respectively) given a fixed series matching.
+The **latter case** is probably the most ambitious one, yet it is of prime
+importance in real-world settings such as the classification of satellite image
+time series.
+Indeed, in this context, images can contain pixels representing different land
+cover classes, which have different temporal responses to a given input
+(_e.g._ change in meteorological conditions).
+Hence each cluster of temporal response could be assigned a different temporal
+alignment pattern.
+
+## Broader questions related to learning from time series
+
+### Metric learning for time series alignments
+
+TODO
+
+### Structure as a guide for weakly-supervised learning
+
+TODO
+
 * Few-shot learning (related to representations)
   * citer le papier de Dustin Tran
     * generative models for various tasks
       * cast the problem as structured prediction (predict emission times also)
-* More on problem-driven: eg. Agricultural practices
-* Make tslearn more generalist (cover more basic stats models, more tasks)
+
+
+
+## References
+
+{% bibliography --cited %}
