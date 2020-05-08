@@ -70,20 +70,37 @@ cover classes, which have different temporal responses to a given input
 Hence each cluster of temporal response could be assigned a different temporal
 alignment pattern.
 
+**TODO**: check if some research plans from MATS could be integrated here
+
 ## Broader questions related to learning from time series
 
-### Metric learning for time series alignments
+### Learning the notion of similarity
 
-TODO
+As illustrated in this document, learning from time series can take very diverse
+forms depending on the invariants at stake in the data.
+In case these invariants are known, dedicated methods can be used, yet it
+can be that very limited expert knowledge is available or that knowledge cannot
+easily guide the choice of a learning method.
+At the moment, this is dealt with through the use of ensemble techniques that
+cover a wide range of similarity notions, yet this is at the cost of a
+significantly augmented complexity.
+**TODO**: citer Bagnall (HIVE COTE)
+More principled approaches are yet to be designed that could learn the notion
+of similarity from the data.
 
 ### Structure as a guide for weakly-supervised learning
 
-TODO
+Finally, in order to deal with weakly supervised data, I believe structure can
+be used as a guide.
+Typically, in the time series context, learning intermediate representations
+that are suited for structured prediction (_i.e._ predicting both the future
+observations together with their emission times) is likely to capture the
+intrinsics of the data.
+This also holds for graphs and other kinds of structured data.
+Such a representation could then be used for various tasks with limited amount
+of supervision, in a few short learning fashion.
 
-* Few-shot learning (related to representations)
-  * citer le papier de Dustin Tran
-    * generative models for various tasks
-      * cast the problem as structured prediction (predict emission times also)
+**TODO**: citer le papier de Dustin Tran et dire des trucs moins vides
 
 
 
