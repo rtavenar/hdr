@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-05-08T16:00:39+02:00",
-  "dateModified": "2020-05-08T16:00:39+02:00",
+  "datePublished": "2020-05-12T18:29:17+02:00",
+  "dateModified": "2020-05-12T18:29:17+02:00",
   "description": "# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)...",
   "author": {
     "@type": "Person",
@@ -1154,7 +1154,7 @@ used in order to approximate it with a linear kernel.</p>
 <p>Let us assume that we have a feature map $\phi$ such that</p>
 
 <p>\begin{equation}
-k_t((x_{i}, t_i), (y_{j}, t_j)) \approx
+k_t((x_{i}, t_i), (x^\prime_j, t^\prime_j)) \approx
     \left\langle\phi(g(x_{i}, t_i)),
         \phi(g(x^\prime_{j}, t^\prime_j))\right\rangle,
 \end{equation}
@@ -1173,12 +1173,7 @@ space, approximate SQFD computation is performed through (i) a barycenter
 computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
 followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
 the dimension of the feature map $\phi(x)$.
-Note that SQFD then corresponds to a biased estimator of the squared
-difference between the mean of the samples $\mathbf{x}$ and $\mathbf{x}^\prime$
-which is classically used to test the difference between distributions
-<a class="citation" href="#NIPS2006_3110">(Gretton, Borgwardt, Rasch, Schölkopf, &amp; Smola, 2007)</a>.</p>
-
-<p>Overall, we have a distance between timestamped feature sets whose
+Overall, we have a distance between timestamped feature sets whose
 complexity can be tuned via the map dimensionality $D$.</p>
 
 <h2 id="evaluation">Evaluation</h2>
@@ -1194,21 +1189,20 @@ However, in our small data context, they proved useful for the task at hand.
 <p>In order to evaluate the classifier presented above, we used the UCR Time
 Series Classification archive, which, at the time, was made of monodimensional
 data only.
-We decided not to work on raw data but rather extract local features on which
-we could run the classification algorithm.
+We decided not to work on raw data but rather extract local features to
+describe our time series.
 We chose to rely on temporal SIFT features, that we had introduced in
 <a class="citation" href="#bailly:halshs-01184900">(Bailly, Malinowski, Tavenard, Guyet, &amp; Chapel, 2015; Bailly, Malinowski, Tavenard, Chapel, &amp; Guyet, 2016)</a>.
-These features are straight-forward 1D extensions of the Scale-Invariant
+These features are straight-forward 1D adaptations of the Scale-Invariant
 Feature Transform (SIFT) framework introduced in Computer Vision
 <a class="citation" href="#Lowe:2004:DIF:993451.996342">(Lowe, 2004)</a>.</p>
 
 <h3 id="results">Results</h3>
 
-<p>We show in <a class="citation" href="#tavenard:halshs-01561461">(Tavenard et al., 2017)</a> show that kernel approximation
-leads to lower computational
-complexity than a pre-processing of the feature sets that would consist in
-performing a $k$-means clustering of each set and using centroids as
-representative features.
+<p>We show in <a class="citation" href="#tavenard:halshs-01561461">(Tavenard et al., 2017)</a> that kernel approximation
+leads to better trade-offs in terms of computational
+complexity <em>vs.</em> kernel approximation than a pre-processing of the feature sets
+that would rely on $k$-means clustering.
 We also show that the obtained distance, once embedded in a Support Vector
 Machine with Gaussian kernel, leads to classification performance that is
 competitive with the state-of-the-art.</p>
@@ -1218,7 +1212,6 @@ competitive with the state-of-the-art.</p>
 <ol class="bibliography"><li><span id="NIPS2009_3874">Bo, L., &amp; Sminchisescu, C. (2009). Efficient Match Kernel between Sets of Features for Visual Recognition. In <i>Neural Information Processing Systems</i> (pp. 135–143).</span></li>
 <li><span id="10.1145/1631272.1631391">Beecks, C., Uysal, M. S., &amp; Seidl, T. (2009). Signature Quadratic Form Distances for Content-Based Similarity. In <i>Proceedings of the ACM International Conference on Multimedia</i> (pp. 697–700).</span></li>
 <li><span id="NIPS2007_3182">Rahimi, A., &amp; Recht, B. (2008). Random Features for Large-Scale Kernel Machines. In <i>Neural Information Processing Systems</i> (pp. 1177–1184).</span></li>
-<li><span id="NIPS2006_3110">Gretton, A., Borgwardt, K., Rasch, M., Schölkopf, B., &amp; Smola, A. J. (2007). A Kernel Method for the Two-Sample-Problem. In <i>Neural Information Processing Systems</i> (pp. 513–520).</span></li>
 <li><span id="bailly:halshs-01184900">Bailly, A., Malinowski, S., Tavenard, R., Guyet, T., &amp; Chapel, L. (2015). Bag-of-Temporal-SIFT-Words for Time Series Classification. In <i>ECML/PKDD Workshop on Advanced Analytics and Learning on Temporal Data</i>. Porto, Portugal.</span></li>
 <li><span id="bailly:hal-01252726">Bailly, A., Malinowski, S., Tavenard, R., Chapel, L., &amp; Guyet, T. (2016). Dense Bag-of-Temporal-SIFT-Words for Time Series Classification. In <i>Advanced Analysis and Learning on Temporal Data</i>. Springer. https://doi.org/10.1007/978-3-319-44412-3_2</span></li>
 <li><span id="Lowe:2004:DIF:993451.996342">Lowe, D. G. (2004). Distinctive Image Features from Scale-Invariant Keypoints. <i>International Journal of Computer Vision</i>, <i>60</i>(2), 91–110.</span></li>

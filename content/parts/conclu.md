@@ -16,12 +16,12 @@ This work can be seen as a first attempt to accommodate time series alignments
 (and more specifically the work presented in {% cite alvarez2018towards %}).
 
 One step forward in this direction could be to take direct inspiration from
-the Gromov-Wasserstein distance {% cite memoli2011gromov %} to design a time
-series alignment strategy.
-While our DTW-GI already can deal with series of features that do not have the
+the Gromov-Wasserstein distance presented in [Sec. 1.3](01/ot.html) to design
+novel time series alignment strategies.
+While DTW-GI can deal with series of features that do not have the
 same dimension, this formulation would allow the comparison of
 sequences of arbitrary objects that lie in different metric spaces (not
-necessarily of the form $\mathbb{R}^d$), like, for example, graphs evolving
+necessarily of the form $\mathbb{R}^p$), like, for example, graphs evolving
 over time.
 
 Though this extension seems appealing, it would come with additional
@@ -72,18 +72,49 @@ alignment pattern.
 
 ## Broader questions related to learning from time series
 
-### Metric learning for time series alignments
+### Learning the notion of similarity
 
-TODO
+As illustrated in this document, learning from time series can take very diverse
+forms depending on the invariants at stake in the data.
+In case these invariants are known, dedicated methods can be used, yet it
+can be that very limited expert knowledge is available or that knowledge cannot
+easily guide the choice of a learning method.
+At the moment, this is dealt with through the use of ensemble techniques that
+cover a wide range of similarity notions {% cite lines2018time %},
+yet this is at the cost of a significantly augmented complexity.
+More principled approaches are yet to be designed that could learn the notion
+of similarity from the data.
 
 ### Structure as a guide for weakly-supervised learning
 
-TODO
+Finally, learning meaningful representations in weakly supervised settings is
+probably one of the major challenges for the community in the coming years.
+Unsupervised representation learning is under-considered in the
+literature up to now, despite recent advances such as
+{% cite franceschi2019unsupervised %} that relies on contrastive learning.
 
-* Few-shot learning (related to representations)
-  * citer le papier de Dustin Tran
-    * generative models for various tasks
-      * cast the problem as structured prediction (predict emission times also)
+In this context, I believe structure can
+be used as a guide.
+Typically, in the time series context, learning intermediate representations
+that are suited for structured prediction (_i.e._ predicting both the future
+observations together with their emission times) is likely to capture the
+intrinsics of the data.
+Such approaches could rely on the recent revival of time series forecasting
+models, such as in
+{% cite vincent2019shape %} and {% cite rubanova2019latent %}.
+A first step in this direction is the SOM-VAE model presented in
+{% cite fortuin2019som %} that relies on a Markov assumption to model
+transitions between quantized latent representations.
+
+Note that the great potential of structured prediction to learn useful
+representations from unsupervised datasets is not restricted to the time series
+context, it also holds for graphs and other kinds of structured data.
+Such a representation could then be used for various tasks with limited amount
+of supervision, in a few-shot learning fashion.
+
+We have started investigating an instance of this paradigm in François
+Painblanc's PhD thesis that deals with the use of forecasting models for a
+better estimation of possible futures in the context of early classification.
 
 
 

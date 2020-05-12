@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/intro.html",
   "headline": "Introduction",
-  "datePublished": "2020-05-08T16:00:39+02:00",
-  "dateModified": "2020-05-08T16:00:39+02:00",
+  "datePublished": "2020-05-12T18:29:17+02:00",
+  "dateModified": "2020-05-12T18:29:17+02:00",
   "description": "        Introduction    This document is an attempt to summarize my recent work related to the design ofmachine learning methods specifically tailored to han...",
   "author": {
     "@type": "Person",
@@ -1011,7 +1011,7 @@ this document (or just marginally in its
 <a href="https://rtavenar.github.io/hdr/">Jupyter notebook</a> form). It concerns open
 source software development, especially through the creation and
 maintenance of <a href="https://tslearn.readthedocs.io"><code>tslearn</code></a>
-<a class="citation" href="#tslearn">(Tavenard et al., 2017)</a>.</p>
+<a class="citation" href="#tslearn">(Tavenard et al., 2017)</a>.<sup class="footnote-ref" id="fnref-1"><a href="#fn-1">1</a></sup></p>
 <p>I realize while writing this document that, over the past few years, I
 have treated time series as if they were several different things.
 First, from an application point of view, I have worked with video recordings
@@ -1021,15 +1021,16 @@ trajectories) when I joined LETG (<em>Littoral, Environnement, Géomatique,
 Télédétection</em>) in 2013.
 Most importantly, these diverse applications have lead to different views
 over what time series can be and these views are connected to how the temporal
-nature of the data is included (or not) in the representation at stake.
+nature of the data is included (or not) in the representation.
 In <strong>TODO ref Gloaguen</strong>, for the sake of efficiency, we have relied on a fully
 non-temporal pre-clustering of the data so as to be able, in a refinement step,
-to model series segments using a beautiful tool called Ornstein Uhlenbeck
-Processes.
+to model series segments using a continuous-time model (hence re-introducing
+temporal information at the sub-segment level).
 At the other extreme of the spectrum, we have
 <a class="citation" href="#guilleme:hal-02513295">(Guilleme, Malinowski, Tavenard, &amp; Renard, 2019)</a> and <a class="citation" href="#tavenard:halshs-01561461">(Tavenard et al., 2017)</a>,
 in which we have postulated that temporal localization information is key for
-prediction and hence we have used timestamps as additional features of the
+prediction.
+In these works, we have hence used timestamps as additional features of the
 input data.
 Elastic alignment-based approaches (such as the well-known Dynamic Time Warping)
 somehow belong somewhere in-between those two extremes.
@@ -1046,7 +1047,8 @@ or not, use formulations that are very similar in spirit to the one of
 Dynamic Time Warping.</p>
 <p>Coming back to the current document, my contributions are organized in two
 parts, the first one being dedicated to the design of adequate similarity
-measures between structured data, while the second one focuses on methods that
+measures between structured data (<em>i.e.</em> graphs and time series), while the
+second one focuses on methods that
 learn latent representations for temporal data.</p>
 <h2 id="Notations">Notations<a class="anchor-link" href="#Notations"> </a></h2><p>Throughout this document, the following notations will be used.</p>
 <p>A time series is a set of $n$ timestamped features:</p>
@@ -1066,6 +1068,14 @@ covers indexes 0 to $j-1$.</p>
 <h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="tslearn">Tavenard, R., Faouzi, J., Vandewiele, G., Divo, F., Androz, G., Holtz, C., … Woods, E. (2017). tslearn: A machine learning toolkit dedicated to time-series data.</span></li>
 <li><span id="guilleme:hal-02513295">Guilleme, M., Malinowski, S., Tavenard, R., &amp; Renard, X. (2019). Localized Random Shapelets. In <i>International Workshop on Advanced Analysis and Learning on Temporal Data</i> (pp. 85–97).</span></li>
 <li><span id="tavenard:halshs-01561461">Tavenard, R., Malinowski, S., Chapel, L., Bailly, A., Sanchez, H., &amp; Bustos, B. (2017). Efficient Temporal Kernels between Feature Sets for Time Series Classification. In <i>European Conference on Machine Learning and Principles and Practice of Knowledge Discovery</i>.</span></li></ol></p>
+<div class="footnotes">
+<hr>
+<ol><li id="fn-1"><p><code>tslearn</code> is a general-purpose Python machine learning library
+for time series that offers tools for pre-processing and feature extraction
+as well as dedicated models for clustering, classification and regression,
+and I started this project in 2017.<a href="#fnref-1" class="footnote">&#8617;</a></p></li>
+</ol>
+</div>
 
 </div>
 </div>

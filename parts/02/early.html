@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/02/early.html",
   "headline": "Early Classification of Time Series",
-  "datePublished": "2020-05-08T16:00:39+02:00",
-  "dateModified": "2020-05-08T16:00:39+02:00",
+  "datePublished": "2020-05-12T18:29:17+02:00",
+  "dateModified": "2020-05-12T18:29:17+02:00",
   "description": "        Early Classification of Time Series    Early classification of time series is the task of performing a classificationas early as possible for an inco...",
   "author": {
     "@type": "Person",
@@ -998,8 +998,7 @@ initFunction(initPrint)
                   <main class="jupyter-page">
     <div id="page-info"><div id="page-title">Early Classification of Time Series</div>
 </div>
-    
-<div class="jb_cell">
+    <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -1016,7 +1015,7 @@ learning strategy.</p>
 classification of time series that balances earliness and accuracy.</p>
 <p>The cost function is of the following form:</p>
 \begin{equation}
-\mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
+\mathcal{L}(\mathbf{x}_{\rightarrow t}, y, t, \boldsymbol{\theta}) =
     \mathcal{L}_c(\mathbf{x}_{\rightarrow t}, y, \boldsymbol{\theta}) + \alpha t
 \label{eq:loss_early}
 \end{equation}<p>where $\hat{y}$ is the class predicted by the model,
@@ -1059,7 +1058,7 @@ then a decision is made using classifier $m_t(\cdot)$.</p>
 
 <div class="jb_cell tag_popout">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Note.</strong> This unpublished note is part of François Painblanc's PhD work.
 We are co-supervising François together with Laetitia Chapel and Chloé Friguet.</p>
@@ -1138,7 +1137,7 @@ classifier is $m_t(\cdot)$, the same as for other methods).</p>
 
 <div class="jb_cell tag_popout">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Note.</strong> This work is part of Marc Rußwurm's PhD work.
 Marc is a PhD student from TU Munich who has come to France for a
@@ -1163,8 +1162,6 @@ models, while they are, in practice, closely related.
 Finally, the loss function presented in Equation \eqref{eq:loss_early} requires
 a careful choice of hyper-parameter $\alpha$ that might not be easy to pick in
 practice.</p>
-<p><strong>TODO: illustrate the problem with Dachraoui's synthetic dataset and 2 very
-close $\alpha$ values once the method is integrated in <code>tslearn</code></strong></p>
 <p>We have hence proposed a representation learning framework that
 covers these three limitations <a class="citation" href="#ruwurm:hal-02174314">(Rußwurm et al., 2019)</a>.</p>
 <p>In more details, we rely on a feature extraction module (that can either be
@@ -1174,12 +1171,16 @@ An important point here is that this feature extractor can operate on time
 series whatever their length (and hence a different feature extractor need not
 to be learned for each time series length).
 Then, this feature is provided as input to two different heads, as shown in the
-following Figure:</p>
-<p><img src="../../images/double_head_early.png" alt="half-width"></p>
+following Figure (in which grey cells correspond to quantities that are
+computed from the models outputs):</p>
+<p><img src="../../images/tex/early_module_cropped.svg" alt="half-width"></p>
 <ul>
-<li>the first head (left) outputs a probability $P_t$ of making a decision at
-time $t$ (given that no decision has been made before): it plays the same role
-as the <em>decision triggering classifier</em> presented above;</li>
+<li>the first head (left) outputs a probability $p_\text{dec}$ of making a
+decision at
+time $t$ <strong>given that no decision has been made before</strong>: it plays the same role
+as the <em>decision triggering classifier</em> presented above and from the series of
+$p_\text{dec}$ values, one can compute the probability $P_t$ of making a
+decision at time $t$;</li>
 <li>the second head is the standard classification head that effectively produces
 a classification if the first head triggered it.</li>
 </ul>
@@ -1190,15 +1191,24 @@ does not lead to dumb optimal solutions (<em>eg.</em> trigger all classification
 the first time stamp, whatever the data).
 We introduced the following loss function:</p>
 \begin{equation}
-    \mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
-        \alpha \mathcal{L}_c(\mathbf{x}, y, \boldsymbol{\theta})
-            - (1-\alpha) P_\boldsymbol{\theta}(m_t(\mathbf{x})=y)
+    \mathcal{L}(\mathbf{x}_{\rightarrow t}, y, t, \boldsymbol{\theta}) =
+        \alpha \mathcal{L}_c(\mathbf{x}_{\rightarrow t}, y, \boldsymbol{\theta})
+            - (1-\alpha) P_\boldsymbol{\theta}(m_t(\mathbf{x}_{\rightarrow t})=y)
             \left( \frac{T-t}{T} \right)
-\end{equation}<p>where $P_\boldsymbol{\theta}(m_t(\mathbf{x})=y)$ is the probability (as
+\end{equation}<p>where $P_\boldsymbol{\theta}(m_t(\mathbf{x}_{\rightarrow t})=y)$ is the probability (as
 assigned by the classification model) to generate $y$ as an output.
 The second part in this loss function is an earliness reward, which is taken
 into account iff the provided decision is sound (<em>ie.</em> the correct class is
-predicted with non-zero probability).</p>
+predicted with non-zero probability).
+When the decision time is drawn from the
+multinomial distribution of parameters $\{P_t\}_{t \in [0, T-1]}$, the overall
+loss is now:
+\begin{equation}
+    \mathbb{E}_{t \sim \mathcal{M}(P_0, \dots , P_{T-1})}
+        \mathcal{L}(\mathbf{x}_{\rightarrow t}, y, t, \boldsymbol{\theta})
+\end{equation}
+and gradients can be back-propagated through both heads of the model, hence
+allowing to jointly learn the early decision mechanism and the predictor.</p>
 <p>We have shown that this model outperforms all known baselines in terms of both
 time complexity and earliness/accuracy tradeoff, especially for large scale
 datasets.

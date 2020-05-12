@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/conclu.html",
   "headline": "Conclusion and Perspectives",
-  "datePublished": "2020-05-08T16:00:39+02:00",
-  "dateModified": "2020-05-08T16:00:39+02:00",
+  "datePublished": "2020-05-12T18:29:17+02:00",
+  "dateModified": "2020-05-12T18:29:17+02:00",
   "description": "        Conclusion and Perspectives    In this part, I will first describe some current and future works that we planto investigate.Finally, I will discuss s...",
   "author": {
     "@type": "Person",
@@ -1012,12 +1012,12 @@ This work can be seen as a first attempt to accommodate time series alignments
 (such as Dynamic Time Warping) and optimal transport distances
 (and more specifically the work presented in <a class="citation" href="#alvarez2018towards">(Alvarez-Melis, Jegelka, &amp; Jaakkola, 2019)</a>).</p>
 <p>One step forward in this direction could be to take direct inspiration from
-the Gromov-Wasserstein distance <a class="citation" href="#memoli2011gromov">(Mémoli, 2011)</a> to design a time
-series alignment strategy.
-While our DTW-GI already can deal with series of features that do not have the
+the Gromov-Wasserstein distance presented in <a href="01/ot.html">Sec. 1.3</a> to design
+novel time series alignment strategies.
+While DTW-GI can deal with series of features that do not have the
 same dimension, this formulation would allow the comparison of
 sequences of arbitrary objects that lie in different metric spaces (not
-necessarily of the form $\mathbb{R}^d$), like, for example, graphs evolving
+necessarily of the form $\mathbb{R}^p$), like, for example, graphs evolving
 over time.</p>
 <p>Though this extension seems appealing, it would come with additional
 computing costs since the Bellmann recursion that is at the core of the Dynamic
@@ -1060,23 +1060,48 @@ cover classes, which have different temporal responses to a given input
 (<em>e.g.</em> change in meteorological conditions).
 Hence each cluster of temporal response could be assigned a different temporal
 alignment pattern.</p>
-<h2 id="Broader-questions-related-to-learning-from-time-series">Broader questions related to learning from time series<a class="anchor-link" href="#Broader-questions-related-to-learning-from-time-series"> </a></h2><h3 id="Metric-learning-for-time-series-alignments">Metric learning for time series alignments<a class="anchor-link" href="#Metric-learning-for-time-series-alignments"> </a></h3><p>TODO</p>
-<h3 id="Structure-as-a-guide-for-weakly-supervised-learning">Structure as a guide for weakly-supervised learning<a class="anchor-link" href="#Structure-as-a-guide-for-weakly-supervised-learning"> </a></h3><p>TODO</p>
-<ul>
-<li>Few-shot learning (related to representations)<ul>
-<li>citer le papier de Dustin Tran<ul>
-<li>generative models for various tasks<ul>
-<li>cast the problem as structured prediction (predict emission times also)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<h2 id="Broader-questions-related-to-learning-from-time-series">Broader questions related to learning from time series<a class="anchor-link" href="#Broader-questions-related-to-learning-from-time-series"> </a></h2><h3 id="Learning-the-notion-of-similarity">Learning the notion of similarity<a class="anchor-link" href="#Learning-the-notion-of-similarity"> </a></h3><p>As illustrated in this document, learning from time series can take very diverse
+forms depending on the invariants at stake in the data.
+In case these invariants are known, dedicated methods can be used, yet it
+can be that very limited expert knowledge is available or that knowledge cannot
+easily guide the choice of a learning method.
+At the moment, this is dealt with through the use of ensemble techniques that
+cover a wide range of similarity notions <a class="citation" href="#lines2018time">(Lines, Taylor, &amp; Bagnall, 2018)</a>,
+yet this is at the cost of a significantly augmented complexity.
+More principled approaches are yet to be designed that could learn the notion
+of similarity from the data.</p>
+<h3 id="Structure-as-a-guide-for-weakly-supervised-learning">Structure as a guide for weakly-supervised learning<a class="anchor-link" href="#Structure-as-a-guide-for-weakly-supervised-learning"> </a></h3><p>Finally, learning meaningful representations in weakly supervised settings is
+probably one of the major challenges for the community in the coming years.
+Unsupervised representation learning is under-considered in the
+literature up to now, despite recent advances such as
+<a class="citation" href="#franceschi2019unsupervised">(Franceschi, Dieuleveut, &amp; Jaggi, 2019)</a> that relies on contrastive learning.</p>
+<p>In this context, I believe structure can
+be used as a guide.
+Typically, in the time series context, learning intermediate representations
+that are suited for structured prediction (<em>i.e.</em> predicting both the future
+observations together with their emission times) is likely to capture the
+intrinsics of the data.
+Such approaches could rely on the recent revival of time series forecasting
+models, such as in
+<a class="citation" href="#vincent2019shape">(Vincent &amp; Thome, 2019)</a> and <a class="citation" href="#rubanova2019latent">(Rubanova, Chen, &amp; Duvenaud, 2019)</a>.
+A first step in this direction is the SOM-VAE model presented in
+<a class="citation" href="#fortuin2019som">(Fortuin, Hüser, Locatello, Strathmann, &amp; Rätsch, 2019)</a> that relies on a Markov assumption to model
+transitions between quantized latent representations.</p>
+<p>Note that the great potential of structured prediction to learn useful
+representations from unsupervised datasets is not restricted to the time series
+context, it also holds for graphs and other kinds of structured data.
+Such a representation could then be used for various tasks with limited amount
+of supervision, in a few-shot learning fashion.</p>
+<p>We have started investigating an instance of this paradigm in François
+Painblanc's PhD thesis that deals with the use of forecasting models for a
+better estimation of possible futures in the context of early classification.</p>
 <h2 id="References">References<a class="anchor-link" href="#References"> </a></h2><p><ol class="bibliography"><li><span id="alvarez2018towards">Alvarez-Melis, D., Jegelka, S., &amp; Jaakkola, T. S. (2019). Towards optimal transport with global invariances. In <i>Proceedings of the International Conference on Artificial Intelligence and Statistics</i>.</span></li>
-<li><span id="memoli2011gromov">Mémoli, F. (2011). Gromov–Wasserstein distances and the metric approach to object matching. <i>Foundations of Computational Mathematics</i>, <i>11</i>(4), 417–487.</span></li>
-<li><span id="courty:hal-02112785">Courty, N., Flamary, R., Tuia, D., &amp; Rakotomamonjy, A. (2017). Optimal Transport for Domain Adaptation. <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>.</span></li></ol></p>
+<li><span id="courty:hal-02112785">Courty, N., Flamary, R., Tuia, D., &amp; Rakotomamonjy, A. (2017). Optimal Transport for Domain Adaptation. <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>.</span></li>
+<li><span id="lines2018time">Lines, J., Taylor, S., &amp; Bagnall, A. (2018). Time series classification with HIVE-COTE: The hierarchical vote collective of transformation-based ensembles. <i>ACM Transactions on Knowledge Discovery from Data (TKDD)</i>, <i>12</i>(5), 52.</span></li>
+<li><span id="franceschi2019unsupervised">Franceschi, J.-Y., Dieuleveut, A., &amp; Jaggi, M. (2019). Unsupervised scalable representation learning for multivariate time series. In <i>Advances in Neural Information Processing Systems</i> (pp. 4652–4663).</span></li>
+<li><span id="vincent2019shape">Vincent, L. E., &amp; Thome, N. (2019). Shape and time distortion loss for training deep time series forecasting models. In <i>Advances in Neural Information Processing Systems</i> (pp. 4191–4203).</span></li>
+<li><span id="rubanova2019latent">Rubanova, Y., Chen, T. Q., &amp; Duvenaud, D. K. (2019). Latent Ordinary Differential Equations for Irregularly-Sampled Time Series. In <i>Advances in Neural Information Processing Systems</i> (pp. 5321–5331).</span></li>
+<li><span id="fortuin2019som">Fortuin, V., Hüser, M., Locatello, F., Strathmann, H., &amp; Rätsch, G. (2019). SOM-VAE: Interpretable Discrete Representation Learning on Time Series. In <i>Proceedings of the International Conference on Learning Representations</i>.</span></li></ol></p>
 
 </div>
 </div>

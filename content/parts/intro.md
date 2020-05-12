@@ -9,7 +9,7 @@ this document (or just marginally in its
 [Jupyter notebook](https://rtavenar.github.io/hdr/) form). It concerns open
 source software development, especially through the creation and
 maintenance of [`tslearn`](https://tslearn.readthedocs.io)
-{% cite tslearn %}.
+{% cite tslearn %}.[^1]
 
 I realize while writing this document that, over the past few years, I
 have treated time series as if they were several different things.
@@ -20,15 +20,16 @@ trajectories) when I joined LETG (_Littoral, Environnement, Géomatique,
 Télédétection_) in 2013.
 Most importantly, these diverse applications have lead to different views
 over what time series can be and these views are connected to how the temporal
-nature of the data is included (or not) in the representation at stake.
+nature of the data is included (or not) in the representation.
 In **TODO ref Gloaguen**, for the sake of efficiency, we have relied on a fully
 non-temporal pre-clustering of the data so as to be able, in a refinement step,
-to model series segments using a beautiful tool called Ornstein Uhlenbeck
-Processes.
+to model series segments using a continuous-time model (hence re-introducing
+temporal information at the sub-segment level).
 At the other extreme of the spectrum, we have
 {% cite guilleme:hal-02513295 %} and {% cite tavenard:halshs-01561461 %},
 in which we have postulated that temporal localization information is key for
-prediction and hence we have used timestamps as additional features of the
+prediction.
+In these works, we have hence used timestamps as additional features of the
 input data.
 Elastic alignment-based approaches (such as the well-known Dynamic Time Warping)
 somehow belong somewhere in-between those two extremes.
@@ -46,7 +47,8 @@ Dynamic Time Warping.
 
 Coming back to the current document, my contributions are organized in two
 parts, the first one being dedicated to the design of adequate similarity
-measures between structured data, while the second one focuses on methods that
+measures between structured data (_i.e._ graphs and time series), while the
+second one focuses on methods that
 learn latent representations for temporal data.
 
 ## Notations
@@ -76,3 +78,8 @@ covers indexes 0 to $j-1$.
 ## References
 
 {% bibliography --cited %}
+
+[^1]: `tslearn` is a general-purpose Python machine learning library
+    for time series that offers tools for pre-processing and feature extraction
+    as well as dedicated models for clustering, classification and regression,
+    and I started this project in 2017.

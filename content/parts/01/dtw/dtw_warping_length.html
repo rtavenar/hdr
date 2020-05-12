@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_warping_length.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-05-08T16:00:39+02:00",
-  "dateModified": "2020-05-08T16:00:39+02:00",
+  "datePublished": "2020-05-12T18:29:17+02:00",
+  "dateModified": "2020-05-12T18:29:17+02:00",
   "description": "# Constrained Dynamic Time Warping**Note.** This work was a part of Zheng Zhang's PhD thesis. It was performedduring Zheng's stay at LETG in 2015-2016.I was ...",
   "author": {
     "@type": "Person",
@@ -1028,8 +1028,8 @@ A limitation of these global constraints is that they completely
 discard some regions of the alignment matrix <em>a priori</em> (<em>i.e.</em> whatever the
 data at stake).</p>
 
-<p>On the contrary, we propose Limited warping path length DTW (LDTW) that
-adds a path length constraint to the DTW
+<p>To alleviate this limitation, we propose Limited warping path length DTW (LDTW)
+that adds a path length constraint to the DTW
 optimization problem such that a path is said admissible for our method iff:</p>
 
 <ul>
@@ -1062,7 +1062,7 @@ This gives the general LDTW algorithm:</p>
 </code></pre></div></div>
 
 <p>The question is then to compute the set <code class="highlighter-rouge">admissible_lengths(i, j, max_length)</code>.
-We have shown that this set can be computed explicitly and that its length
+We have shown that this set can be computed explicitly and that its cardinal
 is $O(\min(i, j))$.
 Overall, we have a $O(mn^2 + nm^2)$ complexity for this exact algorithm.</p>
 
@@ -1118,7 +1118,7 @@ compared to DTW:</p>
 
 <p>Moreover, we have shown through experiments on UCR Time Series Datasets that
 this similarity measure, when used in a 1-Nearest Neighbor Classifier, led to
-higher accuracy than its competitors DTW and its constrained versions
+higher accuracy than other constrained DTW variants
 (Sakoe-Chiba band and Itakura parallelogram).</p>
 
 <h2 id="references">References</h2>
