@@ -47,8 +47,8 @@ A limitation of these global constraints is that they completely
 discard some regions of the alignment matrix _a priori_ (_i.e._ whatever the
 data at stake).
 
-On the contrary, we propose Limited warping path length DTW (LDTW) that
-adds a path length constraint to the DTW
+To alleviate this limitation, we propose Limited warping path length DTW (LDTW)
+that adds a path length constraint to the DTW
 optimization problem such that a path is said admissible for our method iff:
 
 * it is an admissible DTW path;
@@ -80,7 +80,7 @@ def ldtw(x, x_prime, max_length):
 ```
 
 The question is then to compute the set `admissible_lengths(i, j, max_length)`.
-We have shown that this set can be computed explicitly and that its length
+We have shown that this set can be computed explicitly and that its cardinal
 is $O(\min(i, j))$.
 Overall, we have a $O(mn^2 + nm^2)$ complexity for this exact algorithm.
 
@@ -137,7 +137,7 @@ plot_matches(dataset[0], dataset[1], path, "DTW matches")
 
 Moreover, we have shown through experiments on UCR Time Series Datasets that
 this similarity measure, when used in a 1-Nearest Neighbor Classifier, led to
-higher accuracy than its competitors DTW and its constrained versions
+higher accuracy than other constrained DTW variants
 (Sakoe-Chiba band and Itakura parallelogram).
 
 ## References

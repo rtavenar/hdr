@@ -614,7 +614,32 @@ to be properly estimated.
 
 ## Learning Shapelets that Look Like Time Series Snippets
 
-**TODO: decide whether I should include this or not**
+<!-- #region {"tags": ["popout"]} -->
+**Note.** This work is part of Yichang Wang's PhD thesis.
+I am co-supervising Yichang with Élisa Fromont, Rémi Emonet and Simon
+Malinowski.
+<!-- #endregion -->
+
+Early works on shapelet-based time series classification relied on a direct
+extraction of shapelets as time series snippets from the training set.
+Selected shapelets could be used _a posteriori_ to explain the classifier's
+decision from realistic features.
+However, the shapelet enumeration and selection processes were either very
+costly or the selection was fast but did not yield good performance.
+Jointly learning a shapelet-based representation of the series in the dataset
+and classifying the series according to this representation
+{% cite grabocka2014learning %} allowed to obtain
+discriminative shapelets in a much more efficient way.
+
+However, if the learned shapelets are definitively discriminative, they are
+often very different from actual pieces of a real series in the
+dataset. As such, these shapelets might not be suited to explain a particular
+classifier's decision.
+In **TODO cite**,
+we rely on a simple convolutional network to classify time
+series and use an adversarial network that acts as a regularizer to ensure that
+learned shapelets are un-distinguishable from actual time series pieces from
+the training set.
 
 
 ## References

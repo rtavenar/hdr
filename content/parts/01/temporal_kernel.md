@@ -173,7 +173,7 @@ used in order to approximate it with a linear kernel.
 Let us assume that we have a feature map $\phi$ such that
 
 \begin{equation}
-k_t((x_{i}, t_i), (y_{j}, t_j)) \approx
+k_t((x_{i}, t_i), (x^\prime_j, t^\prime_j)) \approx
     \left\langle\phi(g(x_{i}, t_i)),
         \phi(g(x^\prime_{j}, t^\prime_j))\right\rangle,
 \end{equation}
@@ -192,11 +192,6 @@ space, approximate SQFD computation is performed through (i) a barycenter
 computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
 followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
 the dimension of the feature map $\phi(x)$.
-Note that SQFD then corresponds to a biased estimator of the squared
-difference between the mean of the samples $\mathbf{x}$ and $\mathbf{x}^\prime$
-which is classically used to test the difference between distributions
-{% cite NIPS2006_3110 %}.
-
 Overall, we have a distance between timestamped feature sets whose
 complexity can be tuned via the map dimensionality $D$.
 
@@ -213,21 +208,20 @@ However, in our small data context, they proved useful for the task at hand.
 In order to evaluate the classifier presented above, we used the UCR Time
 Series Classification archive, which, at the time, was made of monodimensional
 data only.
-We decided not to work on raw data but rather extract local features on which
-we could run the classification algorithm.
+We decided not to work on raw data but rather extract local features to
+describe our time series.
 We chose to rely on temporal SIFT features, that we had introduced in
 {% cite bailly:halshs-01184900 bailly:hal-01252726 %}.
-These features are straight-forward 1D extensions of the Scale-Invariant
+These features are straight-forward 1D adaptations of the Scale-Invariant
 Feature Transform (SIFT) framework introduced in Computer Vision
 {% cite Lowe:2004:DIF:993451.996342 %}.
 
 ### Results
 
-We show in {% cite tavenard:halshs-01561461 %} show that kernel approximation
-leads to lower computational
-complexity than a pre-processing of the feature sets that would consist in
-performing a $k$-means clustering of each set and using centroids as
-representative features.
+We show in {% cite tavenard:halshs-01561461 %} that kernel approximation
+leads to better trade-offs in terms of computational
+complexity _vs._ kernel approximation than a pre-processing of the feature sets
+that would rely on $k$-means clustering.
 We also show that the obtained distance, once embedded in a Support Vector
 Machine with Gaussian kernel, leads to classification performance that is
 competitive with the state-of-the-art.

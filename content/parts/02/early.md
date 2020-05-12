@@ -34,7 +34,7 @@ classification of time series that balances earliness and accuracy.
 The cost function is of the following form:
 
 \begin{equation}
-\mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
+\mathcal{L}(\mathbf{x}_{\rightarrow t}, y, t, \boldsymbol{\theta}) =
     \mathcal{L}_c(\mathbf{x}_{\rightarrow t}, y, \boldsymbol{\theta}) + \alpha t
 \label{eq:loss_early}
 \end{equation}
@@ -176,9 +176,6 @@ Finally, the loss function presented in Equation \eqref{eq:loss_early} requires
 a careful choice of hyper-parameter $\alpha$ that might not be easy to pick in
 practice.
 
-**TODO: illustrate the problem with Dachraoui's synthetic dataset and 2 very
-close $\alpha$ values once the method is integrated in `tslearn`**
-
 We have hence proposed a representation learning framework that
 covers these three limitations {% cite ruwurm:hal-02174314 %}.
 
@@ -189,13 +186,17 @@ An important point here is that this feature extractor can operate on time
 series whatever their length (and hence a different feature extractor need not
 to be learned for each time series length).
 Then, this feature is provided as input to two different heads, as shown in the
-following Figure:
+following Figure (in which grey cells correspond to quantities that are
+computed from the models outputs):
 
-![half-width](../../images/double_head_early.png)
+![half-width](../../images/tex/early_module_cropped.svg)
 
-* the first head (left) outputs a probability $P_t$ of making a decision at
-time $t$ (given that no decision has been made before): it plays the same role
-as the _decision triggering classifier_ presented above;
+* the first head (left) outputs a probability $p_\text{dec}$ of making a
+decision at
+time $t$ **given that no decision has been made before**: it plays the same role
+as the _decision triggering classifier_ presented above and from the series of
+$p_\text{dec}$ values, one can compute the probability $P_t$ of making a
+decision at time $t$;
 * the second head is the standard classification head that effectively produces
 a classification if the first head triggered it.
 
@@ -207,17 +208,26 @@ the first time stamp, whatever the data).
 We introduced the following loss function:
 
 \begin{equation}
-    \mathcal{L}(\mathbf{x}, y, t, \boldsymbol{\theta}) =
-        \alpha \mathcal{L}_c(\mathbf{x}, y, \boldsymbol{\theta})
-            - (1-\alpha) P_\boldsymbol{\theta}(m_t(\mathbf{x})=y)
+    \mathcal{L}(\mathbf{x}_{\rightarrow t}, y, t, \boldsymbol{\theta}) =
+        \alpha \mathcal{L}_c(\mathbf{x}_{\rightarrow t}, y, \boldsymbol{\theta})
+            - (1-\alpha) P_\boldsymbol{\theta}(m_t(\mathbf{x}_{\rightarrow t})=y)
             \left( \frac{T-t}{T} \right)
 \end{equation}
 
-where $P_\boldsymbol{\theta}(m_t(\mathbf{x})=y)$ is the probability (as
+where $P_\boldsymbol{\theta}(m_t(\mathbf{x}_{\rightarrow t})=y)$ is the probability (as
 assigned by the classification model) to generate $y$ as an output.
 The second part in this loss function is an earliness reward, which is taken
 into account iff the provided decision is sound (_ie._ the correct class is
 predicted with non-zero probability).
+When the decision time is drawn from the
+multinomial distribution of parameters $\{P_t\}_{t \in [0, T-1]}$, the overall
+loss is now:
+\begin{equation}
+    \mathbb{E}_{t \sim \mathcal{M}(P_0, \dots , P_{T-1})}
+        \mathcal{L}(\mathbf{x}_{\rightarrow t}, y, t, \boldsymbol{\theta})
+\end{equation}
+and gradients can be back-propagated through both heads of the model, hence
+allowing to jointly learn the early decision mechanism and the predictor.
 
 We have shown that this model outperforms all known baselines in terms of both
 time complexity and earliness/accuracy tradeoff, especially for large scale

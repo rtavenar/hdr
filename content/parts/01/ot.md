@@ -338,8 +338,7 @@ plt.title('FGW Barycenter');
 ```
 
 We also show that these barycenters can be used for graph clustering.
-
-We also exhibit classification results for FGW embedded in a Gaussian kernel
+Finally, we exhibit classification results for FGW embedded in a Gaussian kernel
 SVM which leads to state-of-the-art performance (even outperforming graph
 neural network approaches) on a wide range of graph classification problems.
 

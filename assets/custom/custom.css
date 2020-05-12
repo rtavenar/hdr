@@ -14,7 +14,7 @@ svg:not(:root), .output_png img, div.text_cell_render>p>img, div.text_cell_rende
 }
 
 div.text_cell_render>p>img[alt=half-width], div.text_cell_render>p>a>img[alt=half-width] {
-    max-width: 300px;
+    width: 300px;
 }
 
 @media (min-width: 64em) {
