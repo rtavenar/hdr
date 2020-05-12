@@ -21,6 +21,8 @@ Because of the specificity of this task, I will use in this section the
 notation $\mathbf{x}_{\rightarrow t}$ to denote the time series $\mathbf{x}$
 truncated after timestamp $t$.
 
+**TODO check t included / excluded in the notations section**
+
 I have worked on two methods for this task.
 The first one is a slight improvement over
 {% cite dachraoui2015early %} and the second one relies on a representation
