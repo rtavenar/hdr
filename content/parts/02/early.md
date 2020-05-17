@@ -19,9 +19,7 @@ Early classification of time series is the task of performing a classification
 as early as possible for an incoming time series.
 Because of the specificity of this task, I will use in this section the
 notation $\mathbf{x}_{\rightarrow t}$ to denote the time series $\mathbf{x}$
-truncated after timestamp $t$.
-
-**TODO check t included / excluded in the notations section**
+truncated after $t$ timestamps.
 
 I have worked on two methods for this task.
 The first one is a slight improvement over
@@ -48,7 +46,7 @@ decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
 and is supposed to be a hyper-parameter of the method.
 
-In {% cite dachraoui2015early %}, authors rely on (i) a clustering of the
+Authors rely on (i) a clustering of the
 training
 time series and (ii) individual classifiers $m_t(\cdot)$ trained at all possible
 timestamps, so as to be able to predict, at time $t$, an expected cost for all
@@ -142,7 +140,7 @@ $\mathbf{x}_{\rightarrow t}$
 observed up to time $t$ predicts whether a decision should be triggered or not.
 In this setting, the target values $\gamma_t$ used to train this
 _decision triggering classifier_
-were computed using the approach described above:
+were computed from expected costs $f_\tau$ presented above:
 
 \begin{equation}
     \gamma_t(\mathbf{x}_{\rightarrow t}, y) = \left\{
@@ -189,7 +187,7 @@ series whatever their length (and hence a different feature extractor need not
 to be learned for each time series length).
 Then, this feature is provided as input to two different heads, as shown in the
 following Figure (in which grey cells correspond to quantities that are
-computed from the models outputs):
+computed from the model outputs):
 
 ![half-width](../../images/tex/early_module_cropped.svg)
 
