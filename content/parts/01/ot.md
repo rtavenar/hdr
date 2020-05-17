@@ -22,8 +22,8 @@ distance that interpolates between Wasserstein distance between node feature
 distributions and Gromov-Wasserstein distance between structures.
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work was part of Titouan Vayer's PhD thesis.
-We were co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
+**Note.** This work is part of Titouan Vayer's PhD thesis.
+We are co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
 <!-- #endregion -->
 
 Here, we first introduce both Wasserstein and Gromov-Wasserstein distances and
@@ -49,9 +49,8 @@ beginning to end).
 <!-- #endregion -->
 
 \begin{equation}
-    W_p(\mu, \mu') = \left(
-        \min_{\pi \in \Pi(\mu, \mu^\prime)}
-            \sum_{i,j} d(x_i, x^\prime_j)^p \pi_{i,j} \right)^{\frac{1}{p}}
+    W_p(\mu, \mu') = \min_{\pi \in \Pi(\mu, \mu^\prime)}
+        \left(\sum_{i,j} d(x_i, x^\prime_j)^p \pi_{i,j} \right)^{\frac{1}{p}}
     \label{eq:wass}
 \end{equation}
 
@@ -72,8 +71,8 @@ distances, as illustrated below:
 The corresponding distance is the Gromov-Wasserstein distance, defined as:
 
 \begin{equation}
-    GW_p(\mu, \mu') = \left(
-        \min_{\pi \in \Pi(\mu, \mu^\prime)}
+    GW_p(\mu, \mu') = \min_{\pi \in \Pi(\mu, \mu^\prime)}
+        \left(
             \sum_{i,j,k,l}
             \left| d_\mu(x_i, x_k) - d_{\mu'}(x^\prime_j, x^\prime_l) \right|^p
             \pi_{i,j} \pi_{k,l}
@@ -112,13 +111,13 @@ More formally, we consider undirected labeled graphs as tuples of the form $\mat
 $(\mathcal{V},\mathcal{E})$ are the set of vertices and edges of the graph.
 $\ell_f: \mathcal{V} \rightarrow \Omega_f$ is a labelling function which
 associates each vertex $v_{i} \in \mathcal{V}$ with a feature
-$a_{i}\stackrel{\text{def}}{=}\ell_f(v_{i})$ in some feature metric space
+$a_{i} = \ell_f(v_{i})$ in some feature metric space
 $(\Omega_f,d)$.
 We will denote by _feature information_ the set of all the features
 $\{a_{i}\}_{i}$ of the graph.
 Similarly, $\ell_s: \mathcal{V} \rightarrow \Omega_s$ maps a vertex $v_i$ from
 the graph to its structure representation
-$x_{i} \stackrel{\text{def}}{=} \ell_s(v_{i})$ in some structure space
+$x_{i} = \ell_s(v_{i})$ in some structure space
 $(\Omega_s,C)$ specific to each graph.
 $C : \Omega_s \times \Omega_s \rightarrow \mathbb{R_{+}}$ is a symmetric
 application which aims at measuring the similarity between the nodes in the
@@ -178,7 +177,7 @@ E_{q}(\mathcal{G}, \mathcal{G}', \pi) =
 
 The FGW distance looks for the coupling $\pi$ between vertices of the
 graphs that minimizes the cost $E_{q}$ which is a linear combination of a cost
-$d(a_{i},a^\prime_j)$ of transporting one feature $a_{i}$ to a feature $a^\prime_j$
+$d(a_{i},a^\prime_j)$ of transporting feature $a_{i}$ to $a^\prime_j$
 and a cost $|C(i,k)-C'(j,l)|$ of transporting pairs of nodes in each structure.
 As such, the optimal coupling tends to associate pairs of feature and
 structure points with similar distances within each structure pair and with
@@ -200,14 +199,14 @@ between the structures;
 We also define a continuous counterpart for FGW which comes with a
 concentration inequality in {% cite vayer:hal-02174316 %}.
 
-We have presented a Conditional Gradient algorithm for optimization on the
+We present a Conditional Gradient algorithm for optimization on the
 above-defined loss.
-We have also exposed a Block Coordinate Descent algorithm to compute graph
+We also provide a Block Coordinate Descent algorithm to compute graph
 barycenters _w.r.t._ FGW.
 
 ### Results
 
-We show that FGW allows to extract meaningful barycenters:
+We have shown that FGW allows to extract meaningful barycenters:
 
 <!-- #region {"tags": ["popout"]} -->
 **Note.** The code provided here uses integration of FGW provided by the
@@ -337,9 +336,10 @@ draw_graph(barycenter)
 plt.title('FGW Barycenter');
 ```
 
-We also show that these barycenters can be used for graph clustering.
-Finally, we exhibit classification results for FGW embedded in a Gaussian kernel
-SVM which leads to state-of-the-art performance (even outperforming graph
+These barycenters can be used for graph clustering.
+Finally, we have exhibited classification results for FGW embedded in a
+Gaussian kernel SVM which leads to state-of-the-art performance
+(even outperforming graph
 neural network approaches) on a wide range of graph classification problems.
 
 ## References

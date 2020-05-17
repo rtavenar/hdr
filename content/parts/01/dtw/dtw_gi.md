@@ -16,8 +16,8 @@ jupyter:
 # DTW with Global Invariances
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work was part of Titouan Vayer's PhD thesis.
-We were co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
+**Note.** This work is part of Titouan Vayer's PhD thesis.
+We are co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
 <!-- #endregion -->
 
 In this work we address the problem of comparing time series while taking
@@ -43,10 +43,8 @@ lie. More formally, we define Dynamic Time Warping with Global Invariances
 
 \begin{equation}
     \text{DTW-GI}(\mathbf{x}, \mathbf{x^\prime}) =
-        \sqrt{
-            \min_{f \in \mathcal{F}, \pi \in \mathcal{A}(\mathbf{x}, \mathbf{x^\prime})}
-                \sum_{(i, j) \in \pi} d(x_i, f(x^\prime_j))^2
-        } ,
+        \min_{f \in \mathcal{F}, \pi \in \mathcal{A}(\mathbf{x}, \mathbf{x^\prime})}
+            \sqrt{ \sum_{(i, j) \in \pi} d(x_i, f(x^\prime_j))^2 } \, ,
     \label{eq:dtwgi}
 \end{equation}
 
@@ -699,13 +697,15 @@ for idx_dataset, dataset_fun in enumerate(list_dataset_generators):
 
 We also introduce soft counterparts following the definition of softDTW from
 {% cite cuturi2017soft %}.
+In this case, optimization consists in gradient descent and a wider variety of
+feature space transformation families can be considered.
 
-We validate the utility of this new metric on real world
+We validate the utility of these similarity measures on real world
 datasets on the tasks of human motion prediction (where motion is captured under
 different points of view) and cover song identification (where song similarity
 is defined up to a key transposition).
 In both these settings, we observe that joint optimization on feature space
-transformation and temporal alignment improves over standard techniques that
+transformation and temporal alignment improves over standard approaches that
 consider these as two independent steps.
 
 ## References

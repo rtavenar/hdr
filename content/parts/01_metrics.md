@@ -16,4 +16,5 @@ Second, in [Sec. 1.2](01/dtw.html), time series are treated as sequences, which
 means that only ordering is of importance (time delay between observations
 is ignored) and variants of the Dynamic Time Warping algorithm are used.
 Finally, in [Sec. 1.3](01/ot.html), undirected labeled graphs are seen as
-discrete distributions over the feature-structure product space.
+discrete distributions over the feature-structure product space and we rely on
+optimal transport distances.

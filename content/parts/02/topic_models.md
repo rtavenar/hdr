@@ -31,9 +31,8 @@ In this work, we build upon the Hierarchical Dirichlet Latent Semantic Motifs
 This generative model relies on the extraction of motifs that encapsulate the
 temporal information of the data.
 It is able to automatically find both the underlying number of motifs needed to
-model a given set of documents and the number of motif occurrences in each
-document (which includes their temporal locations), as shown in the following
-Figure:
+model a given set of documents and the number and localization of motif
+occurrences in each document, as shown in the following Figure:
 
 ![half-width](../../images/hdlsm.svg)
 
@@ -41,7 +40,7 @@ The HDLSM model takes as input a set of quantized time series (aka temporal
 documents).
 More specifically, a time series is represented as a table of counts that
 informs, for
-each pair $(w, t)$, whether word $w$ (typically a quantized feature) was
+each pair $(w, t)$, whether word (or a quantized feature) $w$ was
 present in the time series at time index $t$ (in fact, it can also account for
 the _amount_ of presence of word $w$ at time $t$).
 
@@ -60,12 +59,12 @@ a starting time $t_o$ and an associated motif $k$.
 
 As stated above, motifs are represented as probabilistic maps.
 Each map is drawn from a Dirichlet distribution.
-This models makes intensive use of Dirichlet Processes (DP) to model the
+This model makes intensive use of Dirichlet Processes (DP) to model the
 possibly infinite number of motifs and occurrences.
 
-To learn the parameters of the model, a Gibbs sampling is applied, in which it
+To learn the parameters of the model, Gibbs sampling is used, in which it
 is sufficient to re-sample motif assignments for both observations and
-occurrences and starting time for each motif occurrence.
+occurrences as well as occurrence starting times.
 Other variables are either integrated out or deduced, when a deterministic
 relation holds.
 
@@ -115,7 +114,7 @@ in the segmentation of trajectories into homogeneous _movement modes_;
 * in order to scale to larger datasets, stochastic variational inference is used
 (in place of Gibbs sampling) for inference.
 
-### Use case
+### Motivating use case
 
 The monitoring of maritime traffic relies on several sources of data, in a
 rising context of maritime big data {% cite garnier2016exploiting %}.
@@ -138,7 +137,7 @@ that can handle such complex data while being efficient on large databases,
 and that both cluster trajectories as a whole and detect common
 sub-trajectories.
 
-### The model
+### Model
 
 We define a parametric framework to model trajectory data,
 _i.e._ sequences of geographical positions recorded through time.
@@ -342,9 +341,10 @@ computations involved can be distributed.
 We have provided [a dataset](https://github.com/rtavenar/ushant_ais) of several
 millions of observations in the AIS context.
 This dataset is used to validate our model qualitatively (through visual
-analysis of extracted movement modes and trajectory clusters) and should
-allow future competitive methods to compare on a real-world large-scale
-trajectory dataset.
+analysis of extracted movement modes and trajectory clusters) and compare it to
+a standard $k$-means clustering.
+We hope this dataset will be used for future competitive methods to compare on a 
+real-world large-scale trajectory dataset.
 
 **TODO: add ref to online tech report**
 

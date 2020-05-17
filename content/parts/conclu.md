@@ -1,4 +1,4 @@
-# Conclusion and Perspectives
+# Perspectives
 
 In this part, I will first describe some current and future works that we plan
 to investigate.
@@ -29,7 +29,7 @@ computing costs since the Bellmann recursion that is at the core of the Dynamic
 Time Warping algorithm cannot be used anymore.
 It is likely that approximate solvers will have to be used in this case.
 Also, one typical use-case for such a similarity measure would be to serve as
-a loss function in a structured prediction setting, in which case the
+a loss function in a forecasting setting, in which case the
 computational complexity would be an even higher concern which could necessitate
 to train dedicated Siamese networks (_e.g._ by taking inspiration from the
 method presented in
@@ -96,7 +96,7 @@ literature up to now, despite recent advances such as
 In this context, I believe structure can
 be used as a guide.
 Typically, in the time series context, learning intermediate representations
-that are suited for structured prediction (_i.e._ predicting both the future
+that are suited for structured prediction (_i.e._ predicting future
 observations together with their emission times) is likely to capture the
 intrinsics of the data.
 Such approaches could rely on the recent revival of time series forecasting

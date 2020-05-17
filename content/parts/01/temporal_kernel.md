@@ -42,8 +42,11 @@ between feature sets embedded in the Reproducing Kernel Hilbert Space (RKHS)
 associated with $K$:
 
 \begin{equation}
-    SQFD(\mathbf{x}, \mathbf{x}^\prime)^2 = K(\mathbf{x}, \mathbf{x}) +
-        K(\mathbf{x}^\prime, \mathbf{x}^\prime) - 2 K(\mathbf{x}, \mathbf{x}^\prime).
+    SQFD(\mathbf{x}, \mathbf{x}^\prime) =
+        \sqrt{K(\mathbf{x}, \mathbf{x})
+              + K(\mathbf{x}^\prime, \mathbf{x}^\prime)
+              - 2 K(\mathbf{x}, \mathbf{x}^\prime)}
+        \, .
 \end{equation}
 
 ## Local temporal kernel
@@ -166,7 +169,7 @@ ax_s_y.plot(- s_y1, numpy.arange(s_y1.shape[0])[::-1],
             "b-", linewidth=3.);
 ```
 
-$k_t$ is then a RBF kernel itself, and kernel approximation techniques such as
+$k_t$ is then a RBF kernel itself, and
 Random Fourier Features {% cite NIPS2007_3182 %} can be
 used in order to approximate it with a linear kernel.
 
@@ -193,7 +196,7 @@ computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
 followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
 the dimension of the feature map $\phi(x)$.
 Overall, we have a distance between timestamped feature sets whose
-complexity can be tuned via the map dimensionality $D$.
+precision / complexity tradeoff can be tuned via the map dimensionality $D$.
 
 ## Evaluation
 
@@ -205,9 +208,9 @@ computer vision community at the time of this work.
 However, in our small data context, they proved useful for the task at hand.
 <!-- #endregion -->
 
-In order to evaluate the classifier presented above, we used the UCR Time
+In order to evaluate the method presented above, we have used the UCR Time
 Series Classification archive, which, at the time, was made of monodimensional
-data only.
+time series only.
 We decided not to work on raw data but rather extract local features to
 describe our time series.
 We chose to rely on temporal SIFT features, that we had introduced in

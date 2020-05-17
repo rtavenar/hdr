@@ -25,11 +25,11 @@ In **TODO ref Gloaguen**, for the sake of efficiency, we have relied on a fully
 non-temporal pre-clustering of the data so as to be able, in a refinement step,
 to model series segments using a continuous-time model (hence re-introducing
 temporal information at the sub-segment level).
-At the other extreme of the spectrum, we have
+At the other extreme of the spectrum, in
 {% cite guilleme:hal-02513295 %} and {% cite tavenard:halshs-01561461 %},
-in which we have postulated that temporal localization information is key for
+we have postulated that temporal localization information was key for
 prediction.
-In these works, we have hence used timestamps as additional features of the
+In these works, we hence use timestamps as additional features of the
 input data.
 Elastic alignment-based approaches (such as the well-known Dynamic Time Warping)
 somehow belong somewhere in-between those two extremes.
@@ -37,15 +37,19 @@ Indeed, they only rely on temporal ordering
 (not on timestamps) to assess similarity between series.
 Note also that, compared to other approaches considered in this document,
 convolutional models presented in [Sec. 2.2](02/shapelets_cnn.html) make an
-extra assumption about the regularity of the sampling process.
+extra assumption about the regularity of the sampling process (_i.e._
+observations in a time series are supposed to be acquired at a fixed time
+interval and this interval is the same for all time series in the considered
+collection).
+
 I have, more recently, turned my focus to other structured data such as graphs,
 and it appears that choosing an adequate encoding for the structural information
-in these cases is also a very important question.
+in this context is also a very important question.
 This study relies on the use of Optimal Transport distances that, surprisingly
 or not, use formulations that are very similar in spirit to the one of
 Dynamic Time Warping.
 
-Coming back to the current document, my contributions are organized in two
+In the present document, my contributions are organized in two
 parts, the first one being dedicated to the design of adequate similarity
 measures between structured data (_i.e._ graphs and time series), while the
 second one focuses on methods that
@@ -66,7 +70,7 @@ Time series datasets will be denoted $(\mathbf{X}, \mathbf{y})$ (or just
 $\mathbf{X}$ for unsupervised methods) where
 $\mathbf{X} = \left( \mathbf{x}^{(0)}, \cdots, \mathbf{x}^{(N-1)} \right)$ is
 a set of $N$ time series (that do not necessarily share the same length) and
-$\mathbf{y}$ is a vector of target values.
+$\mathbf{y}$ is a vector of $N$ target values.
 
 When subseries have to be considered, we will denote by
 $\mathbf{x}_{t_1 \rightarrow t_2}$ the subseries extracted from $\mathbf{x}$
@@ -82,4 +86,4 @@ covers first $t$ timestamps.
 [^1]: `tslearn` is a general-purpose Python machine learning library
     for time series that offers tools for pre-processing and feature extraction
     as well as dedicated models for clustering, classification and regression,
-    and I started this project in 2017.
+    and I initiated this project in 2017.

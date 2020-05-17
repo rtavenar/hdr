@@ -15,7 +15,7 @@ jupyter:
 
 # Dynamic Time Warping
 
-This section covers my works related to Dynamic Time Warping for time series.
+This section covers works related to Dynamic Time Warping for time series.
 
 <!-- #region {"tags": ["popout"]} -->
 **Note.** In ``tslearn``, such time series would be represented as arrays of
@@ -48,8 +48,8 @@ optimization problem:
 
 \begin{equation}
 DTW(\mathbf{x}, \mathbf{x}^\prime) =
-    \sqrt{ \min_{\pi \in \mathcal{A}(\mathbf{x}, \mathbf{x}^\prime)}
-        \sum_{(i, j) \in \pi} d(x_i, x^\prime_j)^2 }
+    \min_{\pi \in \mathcal{A}(\mathbf{x}, \mathbf{x}^\prime)}
+        \sqrt{ \sum_{(i, j) \in \pi} d(x_i, x^\prime_j)^2 }
 \label{eq:dtw}
 \end{equation}
 

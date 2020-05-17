@@ -16,27 +16,27 @@ jupyter:
 # Shapelet-based Representations and Convolutional Models
 
 In this section, we will cover works that either relate to the Shapelet
-representation for time series or to the family of (1d) Convolutional Neural
+representation for time series or to the family of (1D) Convolutional Neural
 Networks, since these two families of methods are very similar in spirit
 {% cite lods:hal-01565207 %}.
 
 ## Data Augmentation for Time Series Classification
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work is part of Arthur Le Guennec's Master internship.
+**Note.** This work was part of Arthur Le Guennec's Master internship.
 We were co-supervising Arthur together with Simon Malinowski.
 <!-- #endregion -->
 
 We have shown in {% cite leguennec:halshs-01357973 %} that augmenting time
 series classification datasets was an efficient way to improve generalization
-for shallow Convolutional Neural Networks.
+for Convolutional Neural Networks.
 The data augmentation strategies that were investigated in this work are
 local warping and window slicing and both lead to improvements.
 
 ## Learning to Mimic a Target Distance
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work is part of Arnaud Lods' Master internship.
+**Note.** This work was part of Arnaud Lods' Master internship.
 We were co-supervising Arnaud together with Simon Malinowski.
 <!-- #endregion -->
 
@@ -50,9 +50,9 @@ used similarity measure for time series.
 However, it suffers from its non differentiability and the fact that it does
 not satisfy metric properties.
 Our goal in {% cite lods:hal-01565207 %} was to introduce a Shapelet model that
-extracts latent representations such that Euclidean distance in the latent
-space is as close as possible to Dynamic Time Warping between original time
-series.
+extracts latent representations such that Euclidean distance between latent
+representations is as close as possible to Dynamic Time Warping between original
+time series.
 The resulting model is an instance of a Siamese Network:
 
 ![](../../images/siamese_ldps.png)
@@ -433,8 +433,8 @@ Semi-Sparse Group Lasso) loss that allows to enforce sparsity on some individual
 variables only:
 
 \begin{equation}
-    \mathcal{L}^{\mathrm{SSGL}}(y, \hat{y}, \boldsymbol{\theta}) =
-        \mathcal{L}(y, \hat{y}, \boldsymbol{\theta})
+    \mathcal{L}^{\mathrm{SSGL}}(\mathbf{x}, y, \boldsymbol{\theta}) =
+        \mathcal{L}(\mathbf{x}, y, \boldsymbol{\theta})
         + \alpha \lambda
             \left\| \mathbf{M}_\text{ind} \boldsymbol{\beta} \right\|_1
         + (1-\alpha) \lambda \sum_{k=1}^{K} \sqrt{p_k}
@@ -447,7 +447,7 @@ features in our random shapelet case), $\boldsymbol{\theta}$ is the set of
 all model weights, including weights $\boldsymbol{\beta}$ that are directly
 connected to the features (_ie._ these are weights from the first layer), that
 are organized in groups $\boldsymbol{\beta}^{(k)}$ of size $p_k$ ($p_k=2$ in the
-random shapelet context), each group corresponding to a different shapelet.
+random shapelet context, each group corresponding to a different shapelet).
 
 ```python tags=["hide_input"]
 %config InlineBackend.figure_format = 'svg'
@@ -610,7 +610,7 @@ terms of both Mean Squared Error (MSE) and estimation of zero coefficients.
 
 When applied to the specific case of random shapelets, we have shown that this
 lead to improved accuracy as soon as datasets are large enough for coefficients
-to be properly estimated.
+to be estimated properly.
 
 ## Learning Shapelets that Look Like Time Series Snippets
 

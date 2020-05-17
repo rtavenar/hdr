@@ -39,8 +39,7 @@ The cost function is of the following form:
 \label{eq:loss_early}
 \end{equation}
 
-where $\hat{y}$ is the class predicted by the model,
-$\mathcal{L}_c(\cdot,\cdot,\cdot)$ is a
+where $\mathcal{L}_c(\cdot,\cdot,\cdot)$ is a
 classification loss and $t$ is the timestamp at which a
 decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
@@ -85,8 +84,8 @@ We are co-supervising François together with Laetitia Chapel and Chloé Friguet
 
 Relying on Equation \eqref{eq:dachraoui} to decide prediction time can be
 tricky. We show in the following that in some cases (related to specific
-configurations of training time confusion matrices), such an approach will lead
-to undesirable behaviors.
+configurations of the training time confusion matrices), such an approach will
+lead to undesirable behaviors.
 
 Using Bayes rule, Equation \eqref{eq:dachraoui} can be re-written
 
@@ -136,8 +135,8 @@ cost of a larger computational complexity.
 
 We also showed that in order to limit inference time complexity, one could
 learn a _decision triggering classifier_ that, based on the time series
-$\mathbf{x}_{\rightarrow t}$
-observed up to time $t$ predicts whether a decision should be triggered or not.
+$\mathbf{x}_{\rightarrow t}$, predicts whether a decision should be triggered
+or not.
 In this setting, the target values $\gamma_t$ used to train this
 _decision triggering classifier_
 were computed from expected costs $f_\tau$ presented above:
@@ -180,9 +179,9 @@ We have hence proposed a representation learning framework that
 covers these three limitations {% cite ruwurm:hal-02174314 %}.
 
 In more details, we rely on a feature extraction module (that can either be
-made of convolutional or recurrent submodules) to extract a fixed-sized
+made of causal convolutions or recurrent submodules) to extract a fixed-sized
 representation $h_t$ from an incoming time series $\mathbf{x}_{\rightarrow t}$.
-An important point here is that this feature extractor can operate on time
+An important point here is that this feature extractor should operate on time
 series whatever their length (and hence a different feature extractor need not
 to be learned for each time series length).
 Then, this feature is provided as input to two different heads, as shown in the

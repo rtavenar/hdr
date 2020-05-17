@@ -34,7 +34,7 @@ Optimal Transport for Domain Adaptation {% cite courty:hal-02112785 %}.
 One significant difference however is that we rely on a reference modality for
 alignment, which is guided by our application context.
 
-## Use case
+## Motivating use case
 
 Phosphorus (P) transfer during storm events represents a significant part of
 annual P loads in streams and contributes to eutrophication in downstream water
@@ -58,7 +58,7 @@ limit and test its ability to compare seasonal variability of P storm dynamics
 in two headwater watersheds. Both watersheds are ca. 5 km², have similar
 climate and geology, but differ in land use and P pressure intensity.
 
-## Method
+## Alignment-based resampling method
 
 In the above-described setting, we have access to one modality (discharge,
 commonly denoted $Q$) that is representative of the evolution of the flood.
@@ -69,8 +69,8 @@ Indeed, time series may have
 1. different starting times due to the discharge threshold at which the
 autosamplers were triggered,
 2. different lengths  and
-3. differences in phase that yield different positions of the discharge peak
-and of concentration data points relative to the hydrograph.
+3. differences in phase that yield different temporal localization of the
+discharge peak.
 
 To align time series, we use the path associated to DTW.
 This matching path can be viewed as the optimal way to perform point-wise
@@ -83,10 +83,6 @@ The reference discharge time series used in this study is chosen
 as a storm event with full coverage of flow rise and flow recession phases.
 Alternatively, one could choose a synthetic idealized storm hydrograph.
 
-As stated above, the continuity condition imposed on admissible paths results
-in each element of reference time series $\mathbf{x}^\text{ref}_\text{Q}$ being
-matched with at least one element in each discharge time series from the
-dataset.
 We then use barycentric mapping based on obtained matches to realign other
 modalities to the timestamps of the reference time series, as shown in the
 following Figures:
