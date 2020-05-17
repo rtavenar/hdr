@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/02/early.html",
   "headline": "Early Classification of Time Series",
-  "datePublished": "2020-05-12T20:30:45+02:00",
-  "dateModified": "2020-05-12T20:30:45+02:00",
+  "datePublished": "2020-05-17T09:40:21+02:00",
+  "dateModified": "2020-05-17T09:40:21+02:00",
   "description": "        Early Classification of Time Series    Early classification of time series is the task of performing a classificationas early as possible for an inco...",
   "author": {
     "@type": "Person",
@@ -1006,8 +1006,7 @@ initFunction(initPrint)
 as early as possible for an incoming time series.
 Because of the specificity of this task, I will use in this section the
 notation $\mathbf{x}_{\rightarrow t}$ to denote the time series $\mathbf{x}$
-truncated after timestamp $t$.</p>
-<p><strong>TODO check t included / excluded in the notations section</strong></p>
+truncated after $t$ timestamps.</p>
 <p>I have worked on two methods for this task.
 The first one is a slight improvement over
 <a class="citation" href="#dachraoui2015early">(Dachraoui, Bondu, &amp; Cornuéjols, 2015)</a> and the second one relies on a representation
@@ -1025,7 +1024,7 @@ classification loss and $t$ is the timestamp at which a
 decision is triggered by the system.
 In this setting, $\alpha$ drives the tradeoff between accuracy and earliness
 and is supposed to be a hyper-parameter of the method.</p>
-<p>In <a class="citation" href="#dachraoui2015early">(Dachraoui, Bondu, &amp; Cornuéjols, 2015)</a>, authors rely on (i) a clustering of the
+<p>Authors rely on (i) a clustering of the
 training
 time series and (ii) individual classifiers $m_t(\cdot)$ trained at all possible
 timestamps, so as to be able to predict, at time $t$, an expected cost for all
@@ -1117,7 +1116,7 @@ $\mathbf{x}_{\rightarrow t}$
 observed up to time $t$ predicts whether a decision should be triggered or not.
 In this setting, the target values $\gamma_t$ used to train this
 <em>decision triggering classifier</em>
-were computed using the approach described above:</p>
+were computed from expected costs $f_\tau$ presented above:</p>
 \begin{equation}
     \gamma_t(\mathbf{x}_{\rightarrow t}, y) = \left\{
         \begin{array}{l}
@@ -1173,7 +1172,7 @@ series whatever their length (and hence a different feature extractor need not
 to be learned for each time series length).
 Then, this feature is provided as input to two different heads, as shown in the
 following Figure (in which grey cells correspond to quantities that are
-computed from the models outputs):</p>
+computed from the model outputs):</p>
 <p><img src="../../images/tex/early_module_cropped.svg" alt="half-width"></p>
 <ul>
 <li>the first head (left) outputs a probability $p_\text{dec}$ of making a

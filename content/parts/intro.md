@@ -69,10 +69,10 @@ a set of $N$ time series (that do not necessarily share the same length) and
 $\mathbf{y}$ is a vector of target values.
 
 When subseries have to be considered, we will denote by
-$\mathbf{x}_{i \rightarrow j}$ the subseries extracted from $\mathbf{x}$ that
-starts at time index $i$ and stops at time index $j$ (excluded), and
-$\mathbf{x}_{\rightarrow j}$ will be a shortcut notation for the subseries that
-covers indexes 0 to $j-1$.
+$\mathbf{x}_{t_1 \rightarrow t_2}$ the subseries extracted from $\mathbf{x}$
+that starts at time index $t_1$ and stops at time index $t_2$ (excluded), and
+$\mathbf{x}_{\rightarrow t}$ will be a shortcut notation for the subseries that
+covers first $t$ timestamps.
 
 
 ## References
