@@ -1,4 +1,4 @@
-# About this document
+# Preamble
 
 This document is the Jupyter book version of my HDR thesis[^1].
 It is being written at the moment, so one should not expect it to be stable
