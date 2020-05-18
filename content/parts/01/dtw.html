@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-05-17T14:35:17+02:00",
-  "dateModified": "2020-05-17T14:35:17+02:00",
+  "datePublished": "2020-05-18T19:08:46+02:00",
+  "dateModified": "2020-05-18T19:08:46+02:00",
   "description": "# Dynamic Time WarpingThis section covers works related to Dynamic Time Warping for time series.**Note.** In ``tslearn``, such time series would be represent...",
   "author": {
     "@type": "Person",
@@ -827,7 +827,7 @@ problem:</p>
                              <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
                                          <span class="k">else</span> <span class="n">inf</span><span class="p">)</span>
 
-  <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </code></pre></div></div>
 
 <h2 id="properties">Properties</h2>
