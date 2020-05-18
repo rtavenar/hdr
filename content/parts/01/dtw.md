@@ -101,7 +101,7 @@ def dtw(x, x_prime):
                              C[i-1, j-1] if (i > 0 and j > 0)
                                          else inf)
 
-  return sqrt(C[n, m])
+  return sqrt(C[n-1, m-1])
 ```
 
 

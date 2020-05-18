@@ -44,7 +44,7 @@ ever-growing water quality measurement datasets.
 
 Clustering techniques have proven useful for identifying seasonal storm
 patterns and thus for increasing knowledge about seasonal variability in storm
-export mechanisms (e.g. {% cite aubert:halshs-00906292 %}).
+export mechanisms (_e.g._ {% cite aubert:halshs-00906292 %}).
 Clustering techniques usually require calculating a distance between pairs of
 comparable points in several time series. For this reason, direct clustering
 (without using hysteresis-descriptor variables) of high frequency storm

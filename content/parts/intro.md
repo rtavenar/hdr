@@ -6,7 +6,7 @@ as graphs (in [Sec. 1.3](01/ot.html)) or time series (in the rest of the
 document).
 However, note that one of my contributions to the field is not developed in
 this document (or just marginally in its
-[Jupyter notebook](https://rtavenar.github.io/hdr/) form). It concerns open
+[Jupyter book](https://rtavenar.github.io/hdr/) form). It concerns open
 source software development, especially through the creation and
 maintenance of [`tslearn`](https://tslearn.readthedocs.io)
 {% cite tslearn %}.[^1]
@@ -62,7 +62,7 @@ Throughout this document, the following notations will be used.
 A time series is a set of $n$ timestamped features:
 
 \begin{equation}
-    \textbf{x} = \{ (x_0, t_0), \dots , (x_{n-1}, t_{n-1}) \}
+    \mathbf{x} = \{ (x_0, t_0), \dots , (x_{n-1}, t_{n-1}) \}
 \end{equation}
 
 where all $x_i$ lie in the same ambient space $\mathbb{R}^{p}$.

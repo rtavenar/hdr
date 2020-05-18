@@ -200,8 +200,6 @@ precision / complexity tradeoff can be tuned via the map dimensionality $D$.
 
 ## Evaluation
 
-### Temporal SIFT features
-
 <!-- #region {"tags": ["popout"]} -->
 **Note** that the use of such handcrafted features was already outdated in the
 computer vision community at the time of this work.
@@ -218,8 +216,6 @@ We chose to rely on temporal SIFT features, that we had introduced in
 These features are straight-forward 1D adaptations of the Scale-Invariant
 Feature Transform (SIFT) framework introduced in Computer Vision
 {% cite Lowe:2004:DIF:993451.996342 %}.
-
-### Results
 
 We show in {% cite tavenard:halshs-01561461 %} that kernel approximation
 leads to better trade-offs in terms of computational

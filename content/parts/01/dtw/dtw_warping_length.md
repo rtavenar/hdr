@@ -76,7 +76,7 @@ def ldtw(x, x_prime, max_length):
                                   C[i-1, j-1, l-1] if (i > 0 and j > 0)
                                                    else inf)
 
-  return sqrt(min(C[n, m, :]))
+  return sqrt(min(C[n-1, m-1, :]))
 ```
 
 The question is then to compute the set `admissible_lengths(i, j, max_length)`.
