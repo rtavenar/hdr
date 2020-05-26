@@ -477,7 +477,7 @@ plt.ion()
 def plot_results(beta_star,
                  beta_hat_ssgl=None, mse_ssgl=None,
                  beta_hat_sgl=None, mse_sgl=None):
-    plt.figure(figsize=(6, 2))
+    plt.figure(figsize=(6, 3))
     plt.set_cmap("tab10")
     ind = numpy.arange(dim)
     width = 0.25
@@ -501,7 +501,8 @@ def plot_results(beta_star,
     for group_id in range(3):
         for feature_id in range(n_features_per_group):
             labels.append("$\\beta_%d^{(%d)}$" % (feature_id + 1, group_id + 1))
-    plt.legend(loc="upper left")
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
+               ncol=3, mode="expand", borderaxespad=0.)
     plt.ylabel("Beta values")
     plt.gca().set_xticklabels(labels)
     plt.gca().set_xticks(numpy.arange(6) + .3)
@@ -653,7 +654,7 @@ However, if the learned shapelets are definitively discriminative, they are
 often very different from actual pieces of a real series in the
 dataset. As such, these shapelets might not be suited to explain a particular
 classifier's decision.
-In **TODO cite**,
+In {% cite wang2019 %},
 we rely on a simple convolutional network to classify time
 series and use an adversarial network that acts as a regularizer to ensure that
 learned shapelets are un-distinguishable from actual time series pieces from

@@ -101,9 +101,6 @@ Gromov-Wasserstein distance that, similarly to the Sliced Wasserstein distance
 {% cite rabin2011wasserstein %}, computes similarity between distributions
 through projections on random lines.
 
-**TODO: add a summary of Titouan's last findings about GW when they are
-stabilized.**
-
 ## Fused Gromov-Wasserstein
 
 Here, we focus on comparing structured data composed of a feature
