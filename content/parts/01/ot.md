@@ -15,7 +15,7 @@ jupyter:
 
 # Optimal Transport for Structured Data
 
-This section covers my works related to Optimal Transport distances for
+This section covers our works related to Optimal Transport distances for
 structured data such as graphs.
 In order to compare graphs, we have introduced the Fused Gromov Wasserstein
 distance that interpolates between Wasserstein distance between node feature
@@ -30,12 +30,12 @@ Here, we first introduce both Wasserstein and Gromov-Wasserstein distances and
 some of our results concerning computational considerations related to the
 latter.
 
-## Wasserstein and Gromov-Wasserstein distances
+## Wasserstein and Gromov-Wasserstein Distances
 
 Let $\mu = \sum_i h_i \delta_{x_i}$ and $\mu' = \sum_i h^\prime_i \delta_{x^\prime_i}$
 be two
 discrete distributions lying in the same metric space $(\Omega, d)$.
-Then, the $p$-Wasserstein distance is defined as:
+The $p$-Wasserstein distance is defined as:
 
 <!-- #region {"tags": ["popout"]} -->
 **Note** that the 2-Wasserstein distance is very similar in its formulation to
@@ -61,7 +61,8 @@ This distance is illustrated in the following Figure:
 
 ![](../../images/svg/wass.svg)
 
-When distributions $\mu$ and $\mu'$ do not lie in the same ambient space,
+When distributions $\mu$ and $\mu'$ lie in distinct ambient spaces $\mathcal{X}$
+ and $\mathcal{X}^\prime$,
 however, one cannot compute their Wasserstein distance. An alternative that was
 introduced in {% cite memoli2011gromov %} relies on matching intra-domain
 distances, as illustrated below:
@@ -85,7 +86,7 @@ where $d_\mu$ (resp. $d_{\mu'}$) is the metric associated to $\mathcal{X}$
 
 ### Sliced Gromov-Wasserstein
 
-Computational complexity associated to the optimization problem in
+The computational complexity associated to the optimization problem in
 Equation \eqref{eq:gw} is high in general.
 However, we have shown in {% cite vayer:hal-02174309 %} that in the
 mono-dimensional case, this problem can be seen as an instance of the Quadratic
@@ -105,61 +106,65 @@ stabilized.**
 
 ## Fused Gromov-Wasserstein
 
-Here, we focus on comparing structured data which combine a feature
+Here, we focus on comparing structured data composed of a feature
 **and** a structure information.
 More formally, we consider undirected labeled graphs as tuples of the form $\mathcal{G}=(\mathcal{V},\mathcal{E},\ell_f,\ell_s)$ where
 $(\mathcal{V},\mathcal{E})$ are the set of vertices and edges of the graph.
-$\ell_f: \mathcal{V} \rightarrow \Omega_f$ is a labelling function which
-associates each vertex $v_{i} \in \mathcal{V}$ with a feature
+$\ell_f: \mathcal{V} \rightarrow \Omega_f$ is a labelling function that
+maps each vertex $v_{i} \in \mathcal{V}$ to a feature
 $a_{i} = \ell_f(v_{i})$ in some feature metric space
 $(\Omega_f,d)$.
 We will denote by _feature information_ the set of all the features
-$\{a_{i}\}_{i}$ of the graph.
+$(a_{i})_{i}$ of the graph.
 Similarly, $\ell_s: \mathcal{V} \rightarrow \Omega_s$ maps a vertex $v_i$ from
 the graph to its structure representation
 $x_{i} = \ell_s(v_{i})$ in some structure space
 $(\Omega_s,C)$ specific to each graph.
 $C : \Omega_s \times \Omega_s \rightarrow \mathbb{R_{+}}$ is a symmetric
-application which aims at measuring the similarity between the nodes in the
+application which measures the similarity between the vertices in the
 graph.
-Unlike the feature space however, $\Omega_s$ is implicit and in practice,
-knowing the similarity measure $C$ will be sufficient. With a slight abuse of
+Unlike the feature space, however, $\Omega_s$ is implicit and in practice,
+knowing the similarity measure $C$ is sufficient. With a slight abuse of
 notation, $C$ will be used in the following to denote both the structure
 similarity measure and the matrix that encodes this similarity between pairs of
 nodes in the graph $\{C(i,k) = C(x_i, x_k)\}_{i,k}$.
 Depending on the context, $C$ can either encode the neighborhood information of
 the nodes, the edge information of the graph or more generally it can model a
-distance between the nodes such as the shortest path distance.
+distance between pairs of vertices such as the shortest path distance.
 When $C$ is a metric, such as the shortest-path
-distance, we naturally endow the structure with the metric space $(\Omega_s,C)$.
-We will denote by _structure information_ the set of all the structure
-embeddings $\{x_{i}\}_i$ of the graph.
+distance, we naturally equip the structure with the metric space $(\Omega_s,C)$.
+ We denote by \emph{structure information} the set of all the structure
+ embeddings $(x_{i})_i$ of the graph.
 We propose to enrich the previously described graph with a histogram which
 serves the purpose of signaling the relative importance of the vertices in the
 graph.
-To do so, we equip graph vertices with weights $\{h_{i}\}_{i}$ that sum to $1$.
+To do so, we equip graph vertices with weights $(h_{i})_{i}$ that sum to $1$.
 
 All in all, we define _structured data_ as a
 tuple $\mathcal{S}=(\mathcal{G},h_{\mathcal{G}})$ where $\mathcal{G}$ is a
-graph as described previously and $h_{\mathcal{G}}$ is a function that
+graph as described above and $h_{\mathcal{G}}$ is a function that
 associates a weight to each vertex. This definition allows the graph to be
 represented by a fully supported probability measure over the product space
-feature/structure $\mu= \sum_{i=1}^{n} h_{i} \delta_{(x_{i},a_{i})}$ which
+feature/structure
+$\mu= \sum_{i=1}^{|\mathcal{V}|} h_{i} \delta_{(x_{i},a_{i})}$, where
+$\delta$ is the Dirac measure.
+This probability measure
 describes the entire structured data:
 
 ![half-width](../../images/graph_as_distrib.svg)
 
-### Distance definition and properties
+### Distance Definition and Properties
 
-Let $\mathcal{G}$ and $\mathcal{G}'$ be two graphs, described respectively
-by their probability measure $\mu= \sum_{i=1}^{n} h_{i} \delta_{(x_{i},a_{i})}$
-and $\mu' = \sum_{i=1}^{m} h^\prime_i \delta_{(x^\prime_i,a^\prime_i)}$.
+Let $\mathcal{G}$ and $\mathcal{G}'$ be two graphs with their respective weight
+vectors $h$ and $h^\prime$, described respectively
+by their probability measure $\mu= \sum_{i=1}^{|\mathcal{V}|} h_{i} \delta_{(x_{i},a_{i})}$
+and $\mu' = \sum_{i=1}^{|\mathcal{V}^\prime|} h^\prime_i \delta_{(x^\prime_i,a^\prime_i)}$.
 Their structure matrices are denoted $C$ and $C'$, respectively.
 
 
-We define a novel Optimal Transport discrepancy called the
+We define a novel Optimal Transport discrepancy which we call the
 Fused Gromov-Wasserstein distance.
-It is defined, for a trade-off parameter  $\alpha \in [0,1]$, as
+It is defined, for a trade-off parameter  $\alpha \in [0,1]$ and order $q$, as
 
 \begin{equation}
 \label{discretefgw}
@@ -184,11 +189,11 @@ structure points with similar distances within each structure pair and with
 similar features.
 As an important feature of FGW, by relying on a sum of
 (inter- and intra-)vertex-to-vertex distances, it can handle structured data
-with continuous attributed or discrete labeled nodes
+with continuous attributed or discrete labeled vertices
 (depending on the definition of $d$) and can also be computed even if the graphs
 have different numbers of nodes.
 
-We have shown in {% cite vayer:hal-02174322 %} that FGW retains the following
+We have shown in {% cite vayer:hal-02174322 %} that FGW holds the following
 properties:
 
 * it defines a metric for $q=1$ and a semi-metric for $q >1$;
@@ -196,8 +201,9 @@ properties:
 Wasserstein distance between the features and the Gromov-Wasserstein distance
 between the structures;
 
-We also define a continuous counterpart for FGW which comes with a
-concentration inequality in {% cite vayer:hal-02174316 %}.
+In {% cite vayer:hal-02174316 %}, we also define a continuous counterpart for
+FGW which comes with a
+concentration inequality.
 
 We present a Conditional Gradient algorithm for optimization on the
 above-defined loss.
@@ -336,9 +342,9 @@ draw_graph(barycenter)
 plt.title('FGW Barycenter');
 ```
 
-These barycenters can be used for graph clustering.
+We have shown that such barycenters can be used for graph clustering.
 Finally, we have exhibited classification results for FGW embedded in a
-Gaussian kernel SVM which leads to state-of-the-art performance
+Gaussian-kernel SVM which leads to state-of-the-art performance
 (even outperforming graph
 neural network approaches) on a wide range of graph classification problems.
 

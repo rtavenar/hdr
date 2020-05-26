@@ -1,4 +1,4 @@
-# Learning sensible representations for time series
+# Learning Sensible Representations for Time Series
 
 Another track of research I have been following over the past years is the
 learning of latent representations for time series.
@@ -10,6 +10,7 @@ neural networks feature maps (as in [Sec 2.2](02/shapelets_cnn.html) and
 filter activations they trigger.
 
 More specifically, in [Sec 2.3](02/early.html), we focus on the task of early
-classification of time series. In this context, a method is introduced that
+classification of time series. In this context, a method is introduced.
+This method
 learns an intermediate representation from which both the decision of
 triggering classification and the classification itself can be computed.

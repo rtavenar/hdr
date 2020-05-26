@@ -34,14 +34,18 @@ path, score = dtw_path(x, x_prime)
 
 Dynamic Time Warping (DTW) {% cite sakoe1978dynamic %} is a similarity measure
 between time series.
-Let us consider two time series $\mathbf{x}$ and
+Consider two time series $\mathbf{x}$ and
 $\mathbf{x}^\prime$ of respective lengths $n$ and
 $m$.
 Here, all elements $x_i$ and $x^\prime_j$ are assumed to lie in the same
 $p$-dimensional space and the exact timestamps at which observations occur are
-considered uninformative: only their ordering matters.
+disregarded: only their ordering matters.
 
-## Optimization problem
+## Optimization Problem
+
+ In the following, a path $\pi$ of length $K$ is a
+ sequence of $K$ index pairs
+ $\left((i_0, j_0), \dots , (i_{K-1}, j_{K-1})\right)$.
 
 DTW between $\mathbf{x}$ and $\mathbf{x}^\prime$ is formulated as the following
 optimization problem:
@@ -54,9 +58,9 @@ DTW(\mathbf{x}, \mathbf{x}^\prime) =
 \end{equation}
 
 where $\mathcal{A}(\mathbf{x}, \mathbf{x}^\prime)$ is the set of all admissible
-paths, _ie._ the set of paths $\pi$ such that:
+paths, _i.e._ the set of paths $\pi$ such that:
 
-* $\pi$ is a list $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
+* $\pi$ is a sequence $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
   $\pi_k = (i_k, j_k)$ with $0 \leq i_k < n$ and $0 \leq j_k < m$
 * $\pi_0 = (0, 0)$ and $\pi_{K-1} = (n - 1, m - 1)$
 * for all $k > 0$ , $\pi_k = (i_k, j_k)$ is related to
@@ -81,7 +85,7 @@ examples](https://tslearn.readthedocs.io/en/latest/auto_examples/plot_dtw.html).
 
 ![half-width](../../images/dtw.png)
 
-## Algorithmic solution
+## Algorithmic Solution
 
 There exists an $O(mn)$ algorithm to compute the exact optimum for this
 problem:
@@ -112,14 +116,14 @@ Dynamic Time Warping holds the following properties:
 * $\forall \mathbf{x}, \mathbf{x}^\prime, DTW(\mathbf{x}, \mathbf{x}^\prime) \geq 0$
 * $\forall \mathbf{x}, DTW(\mathbf{x}, \mathbf{x}) = 0$
 
-However, mathematically speaking, DTW is not a valid metric since it does
-not satisfy the triangular inequality nor the identity of indiscernibles.
+However, mathematically speaking, DTW is not a valid metric since it
+satisfies neither the triangular inequality nor the identity of indiscernibles.
 
 ## Setting additional constraints
 
 The set of temporal deformations to which DTW is invariant can be reduced by
-setting additional constraints on the set of acceptable paths.
-These constraints typically consist in forcing paths to lie close to the
+imposing additional constraints on the set of acceptable paths.
+Such constraints typically consist in forcing paths to stay close to the
 diagonal.
 
 ```python tags=["hide_input"]
@@ -142,7 +146,7 @@ def clean_plot(title, sz):
     plt.tight_layout()
 ```
 
-First, the Sakoe-Chiba band is parametrized by a radius $r$ (number of
+The Sakoe-Chiba band is parametrized by a radius $r$ (number of
 off-diagonal elements to consider, also called warping window size sometimes),
 as illustrated below:
 
@@ -175,7 +179,7 @@ plt.imshow(m, cmap="gray")
 clean_plot("Sakoe-Chiba mask of radius $r=3$.", sz)
 ```
 
-Second, the Itakura parallelogram sets a maximum slope $s$ for alignment
+The Itakura parallelogram sets a maximum slope $s$ for alignment
 paths, which leads to a parallelogram-shaped constraint:
 
 <!-- #region {"tags": ["popout"]} -->

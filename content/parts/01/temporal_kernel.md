@@ -27,18 +27,19 @@ We were co-supervising Adeline together with Laetitia Chapel.
 
 ## Match kernel and Signature Quadratic Form Distance
 
-Our method relies on a user-chosen kernel $k(\cdot,\cdot)$ between local
+Our method relies on a kernel $k(\cdot,\cdot)$ between local
 features.
 Based on this local kernel, one can compute the match kernel
 {% cite NIPS2009_3874 %} between sets of local features as:
 
 \begin{equation}
-    K(\mathbf{x}, \mathbf{x}^\prime) = \sum_i \sum_j k(x_i, x^\prime_j).
+    K(\mathbf{x}, \mathbf{x}^\prime) = \sum_i \sum_j k(x_i, x^\prime_j)
 \end{equation}
 
-And the Signature Quadratic Form Distance (SQFD,
+and the Signature Quadratic Form Distance (SQFD,
 {% cite 10.1145/1631272.1631391 %}) is the distance
-between feature sets embedded in the Reproducing Kernel Hilbert Space (RKHS)
+between feature sets $\mathbf{x}$ and $\mathbf{x}^\prime$ embedded in the
+Reproducing Kernel Hilbert Space (RKHS)
 associated with $K$:
 
 \begin{equation}
@@ -49,7 +50,7 @@ associated with $K$:
         \, .
 \end{equation}
 
-## Local temporal kernel
+## Local Temporal Kernel
 
 We introduce a time-sensitive local kernel defined as:
 
@@ -58,7 +59,7 @@ We introduce a time-sensitive local kernel defined as:
 \end{equation}
 
 This kernel is positive semi definite (psd), as the product of two psd kernels
-and, if $k$ is the RBF kernel, it can be written as:
+and, if $k$ is the radial basis function (RBF) kernel, it can be written as:
 
 \begin{equation}
     k_t((x_i, t_i), (x^\prime_j, t^\prime_j)) = k(g(x_i, t_i), g(x^\prime_j, t^\prime_j)).
@@ -69,9 +70,12 @@ g(x_i, t_i) = \left( x_{i,0}, \dots , x_{i, d-1},
                             \sqrt{\frac{\gamma_t}{\gamma_f}} t_i \right)
 \end{equation}
 
+where $x_{i,l}$ denotes the $l$-th feature of the $i$-th observation in
+$\mathbf{x}$.
+
 The code below illustrates the impact of the ratio
 $\sqrt{\frac{\gamma_t}{\gamma_f}}$ on the kernel matrix (larger $\gamma_t$
-leads to ignoring off-diagonal elements):
+leads to paying less attention to off-diagonal elements):
 
 ```python tags=["hide_input"]
 %config InlineBackend.figure_format = 'svg'
@@ -173,14 +177,14 @@ $k_t$ is then a RBF kernel itself, and
 Random Fourier Features {% cite NIPS2007_3182 %} can be
 used in order to approximate it with a linear kernel.
 
-Let us assume that we have a feature map $\phi$ such that
+If $\phi$ is a feature map such that
 
 \begin{equation}
 k_t((x_{i}, t_i), (x^\prime_j, t^\prime_j)) \approx
     \left\langle\phi(g(x_{i}, t_i)),
         \phi(g(x^\prime_{j}, t^\prime_j))\right\rangle,
 \end{equation}
-then we have:
+then
 
 \begin{equation}
 SQFD(\mathbf{x}, \mathbf{x}^\prime) \approx \left\|
@@ -190,13 +194,16 @@ SQFD(\mathbf{x}, \mathbf{x}^\prime) \approx \left\|
     \right\|.
 \end{equation}
 
-In other words, once feature sets are projected in this finite-dimensional
+In other words, once feature sets are embedded in this finite-dimensional
 space, approximate SQFD computation is performed through (i) a barycenter
-computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
-followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
-the dimension of the feature map $\phi(x)$.
-Overall, we have a distance between timestamped feature sets whose
-precision / complexity tradeoff can be tuned via the map dimensionality $D$.
+computation $b_\phi(\cdot)$ in the feature space (which can be performed
+offline)
+followed by (ii) a Euclidean distance computation with a time complexity of
+$O(D)$, where $D$ is
+the dimension of the feature map $\phi$.
+Overall, we have a distance between timestamped feature sets
+the precision / complexity tradeoff of which
+can be tuned via the map dimensionality $D$.
 
 ## Evaluation
 
@@ -206,8 +213,9 @@ computer vision community at the time of this work.
 However, in our small data context, they proved useful for the task at hand.
 <!-- #endregion -->
 
-In order to evaluate the method presented above, we have used the UCR Time
-Series Classification archive, which, at the time, was made of monodimensional
+In order to evaluate the method presented above, we used the UCR Time
+Series Classification archive~\cite{ucr}, which, at the time, was made of
+monodimensional
 time series only.
 We decided not to work on raw data but rather extract local features to
 describe our time series.

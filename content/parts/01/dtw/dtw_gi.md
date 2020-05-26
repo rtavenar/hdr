@@ -20,25 +20,27 @@ jupyter:
 We are co-supervising Titouan together with Laetitia Chapel and Nicolas Courty.
 <!-- #endregion -->
 
-In this work we address the problem of comparing time series while taking
+In this work, we address the problem of comparing time series while taking
 into account both feature space transformation and temporal variability.
 The proposed framework combines a latent global transformation of the feature
 space with the widely used Dynamic Time Warping (DTW).
-This work is available as preprint {% cite vayer2020time %}.
+This work is available as a preprint {% cite vayer2020time %}.
 
 ## Definition
 
 Let $\mathbf{x}$ and $\mathbf{x^\prime}$ be two time series of respective
 lengths $n$ and $m$.
-Here, features from both time series are not assumed to lie in the same ambient
+Here, the features from the two time series are not assumed to lie in the same
+ambient
 space, but it is assumed that features from $\mathbf{x}$ lie in $\mathbb{R}^p$
-while features from $\mathbf{x^\prime}$ lie in $\mathbb{R}^{p'}$
+while features from $\mathbf{x^\prime}$ lie in $\mathbb{R}^{p'}$.
 In the following, we assume $p \geq p'$ without loss of generality.
 In order to allow comparison between time series $\mathbf{x}$ and
 $\mathbf{x^\prime}$,
-we will optimize on a family of functions $\mathcal{F}$ that map features from
+we optimize on a family of functions $\mathcal{F}$ that map features from
 $\mathbf{x^\prime}$ onto the feature space in which features from $\mathbf{x}$
-lie. More formally, we define Dynamic Time Warping with Global Invariances
+lie. $\mathcal{F}$ is hence the family of registration functions.
+More formally, we define Dynamic Time Warping with Global Invariances
 (DTW-GI) as the solution of the following joint optimization problem:
 
 \begin{equation}
@@ -71,10 +73,11 @@ following Figure:
 
 Optimization of the quantity in Equation \eqref{eq:dtwgi} can be performed
 _via_ Block Coordinate Descent.
-In a nutshell, optimization alternates between the following two steps:
+In a nutshell, the optimization process alternates between the following
+two steps:
 
-1. for a fixed $f$, determine the optimal alignment path $\pi$ using the DTW
-algorithm;
+1. for a fixed $f$, the optimal alignment path $\pi$ is obtained through the
+DTW algorithm;
 2. for a fixed path $\pi$, the optimal map $f$ (when $\mathcal{F}$ is the
 Stiefel manifold) is obtained through Singular Value Decomposition.
 
@@ -697,7 +700,8 @@ for idx_dataset, dataset_fun in enumerate(list_dataset_generators):
 
 We also introduce soft counterparts following the definition of softDTW from
 {% cite cuturi2017soft %}.
-In this case, optimization consists in gradient descent and a wider variety of
+In this case, the optimization process consists of a gradient descent, and a
+wider variety of
 feature space transformation families can be considered.
 
 We validate the utility of these similarity measures on real world

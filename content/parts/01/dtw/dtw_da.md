@@ -13,17 +13,19 @@ jupyter:
     name: python3
 ---
 
-# DTW alignment as an adaptive resampling strategy
+# DTW Alignment as an Adaptive Resampling Strategy
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work was a part of Rémi Dupas' PhD thesis (in Environment
+**Note.** This work is a part of Rémi Dupas' PhD thesis (in Environment
 Sciences).
-I was not involved in Rémi's PhD supervision.
+I was not directly involved in the supervision of Rémi's PhD thesis.
 <!-- #endregion -->
 
 In this section, we present a method that uses Dynamic Time Warping (DTW)
-on multimodal data.
-The method relies on the assumption that one of the modalities at stake (called
+on multimodal time series, \emph{i.e.} time series that are made of several
+features recorded over time.
+The method relies on the assumption that one of the considered modalities
+(called
 reference modality in the following) can be used as a reference to (temporally)
 realign other modalities {% cite dupas:halshs-01228397 %}.
 It has been used in the context of hydrological measurements to align pollutant
@@ -31,10 +33,12 @@ concentration profiles based on discharge time series.
 
 This approach can be seen as the DTW counterpart of other works that rely on
 Optimal Transport for Domain Adaptation {% cite courty:hal-02112785 %}.
-One significant difference however is that we rely on a reference modality for
-alignment, which is guided by our application context.
+One significant difference, however, is that it relies on a reference modality
+for
+alignment.
+This design choice is guided by our application context.
 
-## Motivating use case
+## Motivating Use Case
 
 Phosphorus (P) transfer during storm events represents a significant part of
 annual P loads in streams and contributes to eutrophication in downstream water
@@ -44,12 +48,13 @@ ever-growing water quality measurement datasets.
 
 Clustering techniques have proven useful for identifying seasonal storm
 patterns and thus for increasing knowledge about seasonal variability in storm
-export mechanisms (_e.g._ {% cite aubert:halshs-00906292 %}).
-Clustering techniques usually require calculating a distance between pairs of
-comparable points in several time series. For this reason, direct clustering
-(without using hysteresis-descriptor variables) of high frequency storm
-concentration time series is usually irrelevant because their length (number of
-measurement points) may differ and/or measurement points may have different
+export mechanisms (_e.g._, {% cite aubert:halshs-00906292 %}).
+Clustering techniques usually require calculating distances between pairs of
+comparable points in multiple time series. For this reason, direct clustering
+(without using hysteresis-descriptor variables) of high-frequency storm
+concentration time series is usually irrelevant because the lengths of recorded
+time series (number of
+measurement points) might differ and/or measurement points may have different
 positions relative to the hydrograph (flow rise and recession); hence, it is
 difficult to calculate a distance between pairs of comparable points.
 
@@ -58,21 +63,21 @@ limit and test its ability to compare seasonal variability of P storm dynamics
 in two headwater watersheds. Both watersheds are ca. 5 km², have similar
 climate and geology, but differ in land use and P pressure intensity.
 
-## Alignment-based resampling method
+## Alignment-based Resampling Method
 
 In the above-described setting, we have access to one modality (discharge,
 commonly denoted $Q$) that is representative of the evolution of the flood.
 Temporal realignment based on this modality allows to overcome three
-difficulties that may arise when comparing storm-event data.
-Indeed, time series may have
+difficulties that can arise when comparing storm-event data.
+Indeed, time series can have
 
 1. different starting times due to the discharge threshold at which the
-autosamplers were triggered,
-2. different lengths  and
-3. differences in phase that yield different temporal localization of the
+samplers were triggered,
+2. different lengths, and
+3. differences in phase that yield different temporal localizations of the
 discharge peak.
 
-To align time series, we use the path associated to DTW.
+To align time series, we use the path associated with DTW.
 This matching path can be viewed as the optimal way to perform point-wise
 alignment of time series.
 
@@ -83,7 +88,7 @@ The reference discharge time series used in this study is chosen
 as a storm event with full coverage of flow rise and flow recession phases.
 Alternatively, one could choose a synthetic idealized storm hydrograph.
 
-We then use barycentric mapping based on obtained matches to realign other
+We then use barycentric mapping based on the obtained matches to realign other
 modalities to the timestamps of the reference time series, as shown in the
 following Figures:
 
@@ -268,12 +273,12 @@ plt.tight_layout()
 At this point, each time series is transformed to series of $n$
 $p$-dimensional measurements, where $n$ is the length of the
 reference discharge time series and $p$ is the number of water quality
-parameters considered in the study (_i.e._ all modalities except discharge).
+parameters considered in the study (_i.e._ all modalities except the discharge).
 In a second step, a standard $k$-means algorithm is used to cluster
 realigned time series.
 Note that a Euclidean distance can be used for clustering since time series
-have already been temporally realigned; hence, no time-sensitive metric (such as
-DTW) is needed anymore.
+have already been temporally realigned; hence, time-sensitive metrics (such as
+DTW) are no longer needed.
 
 This method proved useful to extract meaningful clusters and an _a posteriori_
 analysis of the clusters enabled to identify the export dynamics of pollutants

@@ -16,12 +16,12 @@ jupyter:
 # Constrained Dynamic Time Warping
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work was a part of Zheng Zhang's PhD thesis. It was performed
+**Note.** This work is a part of Zheng Zhang's PhD thesis. It was performed
 during Zheng's stay at LETG in 2015-2016.
-I was not involved in Zheng's PhD supervision.
+I was not directly involved in the supervision Zheng's PhD thesis.
 <!-- #endregion -->
 
-In this section, we present a method to regularize Dynamic Time Warping (DTW)
+In this section, we present a method to regularize Dynamic Time Warping
 by setting constraints on the length of the admissible warping paths
 {% cite zhang2017dynamic %}.
 
@@ -41,11 +41,11 @@ cost = dtw_limited_warping_length(
 
 As discussed [above](../dtw.html#Setting-additional-constraints), a common way
 to restrict the set of admissible temporal distortions for Dynamic Time Warping
-consists in forcing path to lie close to the diagonal through the use of
+consists in forcing paths to stay close to the diagonal through the use of
 Sakoe-Chiba band or Itakura parallelogram constraints.
 A limitation of these global constraints is that they completely
-discard some regions of the alignment matrix _a priori_ (_i.e._ whatever the
-data at stake).
+discard some regions of the alignment matrix _a priori_ (_i.e._ regardless of
+the involved data).
 
 To alleviate this limitation, we propose Limited warping path length DTW (LDTW)
 that adds a path length constraint to the DTW
@@ -135,9 +135,9 @@ path, cost = dtw_path(dataset[0], dataset[1])
 plot_matches(dataset[0], dataset[1], path, "DTW matches")
 ```
 
-Moreover, we have shown through experiments on UCR Time Series Datasets that
-this similarity measure, when used in a 1-Nearest Neighbor Classifier, led to
-higher accuracy than other constrained DTW variants
+Moreover, our experiments on UCR Time Series Datasets~\cite{ucr} show that
+this similarity measure, when used in a 1-Nearest Neighbor Classifier, leads to
+a higher accuracy than other constrained DTW variants
 (Sakoe-Chiba band and Itakura parallelogram).
 
 ## References

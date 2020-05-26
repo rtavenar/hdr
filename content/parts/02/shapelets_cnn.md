@@ -31,7 +31,7 @@ We have shown in {% cite leguennec:halshs-01357973 %} that augmenting time
 series classification datasets was an efficient way to improve generalization
 for Convolutional Neural Networks.
 The data augmentation strategies that were investigated in this work are
-local warping and window slicing and both lead to improvements.
+local warping and window slicing, and they both lead to improvements.
 
 ## Learning to Mimic a Target Distance
 
@@ -48,10 +48,10 @@ order to mimic a target distance.
 As presented in [Sec. 1.2](../01/dtw.html), Dynamic Time Warping is a widely
 used similarity measure for time series.
 However, it suffers from its non differentiability and the fact that it does
-not satisfy metric properties.
+not satisfy the metric properties.
 Our goal in {% cite lods:hal-01565207 %} was to introduce a Shapelet model that
-extracts latent representations such that Euclidean distance between latent
-representations is as close as possible to Dynamic Time Warping between original
+extracts latent representations such that the Euclidean distance between latent
+representations is a tight estimate of Dynamic Time Warping between original
 time series.
 The resulting model is an instance of a Siamese Network:
 
@@ -59,6 +59,17 @@ The resulting model is an instance of a Siamese Network:
 
 where $m_\theta(\cdot)$ is the feature extraction part of the model that
 maps a time series to its shapelet transform representation.
+The corresponding loss function on which we optimize is hence
+
+ \begin{equation}
+     \mathcal{L}(\mathbf{x}, \mathbf{x}^\prime, \beta, \theta) =
+         \left(
+             DTW(\mathbf{x}, \mathbf{x}^\prime) -
+                 \beta \| m_\theta(\mathbf{x}) - m_\theta(\mathbf{x}^\prime) \|_2
+         \right)^2
+ \end{equation}
+
+ where $\beta$ is an additional scale parameter of the model.
 
 ```python  tags=["hide_input"]
 %config InlineBackend.figure_format = 'svg'
@@ -381,7 +392,7 @@ plt.xlabel("Distance in the Shapelet Transform space")
 plt.ylabel("Dynamic Time Warping distance");
 ```
 
-We have shown that such a model could be used as a feature extractor on top of
+We have shown that the resulting model could be used as a feature extractor on top of
 which a $k$-means clustering could operate efficiently.
 We have also shown in {% cite carlinisperandio:hal-01841995 %} that this
 representation is useful for time series indexing tasks.
@@ -389,18 +400,19 @@ representation is useful for time series indexing tasks.
 ## Including Localization Information
 
 <!-- #region {"tags": ["popout"]} -->
-**Note.** This work was part of Mael Guillemé's PhD thesis.
-I was not involved in Mael's PhD supervision.
+**Note.** This work is part of Mael Guillemé's PhD thesis.
+I was not involved directly in Mael's PhD supervision.
 <!-- #endregion -->
 
-The shapelet transform, as defined above, does not hold localization
-information. Several options could be considered to add such kind of
+The shapelet transform, as defined above, does not contain localization
+information. Several options could be considered to add such
 information. First, the global pooling step could be turned into local pooling
 to keep track of local shapelet distances.
 In {% cite guilleme:hal-02513295 %}, we rather focused on augmenting the feature
 representation with shapelet match localization features.
 
-Relying on a set of random shapelets (shapelets that are extracted uniformly at
+Relying on a set of $p$ random shapelets (shapelets that are extracted
+uniformly at
 random from the set of all subseries in the training set)
 $\{\mathbf{s_k}\}_{k < p}$,
 each time series is embedded into a $2p$-dimensional feature that stores, for
@@ -409,9 +421,9 @@ optimal  match localization $l_{\mathbf{s_k}}(\cdot)$:
 
 \begin{eqnarray}
     d_{\mathbf{s_k}}(\mathbf{x}) &=& \min_t
-        \|\mathbf{x}_{t \rightarrow t+L_k} - \mathbf{s_k}\| \\
+        \|\mathbf{x}_{t \rightarrow t+L_k} - \mathbf{s_k}\|_2 \\
     l_{\mathbf{s_k}}(\mathbf{x}) &=& \arg \min_t
-        \|\mathbf{x}_{t \rightarrow t+L_k} - \mathbf{s_k}\|
+        \|\mathbf{x}_{t \rightarrow t+L_k} - \mathbf{s_k}\|_2
 \end{eqnarray}
 
 where $L_k$ is the length of the $k$-th shapelet and
@@ -424,13 +436,13 @@ feature selection is used afterwards to focus on most useful shapelets.
 In our specific context, we have introduced a structured feature selection
 mechanism that allows, for each shapelet, to either:
 
-* discard all information (match magnitude and localization);
-* keep shapelet distance information and discard localization information;
-* keep all information (match magnitude and localization).
+* Discard all information (match magnitude and localization),
+* Keep shapelet distance information and discard localization information, or
+* Keep all information (match magnitude and localization).
 
 To do so, we have introduced a modified Group-Lasso (called
-Semi-Sparse Group Lasso) loss that allows to enforce sparsity on some individual
-variables only:
+Semi-Sparse Group Lasso) loss that enforces sparsity only on some individual
+ variables:
 
 \begin{equation}
     \mathcal{L}^{\mathrm{SSGL}}(\mathbf{x}, y, \boldsymbol{\theta}) =
@@ -441,13 +453,19 @@ variables only:
             \left\| \boldsymbol{\beta}^{(k)} \right\|_2
 \end{equation}
 
-where $\mathbf{M}_\text{ind}$ is a diagonal indicator matrix that has ones on
+where $\mathcal{L}(\cdot,\cdot,\cdot)$ is the unpenalized
+loss function,
+$\mathbf{M}_\text{ind}$ is a diagonal indicator matrix that has ones on
 the diagonal for features that could be discarded individually (localization
 features in our random shapelet case), $\boldsymbol{\theta}$ is the set of
 all model weights, including weights $\boldsymbol{\beta}$ that are directly
-connected to the features (_ie._ these are weights from the first layer), that
-are organized in groups $\boldsymbol{\beta}^{(k)}$ of size $p_k$ ($p_k=2$ in the
+connected to the features (\emph{i.e.}, these are weights from the first layer),
+that
+are organized in $K$ groups $\boldsymbol{\beta}^{(k)}$ of size $p_k$
+($p_k=2$ in the
 random shapelet context, each group corresponding to a different shapelet).
+Finally, $\alpha$ and $\lambda$ are hyper-parameters of the method that balance
+regularizations.
 
 ```python tags=["hide_input"]
 %config InlineBackend.figure_format = 'svg'
@@ -610,7 +628,7 @@ terms of both Mean Squared Error (MSE) and estimation of zero coefficients.
 
 When applied to the specific case of random shapelets, we have shown that this
 lead to improved accuracy as soon as datasets are large enough for coefficients
-to be estimated properly.
+to be properly estimated.
 
 ## Learning Shapelets that Look Like Time Series Snippets
 
