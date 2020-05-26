@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-05-18T19:08:46+02:00",
-  "dateModified": "2020-05-18T19:08:46+02:00",
+  "datePublished": "2020-05-26T18:11:30+02:00",
+  "dateModified": "2020-05-26T18:11:30+02:00",
   "description": "# Dynamic Time WarpingThis section covers works related to Dynamic Time Warping for time series.**Note.** In ``tslearn``, such time series would be represent...",
   "author": {
     "@type": "Person",
@@ -383,7 +383,7 @@ initFunction(initPrint)
           
             1.
           
-          Defining adequate metrics for structured data
+          Defining Adequate Metrics for Structured Data
         </a>
       </li>
 
@@ -473,7 +473,7 @@ initFunction(initPrint)
                       1.2.2
                       
                     
-                    DTW alignment as an adaptive resampling strategy
+                    DTW Alignment as an Adaptive Resampling Strategy
                   </a>
                 </li>
               
@@ -540,7 +540,7 @@ initFunction(initPrint)
           
             2.
           
-          Learning sensible representations for time series
+          Learning Sensible Representations for Time Series
         </a>
       </li>
 
@@ -755,14 +755,18 @@ shapes <code class="highlighter-rouge">(n, p)</code> and <code class="highlighte
 
 <p>Dynamic Time Warping (DTW) <a class="citation" href="#sakoe1978dynamic">(Sakoe &amp; Chiba, 1978)</a> is a similarity measure
 between time series.
-Let us consider two time series $\mathbf{x}$ and
+Consider two time series $\mathbf{x}$ and
 $\mathbf{x}^\prime$ of respective lengths $n$ and
 $m$.
 Here, all elements $x_i$ and $x^\prime_j$ are assumed to lie in the same
 $p$-dimensional space and the exact timestamps at which observations occur are
-considered uninformative: only their ordering matters.</p>
+disregarded: only their ordering matters.</p>
 
-<h2 id="optimization-problem">Optimization problem</h2>
+<h2 id="optimization-problem">Optimization Problem</h2>
+
+<p>In the following, a path $\pi$ of length $K$ is a
+ sequence of $K$ index pairs
+ $\left((i_0, j_0), \dots , (i_{K-1}, j_{K-1})\right)$.</p>
 
 <p>DTW between $\mathbf{x}$ and $\mathbf{x}^\prime$ is formulated as the following
 optimization problem:</p>
@@ -775,10 +779,10 @@ DTW(\mathbf{x}, \mathbf{x}^\prime) =
 \end{equation}</p>
 
 <p>where $\mathcal{A}(\mathbf{x}, \mathbf{x}^\prime)$ is the set of all admissible
-paths, <em>ie.</em> the set of paths $\pi$ such that:</p>
+paths, <em>i.e.</em> the set of paths $\pi$ such that:</p>
 
 <ul>
-  <li>$\pi$ is a list $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
+  <li>$\pi$ is a sequence $[\pi_0, \dots , \pi_{K-1}]$ of index pairs
 $\pi_k = (i_k, j_k)$ with $0 \leq i_k &lt; n$ and $0 \leq j_k &lt; m$</li>
   <li>$\pi_0 = (0, 0)$ and $\pi_{K-1} = (n - 1, m - 1)$</li>
   <li>
@@ -808,7 +812,7 @@ examples</a>.
 
 <p><img src="../../images/dtw.png" alt="half-width" /></p>
 
-<h2 id="algorithmic-solution">Algorithmic solution</h2>
+<h2 id="algorithmic-solution">Algorithmic Solution</h2>
 
 <p>There exists an $O(mn)$ algorithm to compute the exact optimum for this
 problem:</p>
@@ -839,14 +843,14 @@ problem:</p>
   <li>$\forall \mathbf{x}, DTW(\mathbf{x}, \mathbf{x}) = 0$</li>
 </ul>
 
-<p>However, mathematically speaking, DTW is not a valid metric since it does
-not satisfy the triangular inequality nor the identity of indiscernibles.</p>
+<p>However, mathematically speaking, DTW is not a valid metric since it
+satisfies neither the triangular inequality nor the identity of indiscernibles.</p>
 
 <h2 id="setting-additional-constraints">Setting additional constraints</h2>
 
 <p>The set of temporal deformations to which DTW is invariant can be reduced by
-setting additional constraints on the set of acceptable paths.
-These constraints typically consist in forcing paths to lie close to the
+imposing additional constraints on the set of acceptable paths.
+Such constraints typically consist in forcing paths to stay close to the
 diagonal.</p>
 
 <p>```python tags=[“hide_input”]
@@ -868,7 +872,7 @@ import numpy</p>
     plt.title(title)
     plt.tight_layout()</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-First, the Sakoe-Chiba band is parametrized by a radius $r$ (number of
+The Sakoe-Chiba band is parametrized by a radius $r$ (number of
 off-diagonal elements to consider, also called warping window size sometimes),
 as illustrated below:
 
@@ -900,7 +904,7 @@ cost = dtw(
 <span class="n">clean_plot</span><span class="p">(</span><span class="s">"Sakoe-Chiba mask of radius $r=3$."</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Second, the Itakura parallelogram sets a maximum slope $s$ for alignment
+<p>The Itakura parallelogram sets a maximum slope $s$ for alignment
 paths, which leads to a parallelogram-shaped constraint:</p>
 
 <!-- #region {"tags": ["popout"]} -->

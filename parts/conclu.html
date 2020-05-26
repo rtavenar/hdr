@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/parts/conclu.html",
   "headline": "Perspectives",
-  "datePublished": "2020-05-18T19:08:46+02:00",
-  "dateModified": "2020-05-18T19:08:46+02:00",
+  "datePublished": "2020-05-26T18:11:30+02:00",
+  "dateModified": "2020-05-26T18:11:30+02:00",
   "description": "        Perspectives    In this part, I will first describe some current and future works that we planto investigate.Finally, I will discuss some more fundam...",
   "author": {
     "@type": "Person",
@@ -383,7 +383,7 @@ initFunction(initPrint)
           
             1.
           
-          Defining adequate metrics for structured data
+          Defining Adequate Metrics for Structured Data
         </a>
       </li>
 
@@ -473,7 +473,7 @@ initFunction(initPrint)
                       1.2.2
                       
                     
-                    DTW alignment as an adaptive resampling strategy
+                    DTW Alignment as an Adaptive Resampling Strategy
                   </a>
                 </li>
               
@@ -540,7 +540,7 @@ initFunction(initPrint)
           
             2.
           
-          Learning sensible representations for time series
+          Learning Sensible Representations for Time Series
         </a>
       </li>
 
@@ -746,13 +746,13 @@ initFunction(initPrint)
 to investigate.
 Finally, I will discuss some more fundamental and general questions that
 I expect to be of importance to the future of machine learning for time series.</p>
-<h2 id="Current-and-future-works">Current and future works<a class="anchor-link" href="#Current-and-future-works"> </a></h2><h3 id="Dealing-with-sequences-of-arbitrary-objects">Dealing with sequences of arbitrary objects<a class="anchor-link" href="#Dealing-with-sequences-of-arbitrary-objects"> </a></h3><p>As described in <a href="01/dtw/dtw_gi.html">Sec 1.2.3</a>, we have started to investigate
+<h2 id="Current-and-Future-Works">Current and Future Works<a class="anchor-link" href="#Current-and-Future-Works"> </a></h2><h3 id="Dealing-with-Sequences-of-Arbitrary-Objects">Dealing with Sequences of Arbitrary Objects<a class="anchor-link" href="#Dealing-with-Sequences-of-Arbitrary-Objects"> </a></h3><p>As described in <a href="01/dtw/dtw_gi.html">Sec 1.2.3</a>, we have started to investigate
 the design of invariant alignment similarity measures.
 This work can be seen as a first attempt to accommodate time series alignments
 (such as Dynamic Time Warping) and optimal transport distances
 (and more specifically the work presented in <a class="citation" href="#alvarez2018towards">(Alvarez-Melis, Jegelka, &amp; Jaakkola, 2019)</a>).</p>
-<p>One step forward in this direction could be to take direct inspiration from
-the Gromov-Wasserstein distance presented in <a href="01/ot.html">Sec. 1.3</a> to design
+<p>One step forward in this direction is to take direct inspiration from
+the Gromov-Wasserstein distance presented in <a href="01/ot.html">Sec. 1.3</a> for designing
 novel time series alignment strategies.
 While DTW-GI can deal with series of features that do not have the
 same dimension, this formulation would allow the comparison of
@@ -760,8 +760,9 @@ sequences of arbitrary objects that lie in different metric spaces (not
 necessarily of the form $\mathbb{R}^p$), like, for example, graphs evolving
 over time.</p>
 <p>Though this extension seems appealing, it would come with additional
-computing costs since the Bellmann recursion that is at the core of the Dynamic
-Time Warping algorithm cannot be used anymore.
+computing costs since the Bellmann recursion, which is at the core of the
+Dynamic
+Time Warping algorithm, cannot be used anymore.
 It is likely that approximate solvers will have to be used in this case.
 Also, one typical use-case for such a similarity measure would be to serve as
 a loss function in a forecasting setting, in which case the
@@ -769,25 +770,25 @@ computational complexity would be an even higher concern which could necessitate
 to train dedicated Siamese networks (<em>e.g.</em> by taking inspiration from the
 method presented in
 <a href="02/shapelets_cnn.html#Learning-to-Mimic-a-Target-Distance">Sec. 2.2</a>).</p>
-<h3 id="Temporal-Domain-Adaptation">Temporal Domain Adaptation<a class="anchor-link" href="#Temporal-Domain-Adaptation"> </a></h3><p>Another track of research that we are considering at the moment concerns
+<h3 id="Temporal-Domain-Adaptation">Temporal Domain Adaptation<a class="anchor-link" href="#Temporal-Domain-Adaptation"> </a></h3><p>Another track of research that I am considering at the moment concerns
 temporal domain adaptation, that is the task of temporally realigning time
 series datasets in order to be able to transfer knowledge (<em>e.g.</em> a trained
 classifier) from one domain to the other.</p>
 <p>In this context, and in close relation with application needs, several settings
 can be considered:</p>
 <ol>
-<li>time series can be matched with no particular general structure for temporal
+<li>Time series can be matched with no particular constraint on temporal
 alignments (<em>i.e.</em> individual alignments are considered independent);</li>
-<li>time series are matched with a strong constraint that a single temporal
+<li>Time series are matched with the strong constraint that a single temporal
 alignment map is used for all time series comparison;</li>
-<li>there exists a finite number of different temporal alignment patterns and
+<li>There exists a finite number of different temporal alignment patterns and
 one should extract these patterns, the matching between series of source
 to target datasets and the pattern used for each match.</li>
 </ol>
 <p>In the <strong>first
 case</strong>, matching can be performed using optimal transport and DTW as the ground
 metric, and the method from <a class="citation" href="#courty:hal-02112785">(Courty, Flamary, Tuia, &amp; Rakotomamonjy, 2017)</a> can be used.
-One straight-forward approach for the <strong>second case</strong> would be to alternate
+One straightforward approach for the <strong>second case</strong> can be to alternate
 between (i) an optimal transport
 problem (finding time series pairs) for a fixed temporal realignment and (ii) a
 Dynamic Time Warping between synthetic series (that are built from the source
@@ -800,32 +801,32 @@ cover classes, which have different temporal responses to a given input
 (<em>e.g.</em> change in meteorological conditions).
 Hence each cluster of temporal response could be assigned a different temporal
 alignment pattern.</p>
-<h2 id="Broader-questions-related-to-learning-from-time-series">Broader questions related to learning from time series<a class="anchor-link" href="#Broader-questions-related-to-learning-from-time-series"> </a></h2><h3 id="Learning-the-notion-of-similarity">Learning the notion of similarity<a class="anchor-link" href="#Learning-the-notion-of-similarity"> </a></h3><p>As illustrated in this document, learning from time series can take very diverse
-forms depending on the invariants at stake in the data.
+<h2 id="Broader-Questions-Related-to-Learning-from-Time-Series">Broader Questions Related to Learning from Time Series<a class="anchor-link" href="#Broader-Questions-Related-to-Learning-from-Time-Series"> </a></h2><h3 id="Learning-the-Notion-of-Similarity">Learning the Notion of Similarity<a class="anchor-link" href="#Learning-the-Notion-of-Similarity"> </a></h3><p>As illustrated in this document, learning from time series can take very diverse
+forms depending on the invariants involved in the data.
 In case these invariants are known, dedicated methods can be used, yet it
 can be that very limited expert knowledge is available or that knowledge cannot
 easily guide the choice of a learning method.
-At the moment, this is dealt with through the use of ensemble techniques that
+At the moment, this is handled through the use of ensemble techniques that
 cover a wide range of similarity notions <a class="citation" href="#lines2018time">(Lines, Taylor, &amp; Bagnall, 2018)</a>,
 yet this is at the cost of a significantly augmented complexity.
 More principled approaches are yet to be designed that could learn the notion
 of similarity from the data.</p>
-<h3 id="Structure-as-a-guide-for-weakly-supervised-learning">Structure as a guide for weakly-supervised learning<a class="anchor-link" href="#Structure-as-a-guide-for-weakly-supervised-learning"> </a></h3><p>Finally, learning meaningful representations in weakly supervised settings is
+<h3 id="Structure-as-a-Guide-for-Weakly-supervised-Learning">Structure as a Guide for Weakly-supervised Learning<a class="anchor-link" href="#Structure-as-a-Guide-for-Weakly-supervised-Learning"> </a></h3><p>Finally, learning meaningful representations in weakly supervised settings is
 probably one of the major challenges for the community in the coming years.
-Unsupervised representation learning is under-considered in the
+Unsupervised representation learning has been overlooked in the
 literature up to now, despite recent advances such as
-<a class="citation" href="#franceschi2019unsupervised">(Franceschi, Dieuleveut, &amp; Jaggi, 2019)</a> that relies on contrastive learning.</p>
+<a class="citation" href="#franceschi2019unsupervised">(Franceschi, Dieuleveut, &amp; Jaggi, 2019)</a>, which relies on contrastive learning.</p>
 <p>In this context, I believe structure can
 be used as a guide.
 Typically, in the time series context, learning intermediate representations
-that are suited for structured prediction (<em>i.e.</em> predicting future
+that are suited for structured prediction (<em>i.e.</em>, predicting future
 observations together with their emission times) is likely to capture the
 intrinsics of the data.
 Such approaches could rely on the recent revival of time series forecasting
 models, such as in
 <a class="citation" href="#vincent2019shape">(Vincent &amp; Thome, 2019)</a> and <a class="citation" href="#rubanova2019latent">(Rubanova, Chen, &amp; Duvenaud, 2019)</a>.
 A first step in this direction is the SOM-VAE model presented in
-<a class="citation" href="#fortuin2019som">(Fortuin, Hüser, Locatello, Strathmann, &amp; Rätsch, 2019)</a> that relies on a Markov assumption to model
+<a class="citation" href="#fortuin2019som">(Fortuin, Hüser, Locatello, Strathmann, &amp; Rätsch, 2019)</a>, which relies on a Markov assumption to model
 transitions between quantized latent representations.</p>
 <p>Note that the great potential of structured prediction to learn useful
 representations from unsupervised datasets is not restricted to the time series

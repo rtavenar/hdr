@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html",
   "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-05-18T19:08:46+02:00",
-  "dateModified": "2020-05-18T19:08:46+02:00",
+  "datePublished": "2020-05-26T18:11:30+02:00",
+  "dateModified": "2020-05-26T18:11:30+02:00",
   "description": "# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)...",
   "author": {
     "@type": "Person",
@@ -383,7 +383,7 @@ initFunction(initPrint)
           
             1.
           
-          Defining adequate metrics for structured data
+          Defining Adequate Metrics for Structured Data
         </a>
       </li>
 
@@ -473,7 +473,7 @@ initFunction(initPrint)
                       1.2.2
                       
                     
-                    DTW alignment as an adaptive resampling strategy
+                    DTW Alignment as an Adaptive Resampling Strategy
                   </a>
                 </li>
               
@@ -540,7 +540,7 @@ initFunction(initPrint)
           
             2.
           
-          Learning sensible representations for time series
+          Learning Sensible Representations for Time Series
         </a>
       </li>
 
@@ -749,18 +749,19 @@ We were co-supervising Adeline together with Laetitia Chapel.
 
 <h2 id="match-kernel-and-signature-quadratic-form-distance">Match kernel and Signature Quadratic Form Distance</h2>
 
-<p>Our method relies on a user-chosen kernel $k(\cdot,\cdot)$ between local
+<p>Our method relies on a kernel $k(\cdot,\cdot)$ between local
 features.
 Based on this local kernel, one can compute the match kernel
 <a class="citation" href="#NIPS2009_3874">(Bo &amp; Sminchisescu, 2009)</a> between sets of local features as:</p>
 
 <p>\begin{equation}
-    K(\mathbf{x}, \mathbf{x}^\prime) = \sum_i \sum_j k(x_i, x^\prime_j).
+    K(\mathbf{x}, \mathbf{x}^\prime) = \sum_i \sum_j k(x_i, x^\prime_j)
 \end{equation}</p>
 
-<p>And the Signature Quadratic Form Distance (SQFD,
+<p>and the Signature Quadratic Form Distance (SQFD,
 <a class="citation" href="#10.1145/1631272.1631391">(Beecks, Uysal, &amp; Seidl, 2009)</a>) is the distance
-between feature sets embedded in the Reproducing Kernel Hilbert Space (RKHS)
+between feature sets $\mathbf{x}$ and $\mathbf{x}^\prime$ embedded in the
+Reproducing Kernel Hilbert Space (RKHS)
 associated with $K$:</p>
 
 <p>\begin{equation}
@@ -771,7 +772,7 @@ associated with $K$:</p>
         \, .
 \end{equation}</p>
 
-<h2 id="local-temporal-kernel">Local temporal kernel</h2>
+<h2 id="local-temporal-kernel">Local Temporal Kernel</h2>
 
 <p>We introduce a time-sensitive local kernel defined as:</p>
 
@@ -780,7 +781,7 @@ associated with $K$:</p>
 \end{equation}</p>
 
 <p>This kernel is positive semi definite (psd), as the product of two psd kernels
-and, if $k$ is the RBF kernel, it can be written as:</p>
+and, if $k$ is the radial basis function (RBF) kernel, it can be written as:</p>
 
 <p>\begin{equation}
     k_t((x_i, t_i), (x^\prime_j, t^\prime_j)) = k(g(x_i, t_i), g(x^\prime_j, t^\prime_j)).
@@ -791,9 +792,12 @@ g(x_i, t_i) = \left( x_{i,0}, \dots , x_{i, d-1},
                             \sqrt{\frac{\gamma_t}{\gamma_f}} t_i \right)
 \end{equation}</p>
 
+<p>where $x_{i,l}$ denotes the $l$-th feature of the $i$-th observation in
+$\mathbf{x}$.</p>
+
 <p>The code below illustrates the impact of the ratio
 $\sqrt{\frac{\gamma_t}{\gamma_f}}$ on the kernel matrix (larger $\gamma_t$
-leads to ignoring off-diagonal elements):</p>
+leads to paying less attention to off-diagonal elements):</p>
 
 <p>```python tags=[“hide_input”]
 %config InlineBackend.figure_format = ‘svg’
@@ -894,14 +898,14 @@ ax_s_y.plot(- s_y1, numpy.arange(s_y1.shape[0])[::-1],
 Random Fourier Features <a class="citation" href="#NIPS2007_3182">(Rahimi &amp; Recht, 2008)</a> can be
 used in order to approximate it with a linear kernel.</p>
 
-<p>Let us assume that we have a feature map $\phi$ such that</p>
+<p>If $\phi$ is a feature map such that</p>
 
 <p>\begin{equation}
 k_t((x_{i}, t_i), (x^\prime_j, t^\prime_j)) \approx
     \left\langle\phi(g(x_{i}, t_i)),
         \phi(g(x^\prime_{j}, t^\prime_j))\right\rangle,
 \end{equation}
-then we have:</p>
+then</p>
 
 <p>\begin{equation}
 SQFD(\mathbf{x}, \mathbf{x}^\prime) \approx \left|
@@ -911,13 +915,16 @@ SQFD(\mathbf{x}, \mathbf{x}^\prime) \approx \left|
     \right|.
 \end{equation}</p>
 
-<p>In other words, once feature sets are projected in this finite-dimensional
+<p>In other words, once feature sets are embedded in this finite-dimensional
 space, approximate SQFD computation is performed through (i) a barycenter
-computation $b_\phi(\cdot)$ in the feature space (which can be done offline)
-followed by (ii) a Euclidean distance computation in $O(D)$ time, where $D$ is
-the dimension of the feature map $\phi(x)$.
-Overall, we have a distance between timestamped feature sets whose
-precision / complexity tradeoff can be tuned via the map dimensionality $D$.</p>
+computation $b_\phi(\cdot)$ in the feature space (which can be performed
+offline)
+followed by (ii) a Euclidean distance computation with a time complexity of
+$O(D)$, where $D$ is
+the dimension of the feature map $\phi$.
+Overall, we have a distance between timestamped feature sets
+the precision / complexity tradeoff of which
+can be tuned via the map dimensionality $D$.</p>
 
 <h2 id="evaluation">Evaluation</h2>
 
@@ -927,8 +934,9 @@ computer vision community at the time of this work.
 However, in our small data context, they proved useful for the task at hand.
 <!-- #endregion --></p>
 
-<p>In order to evaluate the method presented above, we have used the UCR Time
-Series Classification archive, which, at the time, was made of monodimensional
+<p>In order to evaluate the method presented above, we used the UCR Time
+Series Classification archive~\cite{ucr}, which, at the time, was made of
+monodimensional
 time series only.
 We decided not to work on raw data but rather extract local features to
 describe our time series.
