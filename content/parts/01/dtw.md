@@ -88,7 +88,7 @@ examples](https://tslearn.readthedocs.io/en/latest/auto_examples/plot_dtw.html).
 ## Algorithmic Solution
 
 There exists an $O(mn)$ algorithm to compute the exact optimum for this
-problem:
+problem (assuming computation of $d(\cdot,\cdot)$ is $O(1)$):
 
 ```python
 def dtw(x, x_prime):
