@@ -5,17 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Machine Learning for Time Series</title>
+  <title>DTW with Global Invariances</title>
   <meta name="description" content="# DTW with Global Invariances**Note.** This work is part of Titouan Vayer's PhD thesis.We are co-supervising Titouan together with Laetitia Chapel and Nicola...">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_gi.html">
-  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/hdr/content/parts/01/dtw/dtw_gi.html">
+  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="http://localhost:4000/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_gi.html" />
+  <meta property="og:url"         content="http://localhost:4000/hdr/content/parts/01/dtw/dtw_gi.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Machine Learning for Time Series" />
+<meta property="og:title"       content="DTW with Global Invariances" />
 <meta property="og:description" content="# DTW with Global Invariances**Note.** This work is part of Titouan Vayer's PhD thesis.We are co-supervising Titouan together with Laetitia Chapel and Nicola..." />
-<meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
+<meta property="og:image"       content="http://localhost:4000/hdr/false" />
 
 <meta name="twitter:card" content="summary">
 
@@ -24,10 +24,10 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_gi.html",
-  "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-05-26T23:25:07+02:00",
-  "dateModified": "2020-05-26T23:25:07+02:00",
+  "mainEntityOfPage": "http://localhost:4000/hdr/content/parts/01/dtw/dtw_gi.html",
+  "headline": "DTW with Global Invariances",
+  "datePublished": "2020-09-28T15:10:21+02:00",
+  "dateModified": "2020-09-28T15:10:21+02:00",
   "description": "# DTW with Global Invariances**Note.** This work is part of Titouan Vayer's PhD thesis.We are co-supervising Titouan together with Laetitia Chapel and Nicola...",
   "author": {
     "@type": "Person",
@@ -38,14 +38,14 @@
     "name": "Data 100 at UC Berkeley",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://rtavenar.github.io/hdr",
+      "url": "http://localhost:4000/hdr",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "https://rtavenar.github.io/hdr",
+    "url": "http://localhost:4000/hdr",
     "height": 60,
     "width": 60
   }
@@ -782,7 +782,7 @@ Time series do not have to lie in the same ambient space, as presented in the
 following Figure:</p>
 
 <figure>
-<p><img src="../../../images/tex/dtw_gi.svg" alt="" /></p>
+<p><img src="/hdr/content/images/tex/dtw_gi.svg" alt="" /></p>
   <figcaption>DTW-GI aligns time series by optimizing on temporal alignment
    (through Dynamic Time Warping) and feature space transformation (denoted
    $f$ here). Time series represented here are color-coded trajectories, whose
@@ -820,7 +820,7 @@ import numpy</p>
     for i, j in path:
         w_pi[i, j] = 1.
     return w_pi</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ```python
 import scipy
 from tslearn.utils import to_time_series
@@ -946,7 +946,7 @@ from tslearn.barycenters import dtw_barycenter_averaging</p>
     “"”Computes item assignement based on DTW alignments and return cost as a
     bonus.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Parameters
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Parameters
 ----------
 X : numpy.array of shape (n, sz, d)
     Time-series to be averaged
@@ -1000,7 +1000,7 @@ return list_w_pi, list_p, list_bias, cost
 <p>def _subgradient_valence_warping(list_w_pi, weights):
     “"”Compute Valence and Warping matrices from paths.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Valence matrices are denoted :math:`V^{(k)}` and Warping matrices are
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Valence matrices are denoted :math:`V^{(k)}` and Warping matrices are
 :math:`W^{(k)}` in [1]_.
 
 This function returns a list of :math:`V^{(k)}` diagonals (as a vector)
@@ -1040,7 +1040,7 @@ return list_v_k, list_w_k
 <p>def _mm_valence_warping(list_w_pi, weights):
     “"”Compute Valence and Warping matrices from paths.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Valence matrices are denoted :math:`V^{(k)}` and Warping matrices are
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Valence matrices are denoted :math:`V^{(k)}` and Warping matrices are
 :math:`W^{(k)}` in [1]_.
 
 This function returns the sum of :math:`V^{(k)}` diagonals (as a vector)
@@ -1084,7 +1084,7 @@ return diag_sum_v_k, list_w_k
 <p>def <em>mm_update_barycenter(X, diag_sum_v_k, list_w_k):
     “"”Update barycenters using the formula from Algorithm 2 in [1]</em>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Parameters
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Parameters
 ----------
 X : numpy.array of shape (n, sz, d)
     Time-series to be averaged
@@ -1123,7 +1123,7 @@ return barycenter
     “"”DTW-GI Barycenter Averaging (DBA) method estimated through
     Expectation-Maximization algorithm.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DBA was originally presented in [1]_.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DBA was originally presented in [1]_.
 This implementation is based on a idea from [2]_ (Majorize-Minimize Mean
 Algorithm).
 
@@ -1326,7 +1326,7 @@ return barycenter, cost
             spiral += numpy.random.rand(2) * 3
         dataset.append(spiral)
     return dataset</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ```python tags=["hide_input"]
 numpy.random.seed(0)
 

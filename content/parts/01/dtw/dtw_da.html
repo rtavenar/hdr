@@ -5,17 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Machine Learning for Time Series</title>
+  <title>DTW Alignment as an Adaptive Resampling Strategy</title>
   <meta name="description" content="# DTW Alignment as an Adaptive Resampling Strategy**Note.** This work is a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not directly involve...">
 
-  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_da.html">
-  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/hdr/content/parts/01/dtw/dtw_da.html">
+  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="http://localhost:4000/hdr/feed.xml">
 
-  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_da.html" />
+  <meta property="og:url"         content="http://localhost:4000/hdr/content/parts/01/dtw/dtw_da.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Machine Learning for Time Series" />
+<meta property="og:title"       content="DTW Alignment as an Adaptive Resampling Strategy" />
 <meta property="og:description" content="# DTW Alignment as an Adaptive Resampling Strategy**Note.** This work is a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not directly involve..." />
-<meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
+<meta property="og:image"       content="http://localhost:4000/hdr/false" />
 
 <meta name="twitter:card" content="summary">
 
@@ -24,10 +24,10 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw/dtw_da.html",
-  "headline": "Machine Learning for Time Series",
-  "datePublished": "2020-05-26T23:25:07+02:00",
-  "dateModified": "2020-05-26T23:25:07+02:00",
+  "mainEntityOfPage": "http://localhost:4000/hdr/content/parts/01/dtw/dtw_da.html",
+  "headline": "DTW Alignment as an Adaptive Resampling Strategy",
+  "datePublished": "2020-09-28T15:10:21+02:00",
+  "dateModified": "2020-09-28T15:10:21+02:00",
   "description": "# DTW Alignment as an Adaptive Resampling Strategy**Note.** This work is a part of Rémi Dupas' PhD thesis (in EnvironmentSciences).I was not directly involve...",
   "author": {
     "@type": "Person",
@@ -38,14 +38,14 @@
     "name": "Data 100 at UC Berkeley",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://rtavenar.github.io/hdr",
+      "url": "http://localhost:4000/hdr",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "https://rtavenar.github.io/hdr",
+    "url": "http://localhost:4000/hdr",
     "height": 60,
     "width": 60
   }
@@ -828,7 +828,7 @@ from tslearn.utils import to_time_series</p>
     offset = .5
     fig = plt.figure(figsize=(6, 3))</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plt.subplot(1, 2, 1)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plt.subplot(1, 2, 1)
 plt.text(x=0.5, y=1.05,
          s="Original discharge time series", fontsize=12, horizontalalignment='center',
          verticalalignment='center', transform=plt.gca().transAxes)
