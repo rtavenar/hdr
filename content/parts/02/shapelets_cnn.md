@@ -459,7 +459,7 @@ $\mathbf{M}_\text{ind}$ is a diagonal indicator matrix that has ones on
 the diagonal for features that could be discarded individually (localization
 features in our random shapelet case), $\boldsymbol{\theta}$ is the set of
 all model weights, including weights $\boldsymbol{\beta}$ that are directly
-connected to the features (\emph{i.e.}, these are weights from the first layer),
+connected to the features (_i.e._, these are weights from the first layer),
 that
 are organized in $K$ groups $\boldsymbol{\beta}^{(k)}$ of size $p_k$
 ($p_k=2$ in the

@@ -130,7 +130,7 @@ the nodes, the edge information of the graph or more generally it can model a
 distance between pairs of vertices such as the shortest path distance.
 When $C$ is a metric, such as the shortest-path
 distance, we naturally equip the structure with the metric space $(\Omega_s,C)$.
- We denote by \emph{structure information} the set of all the structure
+ We denote by _structure information_ the set of all the structure
  embeddings $(x_{i})_i$ of the graph.
 We propose to enrich the previously described graph with a histogram which
 serves the purpose of signaling the relative importance of the vertices in the

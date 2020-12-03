@@ -22,7 +22,7 @@ I was not directly involved in the supervision of Rémi's PhD thesis.
 <!-- #endregion -->
 
 In this section, we present a method that uses Dynamic Time Warping (DTW)
-on multimodal time series, \emph{i.e.} time series that are made of several
+on multimodal time series, _i.e._ time series that are made of several
 features recorded over time.
 The method relies on the assumption that one of the considered modalities
 (called

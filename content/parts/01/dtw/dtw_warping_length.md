@@ -135,7 +135,7 @@ path, cost = dtw_path(dataset[0], dataset[1])
 plot_matches(dataset[0], dataset[1], path, "DTW matches")
 ```
 
-Moreover, our experiments on UCR Time Series Datasets~\cite{ucr} show that
+Moreover, our experiments on UCR Time Series Datasets  {% cite ucr %} show that
 this similarity measure, when used in a 1-Nearest Neighbor Classifier, leads to
 a higher accuracy than other constrained DTW variants
 (Sakoe-Chiba band and Itakura parallelogram).

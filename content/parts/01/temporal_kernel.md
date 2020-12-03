@@ -214,7 +214,7 @@ However, in our small data context, they proved useful for the task at hand.
 <!-- #endregion -->
 
 In order to evaluate the method presented above, we used the UCR Time
-Series Classification archive~\cite{ucr}, which, at the time, was made of
+Series Classification archive {% cite ucr %}, which, at the time, was made of
 monodimensional
 time series only.
 We decided not to work on raw data but rather extract local features to
