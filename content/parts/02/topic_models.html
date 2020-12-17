@@ -5,17 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Temporal Topic Models</title>
+  <title>Machine Learning for Time Series</title>
   <meta name="description" content="# Temporal Topic ModelsTopic models are mixture models that can deal with documents represented asbags of features (BoF) and that can extract latent topics (...">
 
-  <link rel="canonical" href="http://localhost:4000/hdr/content/parts/02/topic_models.html">
-  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="http://localhost:4000/hdr/feed.xml">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/02/topic_models.html">
+  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="http://localhost:4000/hdr/content/parts/02/topic_models.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/02/topic_models.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Temporal Topic Models" />
+<meta property="og:title"       content="Machine Learning for Time Series" />
 <meta property="og:description" content="# Temporal Topic ModelsTopic models are mixture models that can deal with documents represented asbags of features (BoF) and that can extract latent topics (..." />
-<meta property="og:image"       content="http://localhost:4000/hdr/false" />
+<meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
 
@@ -24,10 +24,10 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://localhost:4000/hdr/content/parts/02/topic_models.html",
-  "headline": "Temporal Topic Models",
-  "datePublished": "2020-09-28T15:10:21+02:00",
-  "dateModified": "2020-09-28T15:10:21+02:00",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/02/topic_models.html",
+  "headline": "Machine Learning for Time Series",
+  "datePublished": "2020-12-17T16:45:23+01:00",
+  "dateModified": "2020-12-17T16:45:23+01:00",
   "description": "# Temporal Topic ModelsTopic models are mixture models that can deal with documents represented asbags of features (BoF) and that can extract latent topics (...",
   "author": {
     "@type": "Person",
@@ -38,14 +38,14 @@
     "name": "Data 100 at UC Berkeley",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:4000/hdr",
+      "url": "https://rtavenar.github.io/hdr",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "http://localhost:4000/hdr",
+    "url": "https://rtavenar.github.io/hdr",
     "height": 60,
     "width": 60
   }
@@ -758,7 +758,7 @@ needed to
 model a given set of documents and the number and localization of motif
 occurrences in each document, as shown in the following Figure:</p>
 
-<p><img src="/hdr/content/images/hdlsm.svg" alt="half-width" /></p>
+<p><img src="../../images/hdlsm.svg" alt="half-width" /></p>
 
 <p>The HDLSM model takes as input a set of quantized time series (aka temporal
 documents).
@@ -912,7 +912,7 @@ import scipy.linalg</p>
              fontsize=16)
     line, = plt.plot([], [], ‘rx-‘, zorder=0)</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># initialization function
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># initialization function
 def init():
   line.set_data([], [])
   return (line,)
@@ -934,7 +934,7 @@ return anim
     Y = np.linspace(ylim[0], ylim[1], N)
     X, Y = np.meshgrid(X, Y)</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Pack X and Y into a single 3-dimensional array
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Pack X and Y into a single 3-dimensional array
 pos = np.empty(X.shape + (2,))
 pos[:, :, 0] = X
 pos[:, :, 1] = Y

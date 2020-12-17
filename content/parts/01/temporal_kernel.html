@@ -5,17 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>A Temporal Kernel for Time Series</title>
+  <title>Machine Learning for Time Series</title>
   <meta name="description" content="# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)...">
 
-  <link rel="canonical" href="http://localhost:4000/hdr/content/parts/01/temporal_kernel.html">
-  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="http://localhost:4000/hdr/feed.xml">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html">
+  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="http://localhost:4000/hdr/content/parts/01/temporal_kernel.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="A Temporal Kernel for Time Series" />
+<meta property="og:title"       content="Machine Learning for Time Series" />
 <meta property="og:description" content="# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)..." />
-<meta property="og:image"       content="http://localhost:4000/hdr/false" />
+<meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
 
@@ -24,10 +24,10 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://localhost:4000/hdr/content/parts/01/temporal_kernel.html",
-  "headline": "A Temporal Kernel for Time Series",
-  "datePublished": "2020-09-28T15:10:21+02:00",
-  "dateModified": "2020-09-28T15:10:21+02:00",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/temporal_kernel.html",
+  "headline": "Machine Learning for Time Series",
+  "datePublished": "2020-12-17T16:45:23+01:00",
+  "dateModified": "2020-12-17T16:45:23+01:00",
   "description": "# A Temporal Kernel for Time SeriesThe method presented in this section consists in defining a kernel betweensets of timestamped objects (typically features)...",
   "author": {
     "@type": "Person",
@@ -38,14 +38,14 @@
     "name": "Data 100 at UC Berkeley",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:4000/hdr",
+      "url": "https://rtavenar.github.io/hdr",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "http://localhost:4000/hdr",
+    "url": "https://rtavenar.github.io/hdr",
     "height": 60,
     "width": 60
   }
@@ -853,7 +853,7 @@ bottom_h = bottom + height + 0.02</p>
 <p>rect_s_y = [left, bottom, w_ts, height]
 rect_gram = [left_h, bottom, width, height]
 rect_s_x = [left_h, bottom_h, width, h_ts]</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ```python
 def g(x, ratio):
     sz = x.shape[0]
@@ -935,7 +935,7 @@ However, in our small data context, they proved useful for the task at hand.
 <!-- #endregion --></p>
 
 <p>In order to evaluate the method presented above, we used the UCR Time
-Series Classification archive~\cite{ucr}, which, at the time, was made of
+Series Classification archive <a class="citation" href="#ucr">(Bagnall, Lines, Vickers, &amp; Keogh, 2018)</a>, which, at the time, was made of
 monodimensional
 time series only.
 We decided not to work on raw data but rather extract local features to
@@ -959,6 +959,7 @@ competitive with the state-of-the-art.</p>
 <ol class="bibliography"><li><span id="NIPS2009_3874">Bo, L., &amp; Sminchisescu, C. (2009). Efficient Match Kernel between Sets of Features for Visual Recognition. In <i>Neural Information Processing Systems</i> (pp. 135–143).</span></li>
 <li><span id="10.1145/1631272.1631391">Beecks, C., Uysal, M. S., &amp; Seidl, T. (2009). Signature Quadratic Form Distances for Content-Based Similarity. In <i>Proceedings of the ACM International Conference on Multimedia</i> (pp. 697–700).</span></li>
 <li><span id="NIPS2007_3182">Rahimi, A., &amp; Recht, B. (2008). Random Features for Large-Scale Kernel Machines. In <i>Neural Information Processing Systems</i> (pp. 1177–1184).</span></li>
+<li><span id="ucr">Bagnall, A., Lines, J., Vickers, W., &amp; Keogh, E. (2018). The UEA &amp; UCR Time Series Classification Repository. Retrieved from www.timeseriesclassification.com</span></li>
 <li><span id="bailly:halshs-01184900">Bailly, A., Malinowski, S., Tavenard, R., Guyet, T., &amp; Chapel, L. (2015). Bag-of-Temporal-SIFT-Words for Time Series Classification. In <i>ECML/PKDD Workshop on Advanced Analytics and Learning on Temporal Data</i>. Porto, Portugal.</span></li>
 <li><span id="bailly:hal-01252726">Bailly, A., Malinowski, S., Tavenard, R., Chapel, L., &amp; Guyet, T. (2016). Dense Bag-of-Temporal-SIFT-Words for Time Series Classification. In <i>Advanced Analysis and Learning on Temporal Data</i>. Springer. https://doi.org/10.1007/978-3-319-44412-3_2</span></li>
 <li><span id="Lowe:2004:DIF:993451.996342">Lowe, D. G. (2004). Distinctive Image Features from Scale-Invariant Keypoints. <i>International Journal of Computer Vision</i>, <i>60</i>(2), 91–110.</span></li>

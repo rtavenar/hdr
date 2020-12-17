@@ -5,17 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Optimal Transport for Structured Data</title>
+  <title>Machine Learning for Time Series</title>
   <meta name="description" content="# Optimal Transport for Structured DataThis section covers our works related to Optimal Transport distances forstructured data such as graphs.In order to com...">
 
-  <link rel="canonical" href="http://localhost:4000/hdr/content/parts/01/ot.html">
-  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="http://localhost:4000/hdr/feed.xml">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/ot.html">
+  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="http://localhost:4000/hdr/content/parts/01/ot.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/ot.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Optimal Transport for Structured Data" />
+<meta property="og:title"       content="Machine Learning for Time Series" />
 <meta property="og:description" content="# Optimal Transport for Structured DataThis section covers our works related to Optimal Transport distances forstructured data such as graphs.In order to com..." />
-<meta property="og:image"       content="http://localhost:4000/hdr/false" />
+<meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
 
@@ -24,10 +24,10 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://localhost:4000/hdr/content/parts/01/ot.html",
-  "headline": "Optimal Transport for Structured Data",
-  "datePublished": "2020-09-28T15:10:21+02:00",
-  "dateModified": "2020-09-28T15:10:21+02:00",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/ot.html",
+  "headline": "Machine Learning for Time Series",
+  "datePublished": "2020-12-17T16:45:23+01:00",
+  "dateModified": "2020-12-17T16:45:23+01:00",
   "description": "# Optimal Transport for Structured DataThis section covers our works related to Optimal Transport distances forstructured data such as graphs.In order to com...",
   "author": {
     "@type": "Person",
@@ -38,14 +38,14 @@
     "name": "Data 100 at UC Berkeley",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:4000/hdr",
+      "url": "https://rtavenar.github.io/hdr",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "http://localhost:4000/hdr",
+    "url": "https://rtavenar.github.io/hdr",
     "height": 60,
     "width": 60
   }
@@ -781,7 +781,7 @@ $\mu$ and $\mu’$ (<em>ie.</em> the set of all matrices with marginals $h$ and 
 
 <p>This distance is illustrated in the following Figure:</p>
 
-<p><img src="/hdr/content/images/svg/wass.svg" alt="" /></p>
+<p><img src="../../images/svg/wass.svg" alt="" /></p>
 
 <p>When distributions $\mu$ and $\mu’$ lie in distinct ambient spaces $\mathcal{X}$
  and $\mathcal{X}^\prime$,
@@ -789,7 +789,7 @@ however, one cannot compute their Wasserstein distance. An alternative that was
 introduced in <a class="citation" href="#memoli2011gromov">(Mémoli, 2011)</a> relies on matching intra-domain
 distances, as illustrated below:</p>
 
-<p><img src="/hdr/content/images/svg/gw.svg" alt="" /></p>
+<p><img src="../../images/svg/gw.svg" alt="" /></p>
 
 <p>The corresponding distance is the Gromov-Wasserstein distance, defined as:</p>
 
@@ -852,8 +852,8 @@ the nodes, the edge information of the graph or more generally it can model a
 distance between pairs of vertices such as the shortest path distance.
 When $C$ is a metric, such as the shortest-path
 distance, we naturally equip the structure with the metric space $(\Omega_s,C)$.
- We denote by \emph{structure information} the set of all the structure
- embeddings $(x</em>{i})<em>i$ of the graph.
+ We denote by _structure information</em> the set of all the structure
+ embeddings $(x_{i})<em>i$ of the graph.
 We propose to enrich the previously described graph with a histogram which
 serves the purpose of signaling the relative importance of the vertices in the
 graph.
@@ -870,7 +870,7 @@ $\delta$ is the Dirac measure.
 This probability measure
 describes the entire structured data:</p>
 
-<p><img src="/hdr/content/images/graph_as_distrib.svg" alt="half-width" /></p>
+<p><img src="../../images/graph_as_distrib.svg" alt="half-width" /></p>
 
 <h3 id="distance-definition-and-properties">Distance Definition and Properties</h3>
 
@@ -1007,7 +1007,7 @@ plt.ion()</p>
             mat[i, j] = len(all_paths[i][j])
     np.fill_diagonal(mat, 0.)
     return mat</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ```python
 import numpy as np
 import networkx as nx

@@ -5,17 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Shapelet-based Representations and Convolutional Models</title>
+  <title>Machine Learning for Time Series</title>
   <meta name="description" content="# Shapelet-based Representations and Convolutional ModelsIn this section, we will cover works that either relate to the Shapeletrepresentation for time serie...">
 
-  <link rel="canonical" href="http://localhost:4000/hdr/content/parts/02/shapelets_cnn.html">
-  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="http://localhost:4000/hdr/feed.xml">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/02/shapelets_cnn.html">
+  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="http://localhost:4000/hdr/content/parts/02/shapelets_cnn.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/02/shapelets_cnn.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Shapelet-based Representations and Convolutional Models" />
+<meta property="og:title"       content="Machine Learning for Time Series" />
 <meta property="og:description" content="# Shapelet-based Representations and Convolutional ModelsIn this section, we will cover works that either relate to the Shapeletrepresentation for time serie..." />
-<meta property="og:image"       content="http://localhost:4000/hdr/false" />
+<meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
 
@@ -24,10 +24,10 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://localhost:4000/hdr/content/parts/02/shapelets_cnn.html",
-  "headline": "Shapelet-based Representations and Convolutional Models",
-  "datePublished": "2020-09-28T15:10:21+02:00",
-  "dateModified": "2020-09-28T15:10:21+02:00",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/02/shapelets_cnn.html",
+  "headline": "Machine Learning for Time Series",
+  "datePublished": "2020-12-17T16:45:23+01:00",
+  "dateModified": "2020-12-17T16:45:23+01:00",
   "description": "# Shapelet-based Representations and Convolutional ModelsIn this section, we will cover works that either relate to the Shapeletrepresentation for time serie...",
   "author": {
     "@type": "Person",
@@ -38,14 +38,14 @@
     "name": "Data 100 at UC Berkeley",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:4000/hdr",
+      "url": "https://rtavenar.github.io/hdr",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "http://localhost:4000/hdr",
+    "url": "https://rtavenar.github.io/hdr",
     "height": 60,
     "width": 60
   }
@@ -777,7 +777,7 @@ representations is a tight estimate of Dynamic Time Warping between original
 time series.
 The resulting model is an instance of a Siamese Network:</p>
 
-<p><img src="/hdr/content/images/siamese_ldps.png" alt="" /></p>
+<p><img src="../../images/siamese_ldps.png" alt="" /></p>
 
 <p>where $m_\theta(\cdot)$ is the feature extraction part of the model that
 maps a time series to its shapelet transform representation.
@@ -831,7 +831,7 @@ from tslearn.metrics import dtw</p>
         This implementation does not support custom strides, padding or dilation
         Input shape compatibilty by kernel_size needs to be ensured</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    This code comes from:
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    This code comes from:
     https://github.com/reachtarunhere/pytorch-snippets/blob/master/min_pool1d.py
     (under MIT license)
     """
@@ -849,7 +849,7 @@ def forward(self, l):
 <p>class ShapeletLayer(nn.Module):
     “"”Shapelet layer.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Computes sliding window distances between a set of time series and a set
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Computes sliding window distances between a set of time series and a set
 of shapelets.
 
 Parameters
@@ -929,7 +929,7 @@ def pairwise_distances(cls, x, y):
     return torch.clamp(dist, 0.0, numpy.inf) / L ```
 </code></pre></div></div>
 
-<p>Here is a <code class="language-plaintext highlighter-rouge">PyTorch</code> implementation of this model:</p>
+<p>Here is a <code class="highlighter-rouge">PyTorch</code> implementation of this model:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LDPSModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="s">"""Learning DTW-Preserving Shapelets (LDPS) model.
@@ -1175,11 +1175,11 @@ Semi-Sparse Group Lasso) loss that enforces sparsity only on some individual
 
 <p>where $\mathcal{L}(\cdot,\cdot,\cdot)$ is the unpenalized
 loss function,
-$\mathbf{M}_\text{ind}$ is a diagonal indicator matrix that has ones on
+$\mathbf{M}<em>\text{ind}$ is a diagonal indicator matrix that has ones on
 the diagonal for features that could be discarded individually (localization
 features in our random shapelet case), $\boldsymbol{\theta}$ is the set of
 all model weights, including weights $\boldsymbol{\beta}$ that are directly
-connected to the features (\emph{i.e.}, these are weights from the first layer),
+connected to the features (_i.e.</em>, these are weights from the first layer),
 that
 are organized in $K$ groups $\boldsymbol{\beta}^{(k)}$ of size $p_k$
 ($p_k=2$ in the
@@ -1217,7 +1217,7 @@ import numpy</p>
                 alpha=0.6)
     plt.gca().set_yscale(“log”)</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>labels = []
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>labels = []
 for group_id in range(3):
     for feature_id in range(n_features_per_group):
         labels.append("$\\beta_%d^{(%d)}$" % (feature_id + 1, group_id + 1))
@@ -1255,7 +1255,7 @@ regularization can handle:</p>
 <span class="n">y_test</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">beta_star</span><span class="p">)</span> <span class="o">+</span> <span class="n">noise_level</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>and using the following <code class="language-plaintext highlighter-rouge">PyTorch</code> code for our model definition:</p>
+<p>and using the following <code class="highlighter-rouge">PyTorch</code> code for our model definition:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>

@@ -5,17 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Dynamic Time Warping</title>
+  <title>Machine Learning for Time Series</title>
   <meta name="description" content="# Dynamic Time WarpingThis section covers works related to Dynamic Time Warping for time series.**Note.** In ``tslearn``, such time series would be represent...">
 
-  <link rel="canonical" href="http://localhost:4000/hdr/content/parts/01/dtw.html">
-  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="http://localhost:4000/hdr/feed.xml">
+  <link rel="canonical" href="https://rtavenar.github.io/hdr/content/parts/01/dtw.html">
+  <link rel="alternate" type="application/rss+xml" title="Machine Learning for Time Series" href="https://rtavenar.github.io/hdr/feed.xml">
 
-  <meta property="og:url"         content="http://localhost:4000/hdr/content/parts/01/dtw.html" />
+  <meta property="og:url"         content="https://rtavenar.github.io/hdr/content/parts/01/dtw.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Dynamic Time Warping" />
+<meta property="og:title"       content="Machine Learning for Time Series" />
 <meta property="og:description" content="# Dynamic Time WarpingThis section covers works related to Dynamic Time Warping for time series.**Note.** In ``tslearn``, such time series would be represent..." />
-<meta property="og:image"       content="http://localhost:4000/hdr/false" />
+<meta property="og:image"       content="https://rtavenar.github.io/hdr/false" />
 
 <meta name="twitter:card" content="summary">
 
@@ -24,10 +24,10 @@
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://localhost:4000/hdr/content/parts/01/dtw.html",
-  "headline": "Dynamic Time Warping",
-  "datePublished": "2020-09-28T15:10:21+02:00",
-  "dateModified": "2020-09-28T15:10:21+02:00",
+  "mainEntityOfPage": "https://rtavenar.github.io/hdr/content/parts/01/dtw.html",
+  "headline": "Machine Learning for Time Series",
+  "datePublished": "2020-12-17T16:45:23+01:00",
+  "dateModified": "2020-12-17T16:45:23+01:00",
   "description": "# Dynamic Time WarpingThis section covers works related to Dynamic Time Warping for time series.**Note.** In ``tslearn``, such time series would be represent...",
   "author": {
     "@type": "Person",
@@ -38,14 +38,14 @@
     "name": "Data 100 at UC Berkeley",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:4000/hdr",
+      "url": "https://rtavenar.github.io/hdr",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "http://localhost:4000/hdr",
+    "url": "https://rtavenar.github.io/hdr",
     "height": 60,
     "width": 60
   }
@@ -740,9 +740,9 @@ initFunction(initPrint)
 <p>This section covers works related to Dynamic Time Warping for time series.</p>
 
 <!-- #region {"tags": ["popout"]} -->
-<p><strong>Note.</strong> In <code class="language-plaintext highlighter-rouge">tslearn</code>, such time series would be represented as arrays of
+<p><strong>Note.</strong> In <code class="highlighter-rouge">tslearn</code>, such time series would be represented as arrays of
 respective
-shapes <code class="language-plaintext highlighter-rouge">(n, p)</code> and <code class="language-plaintext highlighter-rouge">(m, p)</code> and DTW can be computed using the following code:</p>
+shapes <code class="highlighter-rouge">(n, p)</code> and <code class="highlighter-rouge">(m, p)</code> and DTW can be computed using the following code:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="kn">import</span> <span class="n">dtw</span><span class="p">,</span> <span class="n">dtw_path</span>
 
@@ -805,12 +805,12 @@ series, on top of the cross-similarity matrix that stores $d(x_i, {x}^\prime_j)$
 values.</p>
 
 <!-- #region {"tags": ["popout"]} -->
-<p><strong>Note.</strong> Code to produce such visualization is available in <a href="https://tslearn.readthedocs.io/en/latest/auto_examples/plot_dtw.html"><code class="language-plaintext highlighter-rouge">tslearn</code>’s
+<p><strong>Note.</strong> Code to produce such visualization is available in <a href="https://tslearn.readthedocs.io/en/latest/auto_examples/plot_dtw.html"><code class="highlighter-rouge">tslearn</code>’s
 Gallery of
 examples</a>.
 <!-- #endregion --></p>
 
-<p><img src="/hdr/content/images/dtw.png" alt="half-width" /></p>
+<p><img src="../../images/dtw.png" alt="half-width" /></p>
 
 <h2 id="algorithmic-solution">Algorithmic Solution</h2>
 
@@ -871,7 +871,7 @@ import numpy</p>
     plt.gca().axis(“off”)
     plt.title(title)
     plt.tight_layout()</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 The Sakoe-Chiba band is parametrized by a radius $r$ (number of
 off-diagonal elements to consider, also called warping window size sometimes),
 as illustrated below:
@@ -909,7 +909,7 @@ paths, which leads to a parallelogram-shaped constraint:</p>
 
 <!-- #region {"tags": ["popout"]} -->
 <p><strong>Note.</strong> A typical call to DTW with Itakura parallelogram constraint in
-<code class="language-plaintext highlighter-rouge">tslearn</code> would be:</p>
+<code class="highlighter-rouge">tslearn</code> would be:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tslearn.metrics</span> <span class="kn">import</span> <span class="n">dtw</span>
 <span class="n">cost</span> <span class="o">=</span> <span class="n">dtw</span><span class="p">(</span>
